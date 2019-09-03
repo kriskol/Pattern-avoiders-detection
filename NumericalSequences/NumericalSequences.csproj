@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8F0EB386-06B3-4B9B-9D11-A0F9931E65CE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NumericalSequences</RootNamespace>
+    <AssemblyName>NumericalSequences</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <LangVersion>8</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="INumSequenceFactory.cs" />
+    <Compile Include="NumSequenceBase.cs" />
+    <Compile Include="NumSequenceBaseIm.cs" />
+    <Compile Include="NumSequenceBaseC.cs" />
+    <Compile Include="NumSequenceExtended.cs" />
+    <Compile Include="NumSequenceExtension.cs" />
+    <Compile Include="NumSequenceExtensionIm.cs" />
+    <Compile Include="NumSequenceBasic.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ArrayExtensions\ArrayExtensions.csproj">
+      <Project>{cdee0a84-23d2-4fe4-b2c0-07c8227aff82}</Project>
+      <Name>ArrayExtensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GeneralInterfaces\GeneralInterfaces.csproj">
+      <Project>{cd6b0881-1cb7-4fa9-8eb0-157a83f67de1}</Project>
+      <Name>GeneralInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LogicInterfaces\LogicInterfaces.csproj">
+      <Project>{037a0165-6f38-41f3-a687-e66df0d8d0a5}</Project>
+      <Name>LogicInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NumberOperationsInterfaces\NumberOperationsInterfaces.csproj">
+      <Project>{bf98f9a0-9058-45dd-8f4e-c6743110b5c0}</Project>
+      <Name>NumberOperationsInterfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+</Project>

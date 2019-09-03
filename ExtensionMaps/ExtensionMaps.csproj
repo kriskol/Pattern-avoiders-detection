@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{83364F56-FB73-4E56-B5FB-0621F3FA3D1D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ExtensionMaps</RootNamespace>
+    <AssemblyName>ExtensionMaps</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ExtensionMap.cs" />
+    <Compile Include="ExtensionMapNumSeq.cs" />
+    <Compile Include="IExtensionMapFactory.cs" />
+    <Compile Include="IExtensionMapNumSeqFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BoolExtensions\BoolExtensions.csproj">
+      <Project>{3ea86532-46b6-4355-bd6f-df8a8ec2d828}</Project>
+      <Name>BoolExtensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ByteExtensions\ByteExtensions.csproj">
+      <Project>{b9d5b91c-89d4-4691-a48c-ba93f1d22171}</Project>
+      <Name>ByteExtensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GeneralInterfaces\GeneralInterfaces.csproj">
+      <Project>{cd6b0881-1cb7-4fa9-8eb0-157a83f67de1}</Project>
+      <Name>GeneralInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LogicInterfaces\LogicInterfaces.csproj">
+      <Project>{037a0165-6f38-41f3-a687-e66df0d8d0a5}</Project>
+      <Name>LogicInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NumberOperationsInterfaces\NumberOperationsInterfaces.csproj">
+      <Project>{bf98f9a0-9058-45dd-8f4e-c6743110b5c0}</Project>
+      <Name>NumberOperationsInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NumericalSequences\NumericalSequences.csproj">
+      <Project>{8f0eb386-06b3-4b9b-9d11-a0f9931e65ce}</Project>
+      <Name>NumericalSequences</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+</Project>
