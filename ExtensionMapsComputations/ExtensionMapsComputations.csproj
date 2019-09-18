@@ -38,8 +38,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IExMapComputationSorted.cs" />
+    <Compile Include="ExMapComputationUnsorted.cs" />
+    <Compile Include="MinimumLettersChecked.cs" />
     <Compile Include="IExMapComputationUnsorted.cs" />
+    <Compile Include="IMinimumLettersChecked.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +52,10 @@
     <ProjectReference Include="..\GeneralInterfaces\GeneralInterfaces.csproj">
       <Project>{cd6b0881-1cb7-4fa9-8eb0-157a83f67de1}</Project>
       <Name>GeneralInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NumericalSequences\NumericalSequences.csproj">
+      <Project>{8f0eb386-06b3-4b9b-9d11-a0f9931e65ce}</Project>
+      <Name>NumericalSequences</Name>
     </ProjectReference>
     <ProjectReference Include="..\Patterns\Patterns.csproj">
       <Project>{c353a7a2-b66e-441e-958b-4bfa2e0ea042}</Project>

@@ -4,26 +4,26 @@ using NumberOperationsInterfaces;
 
 namespace NumberOperationsImplementations
 {
-    public class CtzCompute : ICtzCompute
+    public class CtzComputeTable : ICtzCompute
     {
-        private byte[] lookUpTable;
-        private static readonly CtzCompute ctzCompute;
-
+        private int[] lookUpTable;
+        private static readonly CtzComputeTable ctzComputeTable;
+        
         private void InitializeLookUpTable()
         {
-            lookUpTable = new byte[67];
+            lookUpTable = new int[67];
 
             lookUpTable[0] = 64;
 
             uint number = 1;
 
-            for (byte i = 1; i < 65; i++)
+            for (int i = 1; i < 65; i++)
             {
-                lookUpTable[number % 67] = (byte)(i - 1);
+                lookUpTable[number % 67] = (int)(i - 1);
             }
         }
 
-        private byte Compute(ulong word)
+        private int Compute(ulong word)
         {
             return lookUpTable[((((~word)+1) & word) % 67)];
         }
@@ -32,7 +32,7 @@ namespace NumberOperationsImplementations
         {
             int position = 0;
             int remainder;
-            byte ctz;
+            int ctz;
             
             foreach (var word in words)
             {
@@ -63,21 +63,30 @@ namespace NumberOperationsImplementations
             return Compute(words);
         }
 
-        private CtzCompute()
+        private CtzComputeTable()
         {
             InitializeLookUpTable();
         }
 
-        static CtzCompute()
+        static CtzComputeTable()
         {
-            ctzCompute = new CtzCompute();
+            ctzComputeTable = new CtzComputeTable();
+        }
+
+        public static CtzComputeTable GetCtzComputeTable()
+        {
+            return ctzComputeTable;
         }
 
         public class CtzTableComputeFactory: ICtzFactory
         {
+            public static CtzComputeTable GetCtzComputeTable()
+            {
+                return ctzComputeTable;
+            }
             public ICtzCompute GetCtzCompute()
             {
-                return ctzCompute;
+                return ctzComputeTable;
             }
         }
     }

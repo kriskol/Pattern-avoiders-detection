@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text;
 using NumericalSequences;
 
@@ -8,11 +9,16 @@ namespace Patterns
 
         private readonly int lowestPosition;
         private readonly int highestPosition;
-        private static IPatternFactory<PatternBasic> patternFactory;
+        private static readonly IPatternFactory<PatternBasic> patternFactory;
         
         public override int LowestPosition => lowestPosition;
         public override int HighestPosition => highestPosition;
         protected override IPatternFactory<PatternBasic> PatternFactory => patternFactory;
+
+        public void Change(IEnumerable<int> positions, int difference)
+        {
+            NumSequenceBasic.ChangeMutable(positions, difference);
+        }
         
         public PatternBasic(NumSequenceBasic numSequenceBasic, int lowestPosition,
                             int highestPosition, int maximum) : base(numSequenceBasic, maximum)

@@ -14,14 +14,14 @@ namespace Patterns
         public int Maximum => maximum;
 
         public abstract T InsertPosition(int position);
-        public abstract T InsertLetter(byte letter);
-        public abstract T Insert(int position, byte letter);
-        public abstract byte Get(int position);
+        public abstract T InsertLetter(ulong letter);
+        public abstract T Insert(int position, ulong letter);
+        public abstract ulong Get(int position);
         public abstract T Switch(int positionFrom, int positionTo);
         public abstract T Delete(int position);
         int IPosition.GetPosition(int index)
         { 
-            return Get(index);
+            return (int)Get(index);
         }
         
         public abstract override string ToString();

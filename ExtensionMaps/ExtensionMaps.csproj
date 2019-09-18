@@ -33,7 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ExtensionMap.cs" />
+    <Compile Include="ExtensionMapFactory.cs" />
     <Compile Include="ExtensionMapNumSeq.cs" />
+    <Compile Include="ExtensionMapNumSeqFactory.cs" />
     <Compile Include="IExtensionMapFactory.cs" />
     <Compile Include="IExtensionMapNumSeqFactory.cs" />
   </ItemGroup>

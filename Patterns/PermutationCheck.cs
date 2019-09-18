@@ -17,7 +17,7 @@ namespace Patterns
 
             for (int i = 0; i < length; i++)
             {
-                byte letter = numSequenceBasic.GetLetter(i);
+                byte letter = (byte)numSequenceBasic.GetLetter(i);
                 if (letters.Contains(letter) || letter >= length)
                     return false;
                 else

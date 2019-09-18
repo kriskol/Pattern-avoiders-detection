@@ -1,28 +1,53 @@
+using NumberOperationsImplementations;
+using NumberOperationsInterfaces;
+
 namespace NumericalSequences
 {
-    public class NumSequenceExtended:NumSequenceExtensionIm<NumSequenceExtended>
+    public abstract class NumSequenceExtended:NumSequenceExtensionIm<NumSequenceExtended>
     {
-        public class NumSequenceExtendedFactory: INumSequenceFactory<NumSequenceExtended>
+        private static ICtzCompute ctzCompute;
+        private static IPopCountCompute popCountCompute;
+        private static readonly INumSequenceExtendedFactory numSequenceFactory;
+
+        protected override ICtzCompute CtzCompute => ctzCompute;
+        protected override IPopCountCompute PopCountCompute => popCountCompute;
+        protected INumSequenceExtendedFactory NumSequenceFactory => numSequenceFactory;
+        protected override void ConvertPosition(int position, out int index, out byte positionWord, out int offset)
         {
-            public NumSequenceExtended GetNumSequenceDefault(byte letterSize, int length, bool set)
-            {
-                throw new System.NotImplementedException();
-            }
+            index = (position * LetterSize ) / bitLengthWord;
+            offset = ((position * LetterSize ) - (bitLengthWord * index)) % LetterSize;
+            positionWord = (byte)(((((position * LetterSize ) % bitLengthWord)) 
+                                   - offset) / LetterSize);
+        }
 
-            public NumSequenceExtended GetNumSequence(ulong[] words, byte letterSize, int length)
-            {
-                throw new System.NotImplementedException();
-            }
+        protected override NumSequenceExtended CreateNumSequenceThisProp(ulong[] words)
+        {
+            return CreateNumSequence(words, Length, LetterSize);
+        }
 
-            public NumSequenceExtended GetNumSequence(ulong[] words, byte letterSize, int length, int maximalLength)
-            {
-                throw new System.NotImplementedException();
-            }
+        protected override NumSequenceExtended CreateNumSequence(ulong[] words, int length, byte letterSize)
+        {
+            if (SuffixLengthSet)
+                return numSequenceFactory.GetNumSequence(words, letterSize, length, 
+                                                    SuffixLength, ctzCompute, popCountCompute);
 
-            public NumSequenceExtended GetNumSequence(ulong[] words, byte letterSize, int length, int maximalLength, int suffixLength)
-            {
-                throw new System.NotImplementedException();
-            }
+            return numSequenceFactory.GetNumSequence(words, letterSize, length, ctzCompute, popCountCompute);
+        }
+
+        protected NumSequenceExtended(INumSequenceExtendedBuilder builder) : base(builder)
+        {
+            ctzCompute = builder.GetCtzCompute();
+            popCountCompute = builder.GetPopCountCompute();
+        }
+        
+        
+        public static INumSequenceFactory<NumSequenceExtended> GetNumSequenceFactory()
+        {
+            return numSequenceFactory;
+        }
+        static NumSequenceExtended()
+        {
+            numSequenceFactory = new NumSequenceExtendedFactory();
         }
     }
 }

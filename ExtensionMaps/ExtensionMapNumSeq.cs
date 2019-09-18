@@ -18,7 +18,7 @@ namespace ExtensionMaps
 
         public override bool Get(int position)
         {
-            return numSequenceExtended.GetLetter(position).ToBool();
+            return ((byte)numSequenceExtended.GetLetter(position)).ToBool();
         }
 
         public override ExtensionMap Insert(int position, bool letter)
@@ -31,18 +31,10 @@ namespace ExtensionMaps
             return extensionMapFactory.GetExtensionMapNumSeq(numSequenceExtended.DeleteLetterPosition(position));
         }
 
-        public override ulong[] Words
-        {
-            get
-            {
-                return numSequenceExtended.Words;
-            }
-        }
-        public override int Length
-        {
-            get { return numSequenceExtended.Length; }
-        }
-        
+        public override ulong[] Words => numSequenceExtended.GetWords;
+    
+        public override int Length => numSequenceExtended.Length;
+
         public override ExtensionMap And(ExtensionMap arg)
         {
             return extensionMapFactory.GetExtensionMapNumSeq(numSequenceExtended.And(arg.Words));
@@ -87,23 +79,9 @@ namespace ExtensionMaps
         {
             return numSequenceExtended.GetHashCode();
         }
+        
 
-        public class ExtensionMapNumSeqFactory : IExtensionMapNumSeqFactory
-        {
-            public ExtensionMapNumSeq GetExtensionMapNumSeq(NumSequenceExtended numSequenceExtended)
-            {
-                if (numSequenceExtended != null && numSequenceExtended.LetterSize == 1)
-                    return new ExtensionMapNumSeq(numSequenceExtended);
-                
-                if(numSequenceExtended == null)
-                    throw new ArgumentNullException();
-                else
-                    throw new ArgumentException();
-                
-            }
-        }
-
-        private ExtensionMapNumSeq(NumSequenceExtended numSequenceExtended)
+        internal ExtensionMapNumSeq(NumSequenceExtended numSequenceExtended)
         {
             this.numSequenceExtended = numSequenceExtended;
         }

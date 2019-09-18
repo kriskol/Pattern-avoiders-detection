@@ -38,19 +38,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPermutationContainerPPAFactory.cs" />
     <Compile Include="PermutationContainerPositions.cs" />
     <Compile Include="PermutationContainer.cs" />
     <Compile Include="PermutationContainerPPA.cs" />
+    <Compile Include="PermutationContainerPPAFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExtensionMapsComputations\ExtensionMapsComputations.csproj">
+      <Project>{e5ebb1f8-2cd2-4b34-895e-a2b4e5c2be51}</Project>
+      <Name>ExtensionMapsComputations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExtensionMaps\ExtensionMaps.csproj">
       <Project>{83364f56-fb73-4e56-b5fb-0621f3fa3d1d}</Project>
       <Name>ExtensionMaps</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GeneralInterfaces\GeneralInterfaces.csproj">
+      <Project>{cd6b0881-1cb7-4fa9-8eb0-157a83f67de1}</Project>
+      <Name>GeneralInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Patterns\Patterns.csproj">
       <Project>{c353a7a2-b66e-441e-958b-4bfa2e0ea042}</Project>
       <Name>Patterns</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PermutationsCollections\PermutationsCollections.csproj">
+      <Project>{86b52843-055f-442c-94bd-9fbf27e6e6ff}</Project>
+      <Name>PermutationsCollections</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

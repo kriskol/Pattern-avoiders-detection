@@ -4,10 +4,10 @@ using NumberOperationsInterfaces;
 
 namespace NumberOperationsImplementations
 {
-    public class PopCountCompute : IPopCountCompute
+    public class PopCountComputeTable : IPopCountCompute
     {
         private byte[] lookUpTable;
-        private static readonly PopCountCompute popCountCompute;
+        private static readonly PopCountComputeTable popCountComputeTable;
         
         private byte Compute(ulong word)
         {
@@ -45,21 +45,30 @@ namespace NumberOperationsImplementations
             }
         }
 
-        private PopCountCompute()
+        private PopCountComputeTable()
         {
             FillLookUpTable();
         }
 
-        static PopCountCompute()
+        static PopCountComputeTable()
         {
-            popCountCompute = new PopCountCompute();
+            popCountComputeTable = new PopCountComputeTable();
+        }
+
+        public static PopCountComputeTable GetPopCountComputeTable()
+        {
+            return popCountComputeTable;
         }
 
         public class PopCountTableComputeFactory : IPopCountFactory
         {
+            public static PopCountComputeTable GetPopCountComputeTable()
+            {
+                return popCountComputeTable;
+            }
             public IPopCountCompute GetPopCountCompute()
             {
-                return popCountCompute;
+                return popCountComputeTable;
             }
         }
     }

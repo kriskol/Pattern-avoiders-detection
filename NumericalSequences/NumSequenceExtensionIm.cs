@@ -1,25 +1,22 @@
 using System.Collections.Generic;
-using System.Linq;
-using System;
-using System.Collections.ObjectModel;
 using ArrayExtensions;
 using NumberOperationsInterfaces;
 
-namespace NumericalSequences
+namespace NumericalSequences 
 {
     public abstract class NumSequenceExtensionIm<T>:NumSequenceExtension<T> where T:NumSequenceExtensionIm<T>
     {
-        private ICtzCompute ctzCompute;
-        private IPopCountCompute popCountCompute;
-        
+
+        protected abstract ICtzCompute CtzCompute { get; }
+        protected abstract IPopCountCompute PopCountCompute { get; }
         public override IEnumerable<int> Ctz()
         {
-            return ctzCompute.ComputeCtz(Words);
+            return CtzCompute.ComputeCtz(Words);
         }
 
         public override int PopCount()
         {
-            return popCountCompute.ComputePopCount(Words);
+            return PopCountCompute.ComputePopCount(Words);
         }
 
         public override int PopCount(int fromGivenPosition)
@@ -27,7 +24,7 @@ namespace NumericalSequences
             ConvertPosition(fromGivenPosition, out int index, out byte positionWord, out int offset);
             ulong[] newArray = Words.Slice(index, Words.Length);
             newArray[0] = newArray[0] >> (offset + positionWord * LetterSize);
-            return popCountCompute.ComputePopCount(newArray);
+            return PopCountCompute.ComputePopCount(newArray);
         }
 
         public override T And(T arg)
@@ -68,5 +65,10 @@ namespace NumericalSequences
 
             return CreateNumSequenceThisProp(newWords);
         }
+        
+        protected NumSequenceExtensionIm(INumSequenceBaseBuilder builder) : base(builder)
+        {
+        }
+        
     }
 }

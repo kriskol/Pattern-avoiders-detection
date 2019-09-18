@@ -6,25 +6,29 @@ namespace NumericalSequences
     public abstract class NumSequenceBase<T> : IEquatable<T> where T:NumSequenceBase<T>
     {
         private readonly byte letterSize;
-        private int length;
-        private int suffixLength;
-        private int maximalLength;
-        protected bool suffixLengthSet = false;
-        protected bool maximalLengthSet = false;
-
+        private readonly int length;
+        private readonly int suffixLength;
+        private readonly bool suffixLengthSet;
         public byte LetterSize => letterSize;
-        public int Length => length;
-        protected int SuffixLength => suffixLengthSet ? suffixLength : length;
-        protected int MaximalLength => maximalLengthSet ? maximalLength : Int32.MaxValue;
-   
-        public abstract byte GetLetter(int position);
-        public abstract T SetLetter(int position, byte letter);
+
+        public int Length
+        {
+            get { return length; }
+            protected set { length = value; }
+        }
+        protected int SuffixLength => SuffixLengthSet ? suffixLength : 0;
+        protected  bool SuffixLengthSet => suffixLengthSet;
+        
+        public abstract ulong GetLetter(int position);
+        public abstract T SetLetter(int position, ulong letter);
+        public abstract void SetLetterMutable(int position, ulong letter);
         public abstract T DeleteLetterPosition(int position);
         
-        public abstract T DeleteLetter(byte letter);
-        public abstract T InsertLetter(int position, byte letter);
+        public abstract T InsertLetter(int position, ulong letter);
+        public abstract void InsertLetterMutable(int position, ulong letter);
         public abstract T Switch(int positionFrom, int positionTo);
         public abstract T Change(IEnumerable<int> positions, int difference);
+        public abstract void ChangeMutable(IEnumerable<int> positions, int difference);
 
         public override bool Equals(object obj)
         {
@@ -37,12 +41,12 @@ namespace NumericalSequences
         public abstract override int GetHashCode();
         public abstract override string ToString();
         
-        protected NumSequenceBase(byte letterSize, int length, int suffixLength, int maximalLength)
+        protected NumSequenceBase(INumSequenceBaseBuilder builder)
         {
-            this.letterSize = letterSize;
-            this.length = length;
-            this.suffixLength = suffixLength;
-            this.maximalLength = maximalLength;
+            letterSize = builder.LetterSize;
+            length = builder.Length;
+            suffixLength = builder.SuffixLength;
+            suffixLengthSet = builder.SuffixLengthSet;
         }
     }
 }

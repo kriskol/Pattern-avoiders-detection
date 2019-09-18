@@ -30,6 +30,13 @@ namespace PermutationsCollections
             hashSet.Add(item);
         }
 
+        public void AddItems(IEnumerable<Permutation> items)
+        {
+            foreach (var item in items)
+            {
+                Add(item);
+            }
+        }
         public void Clear()
         {
             hashSet.Clear();
@@ -65,5 +72,9 @@ namespace PermutationsCollections
         public int Count => hashSet.Count();
         public bool IsReadOnly => isReadOnly;
         public int LengthLongestPermutation => lengthLongestPermutation;
+        public void UnionWith(IPermutationsCollection permutationCollection)
+        {
+            hashSet.UnionWith(permutationCollection);
+        }
     }
 }

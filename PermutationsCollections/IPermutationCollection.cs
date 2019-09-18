@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using GeneralCollectionsInterfaces;
 using Patterns;
 
 namespace PermutationsCollections
@@ -7,5 +6,7 @@ namespace PermutationsCollections
     public interface IPermutationsCollection : ICollection<Permutation>
     {
         int LengthLongestPermutation { get; }
+        void UnionWith(IPermutationsCollection permutationCollection);
+        void AddItems(IEnumerable<Permutation> items);
     }
 }

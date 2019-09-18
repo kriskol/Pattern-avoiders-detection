@@ -33,16 +33,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="IIsPermutation.cs" />
+    <Compile Include="IPatternBasicFactoryExternal.cs" />
     <Compile Include="IPatternFactory.cs" />
     <Compile Include="IIsPatternBasic.cs" />
+    <Compile Include="IPermutationFactoryExternal.cs" />
     <Compile Include="PatternBasic.cs" />
     <Compile Include="PatternBasicCheckFree.cs" />
+    <Compile Include="PatternBasicFactoryExternal.cs" />
+    <Compile Include="PatternFactoryExternal.cs" />
     <Compile Include="PermutationCheck.cs" />
     <Compile Include="Pattern.cs" />
     <Compile Include="PatternC.cs" />
     <Compile Include="PatternIm.cs" />
     <Compile Include="Permutation.cs" />
     <Compile Include="PermutationCheckFree.cs" />
+    <Compile Include="PermutationFactoryExternal.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GeneralInterfaces\GeneralInterfaces.csproj">

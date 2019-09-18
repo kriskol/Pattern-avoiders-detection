@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B847AE18-876F-4F8D-AAFC-5994A46BEE05}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PatternAvoidersPPAComputation</RootNamespace>
+    <AssemblyName>PatternAvoidersPPAComputation</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AvoidersComputationFactoryPPAA.cs" />
+    <Compile Include="AvoidersComputationFactoryPPAP.cs" />
+    <Compile Include="AvoidersComputationHandler.cs" />
+    <Compile Include="AvoidersPPAAComputationSequential.cs" />
+    <Compile Include="AvoidersPPAComputation.cs" />
+    <Compile Include="AvoidersPPAComputationSequential.cs" />
+    <Compile Include="AvoidersPPAAComputationTreeTraverse.cs" />
+    <Compile Include="AvoidersPPAComputationTreeTraverse.cs" />
+    <Compile Include="AvoidersPPAPComputationSequential.cs" />
+    <Compile Include="AvoidersPPAPComputationTreeTraverse.cs" />
+    <Compile Include="IAvoidersComputationAbstractFactory.cs" />
+    <Compile Include="IAvoidersPPAComputationHandler.cs" />
+    <Compile Include="IAvoidersPPAComputationSequential.cs" />
+    <Compile Include="IAvoidersPPAComputationTreeTraverse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExtensionMaps\ExtensionMaps.csproj">
+      <Project>{83364f56-fb73-4e56-b5fb-0621f3fa3d1d}</Project>
+      <Name>ExtensionMaps</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PatternNode\PatternNode.csproj">
+      <Project>{0ca4584f-9de5-4704-ab6e-b104321488c0}</Project>
+      <Name>PatternNode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Patterns\Patterns.csproj">
+      <Project>{c353a7a2-b66e-441e-958b-4bfa2e0ea042}</Project>
+      <Name>Patterns</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PermutationContainers\PermutationContainers.csproj">
+      <Project>{beda8c30-ff4b-417f-9f0e-cb489090c22b}</Project>
+      <Name>PermutationContainers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PermutationsCollections\PermutationsCollections.csproj">
+      <Project>{86b52843-055f-442c-94bd-9fbf27e6e6ff}</Project>
+      <Name>PermutationsCollections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PermutationSuccessorsComputation\PermutationSuccessorsComputation.csproj">
+      <Project>{c221b254-4b65-4c94-af1a-0e9ff5729106}</Project>
+      <Name>PermutationSuccessorsComputation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Result\Result.csproj">
+      <Project>{57756a2a-f6fa-4029-bfd2-c45d64013224}</Project>
+      <Name>Result</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+</Project>

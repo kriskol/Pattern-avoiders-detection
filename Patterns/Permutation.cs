@@ -8,13 +8,15 @@ namespace Patterns
     public class Permutation: PatternIm<Permutation>
     {
         private readonly int highestPosition;
-        private static IPatternFactory<Permutation> patternFactory;
-
-        public override int LowestPosition => 1;
+        private static readonly IPatternFactory<Permutation> patternFactory;
+        private Permutation inversion;
+        private bool inversionSet;
+        
+        public override int LowestPosition => 0;
         public override int HighestPosition => highestPosition;
         protected override IPatternFactory<Permutation> PatternFactory => patternFactory;
 
-        public override Permutation InsertLetter(byte letter)
+        public override Permutation InsertLetter(ulong letter)
         {
             NumSequenceBasic numSequenceBasicTemp = base.InsertLetter(letter).NumSequenceBasic;
             NumSequenceBasic newNumSequenceBasic = IncreaseHigherLetters(numSequenceBasicTemp, letter,
@@ -22,7 +24,7 @@ namespace Patterns
             return patternFactory.GetPattern(newNumSequenceBasic, LowestPosition, HighestPosition +1,
                                             Maximum + 1);
         }
-        public override Permutation Insert(int position, byte letter)
+        public override Permutation Insert(int position, ulong letter)
         {
             NumSequenceBasic numSequenceBasicTemp = base.Insert(position, letter).NumSequenceBasic;
             NumSequenceBasic newNumSequenceBasic = IncreaseHigherLetters(numSequenceBasicTemp, letter,
@@ -32,7 +34,7 @@ namespace Patterns
         }
         public override Permutation Delete(int position)
         {
-            byte letter = NumSequenceBasic.GetLetter(position - LowestPosition);
+            byte letter = (byte)NumSequenceBasic.GetLetter(position - LowestPosition);
             NumSequenceBasic numSequenceBasicTemp = base.Delete(position).NumSequenceBasic;
             NumSequenceBasic newNumSequenceBasic = DecreaseHigherLetters(numSequenceBasicTemp, letter,
                                                 position - LowestPosition);
@@ -60,6 +62,27 @@ namespace Patterns
                                             HighestPosition - 1, Maximum - 1);
         }
 
+        public Permutation ComputeInversion()
+        {
+            if (inversionSet)
+                return inversion;
+            else
+            {
+                NumSequenceBasicFactory factory = new NumSequenceBasicFactory();
+                NumSequenceBasic numSequenceBasic = factory.GetNumSequenceDefault(LetterSize, Length, false);
+
+                for (int i = LowestPosition; i <= HighestPosition; i++)
+                {
+                    numSequenceBasic.SetLetterMutable((int)NumSequenceBasic.GetLetter(i),(ulong)i);
+                }
+
+                inversionSet = true;
+                inversion = patternFactory.GetPattern(numSequenceBasic, 1, HighestPosition, Maximum);
+                
+                return inversion;
+            }
+        }
+
         private IEnumerable<int> CorrectPositions(IEnumerable<int> positions)
         {
             List<int> newPositions = new List<int>();
@@ -70,21 +93,21 @@ namespace Patterns
             return newPositions;
         }
 
-        private NumSequenceBasic IncreaseHigherLetters(NumSequenceBasic numSequenceBasic, byte letter,
+        private NumSequenceBasic IncreaseHigherLetters(NumSequenceBasic numSequenceBasic, ulong letter,
             int avoidedPosition)
         {
             return CorrectNumSequence(numSequenceBasic, 1, FindPositionsToBeAltered(numSequenceBasic,
                                                                         letter, avoidedPosition));
         }
 
-        private NumSequenceBasic DecreaseHigherLetters(NumSequenceBasic numSequenceBasic, byte letter,
+        private NumSequenceBasic DecreaseHigherLetters(NumSequenceBasic numSequenceBasic, ulong letter,
             int avoidedPosition)
         {
             return CorrectNumSequence(numSequenceBasic, -1, FindPositionsToBeAltered(numSequenceBasic,
                                                                         letter, avoidedPosition));
         }
 
-        private IEnumerable<int> FindPositionsToBeAltered(NumSequenceBasic numSequenceBasic, byte letter,
+        private IEnumerable<int> FindPositionsToBeAltered(NumSequenceBasic numSequenceBasic, ulong letter,
             int avoidedPosition)
         {
             List<int> positions = new List<int>();
@@ -108,7 +131,8 @@ namespace Patterns
             public Permutation GetPattern(NumSequenceBasic numSequenceBasic, int lowestPosition, 
                                             int highestPosition, int maximum)
             {
-                if (isPermutation.IsPermutation(numSequenceBasic))
+                if (isPermutation.IsPermutation(numSequenceBasic) &&
+                    lowestPosition == 0)
                     return new Permutation(numSequenceBasic, highestPosition, maximum);
 
                 return null;
@@ -127,6 +151,7 @@ namespace Patterns
         private Permutation(NumSequenceBasic numSequenceBasic, int highestPosition, int maximum) : base(numSequenceBasic, maximum)
         {
             this.highestPosition = highestPosition;
+            inversionSet = false;
         }
 
         static Permutation()

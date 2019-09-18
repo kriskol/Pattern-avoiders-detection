@@ -33,14 +33,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="INumSequenceBasicFactory.cs" />
+    <Compile Include="INumSequenceExtendedFactory.cs" />
     <Compile Include="INumSequenceFactory.cs" />
     <Compile Include="NumSequenceBase.cs" />
     <Compile Include="NumSequenceBaseIm.cs" />
     <Compile Include="NumSequenceBaseC.cs" />
+    <Compile Include="NumSequenceBasicFactory.cs" />
+    <Compile Include="NumSequenceBasicWs.cs" />
     <Compile Include="NumSequenceExtended.cs" />
+    <Compile Include="NumSequenceExtendedFactory.cs" />
+    <Compile Include="NumSequenceExtendedWs.cs" />
     <Compile Include="NumSequenceExtension.cs" />
     <Compile Include="NumSequenceExtensionIm.cs" />
     <Compile Include="NumSequenceBasic.cs" />
+    <Compile Include="NumSequenceFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ArrayExtensions\ArrayExtensions.csproj">
@@ -55,9 +62,17 @@
       <Project>{037a0165-6f38-41f3-a687-e66df0d8d0a5}</Project>
       <Name>LogicInterfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NumberOperationsDefaults\NumberOperationsDefaults.csproj">
+      <Project>{2675c87b-46dd-4c3b-ae85-046b16fdbd3e}</Project>
+      <Name>NumberOperationsDefaults</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NumberOperationsInterfaces\NumberOperationsInterfaces.csproj">
       <Project>{bf98f9a0-9058-45dd-8f4e-c6743110b5c0}</Project>
       <Name>NumberOperationsInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NumericalSequencesConstruction\NumericalSequencesConstruction.csproj">
+      <Project>{08384601-7571-4c48-8a9b-abdcbbb26b25}</Project>
+      <Name>NumericalSequencesConstruction</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

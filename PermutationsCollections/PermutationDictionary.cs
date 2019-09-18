@@ -9,6 +9,7 @@ namespace PermutationsCollections
     public class PermutationDictionary<T> : IPermutationDictionary<T>
     {
         private Dictionary<Permutation, T> dictionary;
+        private int lengthLongestPermutation = -1;
         public IEnumerator<KeyValuePair<Permutation, T>> GetEnumerator()
         {
             return dictionary.GetEnumerator();
@@ -21,11 +22,14 @@ namespace PermutationsCollections
 
         public void Add(KeyValuePair<Permutation, T> item)
         {
+            if (item.Key.Length > lengthLongestPermutation)
+                lengthLongestPermutation = item.Key.Length;
             dictionary.Add(item.Key,item.Value);
         }
 
         public void Clear()
         {
+            lengthLongestPermutation = -1;
             dictionary.Clear();
         }
 
@@ -47,13 +51,24 @@ namespace PermutationsCollections
 
         public bool Remove(KeyValuePair<Permutation, T> item)
         {
-            return dictionary.Remove(item.Key);
+            bool result =  dictionary.Remove(item.Key);
+            lengthLongestPermutation = -1;
+            foreach (var key in dictionary.Keys)
+            {
+                if (key.Length > lengthLongestPermutation)
+                    lengthLongestPermutation = key.Length;
+            }
+
+            return result;
         }
 
         public int Count => dictionary.Count;
         public bool IsReadOnly => false;
         public void Add(Permutation key, T value)
         {
+            if (key.Length > lengthLongestPermutation)
+                lengthLongestPermutation = key.Length;
+            
             dictionary.Add(key,value);
         }
 
@@ -64,7 +79,16 @@ namespace PermutationsCollections
 
         public bool Remove(Permutation key)
         {
-            return dictionary.Remove(key);
+            bool result = dictionary.Remove(key);
+            
+            lengthLongestPermutation = -1;
+            foreach (var permutation in dictionary.Keys)
+            {
+                if (permutation.Length > lengthLongestPermutation)
+                    lengthLongestPermutation = permutation.Length;
+            }
+
+            return result;
         }
 
         public bool TryGetValue(Permutation key, out T value)
@@ -75,10 +99,27 @@ namespace PermutationsCollections
         public T this[Permutation key]
         {
             get => dictionary[key];
-            set => dictionary[key] = value;
+            set
+            {
+                dictionary[key] = value; 
+                lengthLongestPermutation = -1;
+                foreach (var permutation in dictionary.Keys)
+                {
+                    if (permutation.Length > lengthLongestPermutation)
+                        lengthLongestPermutation = permutation.Length;
+                }
+            }
         }
 
         public ICollection<Permutation> Keys => dictionary.Keys;
         public ICollection<T> Values => dictionary.Values;
+        public int LengthLongestPermutation { get; }
+        public IPermutationsCollection GetKeys()
+        {
+            PermutationCollection permutationCollection = new PermutationCollection();
+            permutationCollection.AddItems(dictionary.Keys);
+
+            return permutationCollection;
+        }
     }
 }
