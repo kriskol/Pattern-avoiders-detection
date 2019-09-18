@@ -303,8 +303,8 @@ namespace NumericalSequences
                 throw new ArgumentOutOfRangeException();
 
             ulong[] words = InsertLetterInternal(position, letter);
-            Length = Length + 1;
             Words = words;
+            Length = Length + 1;
         }
 
         protected ulong DeleteLetter(ulong word, int offset, byte position, byte size)

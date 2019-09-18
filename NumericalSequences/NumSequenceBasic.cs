@@ -10,11 +10,16 @@ namespace NumericalSequences
     {
         private static readonly INumSequenceBasicFactory numSequenceFactory;
         private readonly int maximalLength;
-        private readonly int countBlockedBitsFromStart;
+        private int countBlockedBitsFromStart;
         private readonly bool maximalLengthSet;
 
         protected  bool MaximalLengthSet => maximalLengthSet;
-        protected int CountBlockedBitsFromStart => MaximalLengthSet ? countBlockedBitsFromStart : 0;
+
+        protected int CountBlockedBitsFromStart
+        {
+            get { return MaximalLengthSet ? countBlockedBitsFromStart : 0; }
+            set { countBlockedBitsFromStart = value; }
+        }
         protected int MaximalLength => MaximalLengthSet ? maximalLength : 0;
         protected INumSequenceBasicFactory NumSequenceFactory => numSequenceFactory;
         protected override void ConvertPosition(int position, out int index, out byte positionWord, out int offset)
@@ -112,21 +117,17 @@ namespace NumericalSequences
             return base.GetHashCode();
         }
 
-        protected override ulong[] InsertLetterInternal(int position, ulong letter)
+
+        protected void CutOverflowWords(ulong[] words,int position, 
+                                            ulong letter, out int newCountBlockedBitsFromStart)
         {
-            ulong[] words = base.InsertLetterInternal(position, letter);
-
-            if (maximalLengthSet && Length == MaximalLength)
+            newCountBlockedBitsFromStart = countBlockedBitsFromStart + LetterSize;
+            if (newCountBlockedBitsFromStart >= bitLengthWord)
             {
-                int newCountBlockedBitsFromStart = countBlockedBitsFromStart + LetterSize;
-                if (newCountBlockedBitsFromStart >= bitLengthWord)
-                {
-                    words = words.Slice(newCountBlockedBitsFromStart / bitLengthWord, words.Length);
-                    newCountBlockedBitsFromStart = newCountBlockedBitsFromStart % bitLengthWord;
-                }
+                words = words.Slice(newCountBlockedBitsFromStart / bitLengthWord, words.Length);
+                newCountBlockedBitsFromStart = newCountBlockedBitsFromStart % bitLengthWord;
             }
-
-            return words;
+                
         }
 
         public override NumSequenceBasic InsertLetter(int position, ulong letter)
@@ -134,13 +135,7 @@ namespace NumericalSequences
             if (maximalLengthSet && Length == MaximalLength)
             {
                 ulong[] words = InsertLetterInternal(position, letter);
-                int newCountBlockedBitsFromStart = countBlockedBitsFromStart + LetterSize;
-                if (newCountBlockedBitsFromStart >= bitLengthWord)
-                {
-                    words = words.Slice(newCountBlockedBitsFromStart / bitLengthWord, words.Length);
-                    newCountBlockedBitsFromStart = newCountBlockedBitsFromStart % bitLengthWord;
-                }
-                
+                CutOverflowWords(words, position, letter, out int newCountBlockedBitsFromStart);
                 return CreateNumSequence(words, Length, LetterSize, newCountBlockedBitsFromStart);
             }
                 
@@ -149,6 +144,15 @@ namespace NumericalSequences
 
         public override void InsertLetterMutable(int position, ulong letter)
         {
+            if (maximalLengthSet && Length == MaximalLength)
+            {
+                ulong[] words = InsertLetterInternal(position, letter);
+                CutOverflowWords(words, position, letter, out int newCountBlockedBitsFromStart);
+                Words = words;
+                Length = Length + 1;
+                CountBlockedBitsFromStart = newCountBlockedBitsFromStart;
+            }
+            
             base.InsertLetterMutable(position, letter);
         }
 

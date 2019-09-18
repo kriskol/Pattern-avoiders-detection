@@ -6,7 +6,7 @@ namespace NumericalSequences
     public abstract class NumSequenceBase<T> : IEquatable<T> where T:NumSequenceBase<T>
     {
         private readonly byte letterSize;
-        private readonly int length;
+        private int length;
         private readonly int suffixLength;
         private readonly bool suffixLengthSet;
         public byte LetterSize => letterSize;
