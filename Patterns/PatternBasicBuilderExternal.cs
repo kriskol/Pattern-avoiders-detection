@@ -8,6 +8,11 @@ namespace Patterns
         {
             factoryBuilder.SetMaximalLength(maximalLength, 0);
         }
+
+        public PatternBasicBuilderExternal() : base()
+        {
+            patternFactory = new PatternBasic.PatternBasicFactory();
+        }
         
         public PatternBasicBuilderExternal(INumSequenceBasicFactoryExternal factoryNumSequence,
                                             IBasicWsBuilderFactory factoryBuilder,

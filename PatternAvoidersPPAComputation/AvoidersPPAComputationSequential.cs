@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using ExtensionMaps;
 using PatternNode;
+using Patterns;
+using PermutationContainers;
 using PermutationsCollections;
 using Result;
 
@@ -9,9 +11,41 @@ namespace PatternAvoidersPPAComputation
 {
     public abstract class AvoidersPPAComputationSequential : AvoidersPPAComputation, IAvoidersPPAComputationSequential
     {
-        protected virtual PatternNodePPA GetStartingNode()
+        protected virtual PatternNodePPA GetStartingNode(IPermutationsCollection avoidedPermutations, int n)
         {
+            IPatternNodePPABuilderFactory nodePpaBuilderFactory = new PatternNodePPABuilder();
+            IPatternNodePPABuilder nodePpaBuilder;
+            IPermutationContainerPPAFactory containerPpaFactory = 
+                                                new PermutationContainerPPAFactory(avoidedPermutations);
+            IPermutationBuilderExternal permutationBuilderExternal = new PermutationBuilderExternal();
+            IPatternBasicBuilderExternal patternBasicBuilderExternal = new PatternBasicBuilderExternal();
+            IExtensionMapFactory extensionMapFactory = new ExtensionMapNumSeqFactory();
+            Permutation permutation;
+            PatternBasic patternBasic;
+            ExtensionMap extensionMap;
+            PermutationContainerPPA permutationContainer;
             
+            int maxValue = Math.Max(n, avoidedPermutations.LengthLongestPermutation);
+            byte letterSize = (byte)(int)(Math.Ceiling(Math.Log(maxValue,2))) - 1);
+            
+            permutationBuilderExternal.SetSuffixLength(avoidedPermutations.LengthLongestPermutation);
+            permutation = permutationBuilderExternal.CreatePattern(new ulong[] {0}, letterSize, 0);
+            
+            patternBasicBuilderExternal.SetMaximalLength(avoidedPermutations.LengthLongestPermutation);
+            patternBasic = patternBasicBuilderExternal.CreatePattern(new ulong[] {0}, letterSize, 0);
+            
+            
+            if(avoidedPermutations.Contains(permutation.Insert(0,0)))
+                extensionMap = extensionMapFactory.GetExtensionMapDefault(1, true);
+            else
+                extensionMap = extensionMapFactory.GetExtensionMapDefault(1, false);
+
+            permutationContainer = containerPpaFactory.CreatePermutation(permutation, patternBasic, extensionMap);
+            
+            nodePpaBuilderFactory.SetContainerPPA(permutationContainer);
+            nodePpaBuilderFactory.TryGetBuilder(out nodePpaBuilder);
+
+            return new PatternNodePPA(nodePpaBuilder);
         }
 
         protected List<PatternNodePPA> Compute(PatternNodePPA node, IPermutationsCollection avoidedPermutations,

@@ -1,3 +1,4 @@
+using System.Text;
 using ExtensionMaps;
 using GeneralInterfaces;
 using NumericalSequences;
@@ -9,15 +10,21 @@ namespace ExtensionMapsComputations
     public class MinimumLettersChecked : IMinimumLettersChecked
     {
         private IPermutationsCollection[] permutationsUpfixes;
-        private static Permutation.PermutationFactory permFactory;
-        private static NumSequenceBasicFactory numSeqFactory;
+        //private static Permutation.PermutationFactory permFactory;
+        private static IPermutationBuilderExternal permutationBuilder;
+        //private static NumSequenceBasicFactory numSeqFactory;
         private static NumSequenceExtendedFactory numSeqExtFactory;
         
         private void ComputeUpfixes(Permutation permutation, IPosition positions)
         {
-            Permutation permutationUpfix = permFactory.GetPattern(numSeqFactory.GetNumSequenceDefault
-                                                                (permutation.LetterSize, 0, false),
-                                                                0, -1, -1);
+            //Permutation permutationUpfix = permFactory.GetPattern(numSeqFactory.GetNumSequenceDefault
+            //                                                    (permutation.LetterSize, 0, false),
+            //                                                    0, -1, -1);
+            
+            permutationBuilder.Reset();
+            Permutation permutationUpfix = permutationBuilder.CreatePattern(new ulong[] {0},
+                                            permutation.LetterSize, 0);
+            
             int length = permutation.Length;
 
             NumSequenceExtended numSequenceExtended =
@@ -36,16 +43,20 @@ namespace ExtensionMapsComputations
             }
         }
         
-        public int GetMinimumLettersConsidered(IPermutationDictionary<ExtensionMap> permExMaps, Permutation permutation, 
+        public int GetMinimumLettersConsidered(IPermutationDictionary<ExtensionMap> permExMaps, 
+                                                Permutation permutation, 
                                                 IPosition positions, int maximumLettersConsidered)
         {
             int length = permutation.Length;
             NumSequenceExtended numSequenceExtended =
                 numSeqExtFactory.GetNumSequenceDefault(1, length, false);
-            Permutation permutationUpfix = permFactory.GetPattern(numSeqFactory.GetNumSequenceDefault
-                                                        (permutation.LetterSize, 0, false),
-                                                        0, -1, -1);
+            //Permutation permutationUpfix = permFactory.GetPattern(numSeqFactory.GetNumSequenceDefault
+             //                                           (permutation.LetterSize, 0, false),
+             //                                           0, -1, -1);
 
+            Permutation permutationUpfix = permutationBuilder.CreatePattern(new ulong[] {0},
+                                                                    permutation.LetterSize, 0);
+            
             int minimumLettersConsidered = 0;
             int index;
             int popCount;
@@ -81,8 +92,9 @@ namespace ExtensionMapsComputations
 
         static MinimumLettersChecked()
         {
-            permFactory = new Permutation.PermutationFactory();
-            numSeqFactory = new NumSequenceBasicFactory();
+            //permFactory = new Permutation.PermutationFactory();
+            //numSeqFactory = new NumSequenceBasicFactory();
+            permutationBuilder = new PermutationBuilderExternal();
             numSeqExtFactory = new NumSequenceExtendedFactory();
         }
     }
