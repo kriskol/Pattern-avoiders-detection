@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{42906F35-5A50-470C-B3BA-5F6ABA41198B}</ProjectGuid>
+    <ProjectGuid>{EB745027-F28A-49C4-8473-A7B1428508A0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommandHandlers</RootNamespace>
-    <AssemblyName>CommandHandlers</AssemblyName>
+    <RootNamespace>PatternNodeCreation</RootNamespace>
+    <AssemblyName>PatternNodeCreation</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,28 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CommandHandlerPatternAvoidancePPA.cs" />
-    <Compile Include="CommandHandlerPatterns.cs" />
-    <Compile Include="ICommandHandlerPatternAvoidance.cs" />
-    <Compile Include="CommandHandlerW.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PatternAvoidersPPAComputation\PatternAvoidersPPAComputation.csproj">
-      <Project>{b847ae18-876f-4f8d-aafc-5994a46bee05}</Project>
-      <Name>PatternAvoidersPPAComputation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Patterns\Patterns.csproj">
-      <Project>{c353a7a2-b66e-441e-958b-4bfa2e0ea042}</Project>
-      <Name>Patterns</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PermutationsCollections\PermutationsCollections.csproj">
-      <Project>{86b52843-055f-442c-94bd-9fbf27e6e6ff}</Project>
-      <Name>PermutationsCollections</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Result\Result.csproj">
-      <Project>{57756a2a-f6fa-4029-bfd2-c45d64013224}</Project>
-      <Name>Result</Name>
-    </ProjectReference>
+    <Compile Include="IPatternNodePPABuilderExternal.cs" />
+    <Compile Include="IPatternNodePPAExternalFactory.cs" />
+    <Compile Include="PatternNodePPABuilderExternal.cs" />
+    <Compile Include="PatternNodePPAExternalFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

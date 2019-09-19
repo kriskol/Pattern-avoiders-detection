@@ -15,7 +15,7 @@ namespace NumericalSequences
         }
         private NumSequenceBasic GetNumSequence()
         {
-            builderFactory.TryGetBuilder(ref builder);
+            builderFactory.TryGetBuilder(out builder);
             return new NumSequenceBasicWs(builder);
         }
         

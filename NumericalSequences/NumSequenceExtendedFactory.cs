@@ -29,7 +29,7 @@ namespace NumericalSequences
         }
         private NumSequenceExtended GetNumSequence()
         {
-            builderFactory.TryGetBuilder(ref builder);
+            builderFactory.TryGetBuilder(out builder);
             return new NumSequenceExtendedWs(builder);
         }
         

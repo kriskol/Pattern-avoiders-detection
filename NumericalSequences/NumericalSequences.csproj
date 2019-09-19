@@ -36,10 +36,12 @@
     <Compile Include="INumSequenceBasicFactory.cs" />
     <Compile Include="INumSequenceExtendedFactory.cs" />
     <Compile Include="INumSequenceFactory.cs" />
+    <Compile Include="INumSequenceBasicFactoryExternal.cs" />
     <Compile Include="NumSequenceBase.cs" />
     <Compile Include="NumSequenceBaseIm.cs" />
     <Compile Include="NumSequenceBaseC.cs" />
     <Compile Include="NumSequenceBasicFactory.cs" />
+    <Compile Include="NumSequenceBasicFactoryExternal.cs" />
     <Compile Include="NumSequenceBasicWs.cs" />
     <Compile Include="NumSequenceExtended.cs" />
     <Compile Include="NumSequenceExtendedFactory.cs" />

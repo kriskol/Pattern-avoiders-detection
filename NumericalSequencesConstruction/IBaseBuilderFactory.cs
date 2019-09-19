@@ -6,5 +6,7 @@ namespace NumericalSequences
         void SetLength(int length);
         void SetSuffixLength(int suffixLength);
         void SetSuffixLength();
+
+        void Reset();
     }
 }

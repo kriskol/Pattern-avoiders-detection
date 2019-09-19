@@ -13,7 +13,7 @@ namespace PatternAvoidersPPAComputation
             PatternNodePPA parent = node.Parent;
             List<PatternNodePPA>[] descendants;
             parent.TryGetDescendants(out descendants);
-            List<PatternNodePPA> nodes = descendants[node.PositionPreceedingLetters(node.Permutation.Length - 1)];
+            List<PatternNodePPA> nodes = descendants[node.PositionPrecedingLetters(node.Permutation.Length - 1)];
             
             foreach (var nodeProcessed in nodes)
                 result.TryProcessNodeChildren(nodeProcessed);

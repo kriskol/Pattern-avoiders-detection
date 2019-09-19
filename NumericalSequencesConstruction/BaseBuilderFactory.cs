@@ -26,7 +26,7 @@ namespace NumericalSequences
         public abstract void SetSuffixLength(int suffixLength);
         public abstract void SetSuffixLength();
         
-        protected virtual void Reset()
+        public virtual void Reset()
         {
             letterSizeS = false;
             lengthS = false;

@@ -20,7 +20,7 @@ namespace PatternAvoidersPPAComputation
             parent.TryGetDescendants(out descendants);
             parent.TryGetExtensionMapsDescendants(out extensionMaps);
             
-            nodes = descendants[node.PositionPreceedingLetters(node.Permutation.Length - 1)];
+            nodes = descendants[node.PositionPrecedingLetters(node.Permutation.Length - 1)];
             
             foreach (var nodeProcessed in nodes)
                 result.ProcessPermutations(permSuccessorsComputation.Successors(nodeProcessed.Permutation, 

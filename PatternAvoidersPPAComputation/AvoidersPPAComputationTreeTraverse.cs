@@ -44,10 +44,10 @@ namespace PatternAvoidersPPAComputation
 
             if (depth <= 1)
                 foreach (var node in nodes)
-                    InsertDescendant(descendants, node, node.PositionPreceedingLetters(letter));
+                    InsertDescendant(descendants, node, node.PositionPrecedingLetters(letter));
             else
             {
-                int index = nodes[0].PositionPreceedingLetters(letter);
+                int index = nodes[0].PositionPrecedingLetters(letter);
                 InsertDescendants(descendants, nodes, index);
             }
         }
@@ -59,7 +59,7 @@ namespace PatternAvoidersPPAComputation
             parent.TryGetExtensionMapsDescendants(out extensionMaps);
             List<PatternNodePPA>[] descendants;
             parent.TryGetDescendants(out descendants);
-            List<PatternNodePPA> nodes = descendants[node.PositionPreceedingLetters( node.Permutation.Length-1)];
+            List<PatternNodePPA> nodes = descendants[node.PositionPrecedingLetters( node.Permutation.Length-1)];
 
             IPermutationDictionary<ExtensionMap> newExtensionMaps;
             List<PatternNodePPA>[] newDescendants = new List<PatternNodePPA>[node.Permutation.Length+1];

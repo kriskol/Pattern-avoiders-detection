@@ -33,26 +33,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="IIsPermutation.cs" />
-    <Compile Include="IPatternBasicFactoryExternal.cs" />
+    <Compile Include="IPatternBasicBuilderExternal.cs" />
+    <Compile Include="IPatternBuilderExternal.cs" />
     <Compile Include="IPatternFactory.cs" />
     <Compile Include="IIsPatternBasic.cs" />
-    <Compile Include="IPermutationFactoryExternal.cs" />
+    <Compile Include="IPermutationBuilderExternal.cs" />
     <Compile Include="PatternBasic.cs" />
+    <Compile Include="PatternBasicBuilderExternal.cs" />
     <Compile Include="PatternBasicCheckFree.cs" />
-    <Compile Include="PatternBasicFactoryExternal.cs" />
-    <Compile Include="PatternFactoryExternal.cs" />
+    <Compile Include="PatternBuilderExternal.cs" />
+    <Compile Include="PermutationBuilderExternal.cs" />
     <Compile Include="PermutationCheck.cs" />
     <Compile Include="Pattern.cs" />
     <Compile Include="PatternC.cs" />
     <Compile Include="PatternIm.cs" />
     <Compile Include="Permutation.cs" />
     <Compile Include="PermutationCheckFree.cs" />
-    <Compile Include="PermutationFactoryExternal.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GeneralInterfaces\GeneralInterfaces.csproj">
       <Project>{cd6b0881-1cb7-4fa9-8eb0-157a83f67de1}</Project>
       <Name>GeneralInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NumericalSequencesConstruction\NumericalSequencesConstruction.csproj">
+      <Project>{08384601-7571-4c48-8a9b-abdcbbb26b25}</Project>
+      <Name>NumericalSequencesConstruction</Name>
     </ProjectReference>
     <ProjectReference Include="..\NumericalSequences\NumericalSequences.csproj">
       <Project>{8f0eb386-06b3-4b9b-9d11-a0f9931e65ce}</Project>

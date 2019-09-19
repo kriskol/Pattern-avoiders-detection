@@ -88,7 +88,7 @@ namespace NumericalSequences
                 builder.Words = words;
             }
 
-            public bool TryGetBuilder(ref INumSequenceBasicWsBuilder builder)
+            public bool TryGetBuilder(out INumSequenceBasicWsBuilder builder)
             {
                 if (lengthS && letterSizeS && suffixLengthS 
                     && maximalLengthS && wordsS)
@@ -103,7 +103,7 @@ namespace NumericalSequences
                 }
             }
 
-            protected override void Reset()
+            public override void Reset()
             {
                 builder = new NumSequenceBasicWsBuilder();
                 base.Reset();

@@ -21,7 +21,7 @@ namespace NumericalSequences
         
         public abstract void SetPopCountCompute(IPopCountCompute popCountCompute);
 
-        protected override void Reset()
+        public override void Reset()
         {
             base.Reset();
             ctzComputeS = false;

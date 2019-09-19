@@ -23,7 +23,7 @@ namespace PatternNode
             for(int i = 0; i < containerPPA.
         }
 
-        public int PositionPreceedingLetters(int letter)
+        public int PositionPrecedingLetters(int letter)
         {
             containerPPA.PositionPreceedingLetters(letter);
         }
