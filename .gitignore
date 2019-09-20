@@ -1,3 +1,9 @@
 bin/
 obj/
 /packages/
+/GeneralCollectionsInterfaces/
+/PatternAvoidanceInputReader/
+/PatternAvoidersComputationNodes/
+/PatternCreation/
+/PatternNodeCreation/
+/PatternsContainers/

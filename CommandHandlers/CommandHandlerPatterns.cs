@@ -32,7 +32,7 @@ namespace CommandHandlers
             {
                 parsedLine = parsedLines[i];
                 maxValue = Math.Max(n, lengthLongestAvoider);
-                byte letterSize = (byte)(int)(Math.Ceiling(Math.Log(maxValue,2))) - 1);
+                byte letterSize = (byte)((int)(Math.Ceiling(Math.Log(maxValue,2))) - 1);
                 collection.Add(builder.CreatePattern(parsedLine, letterSize));
             }
 

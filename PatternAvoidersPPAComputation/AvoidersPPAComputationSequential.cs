@@ -11,41 +11,17 @@ namespace PatternAvoidersPPAComputation
 {
     public abstract class AvoidersPPAComputationSequential : AvoidersPPAComputation, IAvoidersPPAComputationSequential
     {
-        protected virtual PatternNodePPA GetStartingNode(IPermutationsCollection avoidedPermutations, int n)
+        protected virtual PatternNodePPA GetStartingNode(IPermutationsCollection avoidedPermutations, 
+                                                                int maximalLengthAvoiders)
         {
-            IPatternNodePPABuilderFactory nodePpaBuilderFactory = new PatternNodePPABuilder();
-            IPatternNodePPABuilder nodePpaBuilder;
-            IPermutationContainerPPAFactory containerPpaFactory = 
-                                                new PermutationContainerPPAFactory(avoidedPermutations);
-            IPermutationBuilderExternal permutationBuilderExternal = new PermutationBuilderExternal();
-            IPatternBasicBuilderExternal patternBasicBuilderExternal = new PatternBasicBuilderExternal();
-            IExtensionMapFactory extensionMapFactory = new ExtensionMapNumSeqFactory();
-            Permutation permutation;
-            PatternBasic patternBasic;
-            ExtensionMap extensionMap;
-            PermutationContainerPPA permutationContainer;
+            IPatternNodePPAFactory factory = new PatternNodePPAFactory();
             
-            int maxValue = Math.Max(n, avoidedPermutations.LengthLongestPermutation);
-            byte letterSize = (byte)(int)(Math.Ceiling(Math.Log(maxValue,2))) - 1);
-            
-            permutationBuilderExternal.SetSuffixLength(avoidedPermutations.LengthLongestPermutation);
-            permutation = permutationBuilderExternal.CreatePattern(new ulong[] {0}, letterSize, 0);
-            
-            patternBasicBuilderExternal.SetMaximalLength(avoidedPermutations.LengthLongestPermutation);
-            patternBasic = patternBasicBuilderExternal.CreatePattern(new ulong[] {0}, letterSize, 0);
+            int maxValue = Math.Max(maximalLengthAvoiders, avoidedPermutations.LengthLongestPermutation);
+            byte letterSize = (byte)((int)(Math.Ceiling(Math.Log(maxValue,2))) - 1);
             
             
-            if(avoidedPermutations.Contains(permutation.Insert(0,0)))
-                extensionMap = extensionMapFactory.GetExtensionMapDefault(1, true);
-            else
-                extensionMap = extensionMapFactory.GetExtensionMapDefault(1, false);
 
-            permutationContainer = containerPpaFactory.CreatePermutation(permutation, patternBasic, extensionMap);
-            
-            nodePpaBuilderFactory.SetContainerPPA(permutationContainer);
-            nodePpaBuilderFactory.TryGetBuilder(out nodePpaBuilder);
-
-            return new PatternNodePPA(nodePpaBuilder);
+            return factory.CreateDefaultPatternNodePpa(letterSize, avoidedPermutations);
         }
 
         protected List<PatternNodePPA> Compute(PatternNodePPA node, IPermutationsCollection avoidedPermutations,
@@ -88,9 +64,11 @@ namespace PatternAvoidersPPAComputation
             return node;
         }
 
-        public virtual PatternNodePPA Compute(PatternNodePPA node, IPermutationsCollection avoidedPermutations,
+        public virtual PatternNodePPA Compute(IPermutationsCollection avoidedPermutations,
             int maximalLengthAvoiders, int maximalDepthComputed, ResultPPA result)
         {
+            PatternNodePPA node = GetStartingNode(avoidedPermutations, maximalLengthAvoiders);
+            
             int depth = Math.Min(maximalLengthAvoiders, maximalDepthComputed);
 
             if (depth == maximalDepthComputed)
@@ -98,6 +76,6 @@ namespace PatternAvoidersPPAComputation
             else
                 return ComputeNotMaximalDepth(node, avoidedPermutations, depth, result);
         }
-
+        
     }
 }

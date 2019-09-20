@@ -34,12 +34,14 @@
   <ItemGroup>
     <Compile Include="IPatternNodeBuilder.cs" />
     <Compile Include="IPatternNodeBuilderFactory.cs" />
+    <Compile Include="IPatternNodePPAFactory.cs" />
     <Compile Include="IPatternNodePPABuilder.cs" />
     <Compile Include="IPatternNodePPABuilderFactory.cs" />
     <Compile Include="PatternNode.cs" />
     <Compile Include="PatternNodeBuilder.cs" />
     <Compile Include="PatternNodePPA.cs" />
     <Compile Include="PatternNodePPABuilder.cs" />
+    <Compile Include="PatternNodePPAFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExtensionMaps\ExtensionMaps.csproj">

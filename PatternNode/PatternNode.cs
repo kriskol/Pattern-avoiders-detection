@@ -26,13 +26,49 @@ namespace PatternNode
             }
         }
 
-        public abstract void DisposeChildren();
-        public abstract void DisposeDescendants();
-        
-        public abstract int DescendantsDepthFromNode { get; }
-        public abstract int CountChildren { get; }
-        public abstract bool TryGetChildren(out List<T> children);
-        public abstract bool TryGetDescendants(out List<T>[] descendants);
+        public virtual void DisposeChildren()
+        {
+            childrenSet = false;
+            children = null;
+        }
+
+        public virtual void DisposeDescendants()
+        {
+            descendantsSet =false;
+            descendants = null;
+        }
+
+        public virtual int DescendantsDepthFromNode => descendantsSet ? descendantsLevelFromNode : -1;
+
+        public virtual int CountChildren => countChildrenSet ? countChildren : -1;
+
+        public virtual bool TryGetChildren(out List<T> children)
+        {
+            if (childrenSet)
+            {
+                children = this.children;
+                return true;
+            }
+            else
+            {
+                children = null;
+                return false;
+            }
+        }
+
+        public virtual bool TryGetDescendants(out List<T>[] descendants)
+        {
+            if (descendantsSet)
+            {
+                descendants = this.descendants;
+                return true;
+            }
+            else
+            {
+                descendants = null;
+                return false;
+            }
+        }
 
         protected PatternNode(IPatternNodeBuilder<T> builder)
         {

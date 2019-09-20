@@ -15,40 +15,33 @@ namespace PatternNode
         
         public Permutation Permutation => containerPPA.Permutation;
         public ExtensionMap ExtensionMap => containerPPA.ExtensionMap;
-        
-        
-        public int Position(ulong letter)
+
+
+        public override int CountChildren 
         {
-            int position = containerPPA.Position((int)letter);
-            for(int i = 0; i < containerPPA.
+            get {
+                if (!countChildrenSet)
+                {
+                
+                    childrenSet = true;
+                    countChildren = containerPPA.ExtensionMap.PopCount();
+                }
+
+                return countChildren;
+            }
         }
+    
 
         public int PositionPrecedingLetters(int letter)
         {
-            containerPPA.PositionPreceedingLetters(letter);
-        }
-
-        public override int DescendantsDepthFromNode
-        {
-            get
-            {
-                if (descendantsSet)
-                    return descendantsLevelFromNode;
-                else
-                    return 0;
-            }
-        }
-
-        public override void DisposeChildren()
-        {
-            childrenSet = false;
-            children = null;
+            return containerPPA.PositionPreceedingLetters(letter);
         }
 
         public override void DisposeDescendants()
         {
-            descendantsSet =false;
-            descendants = null;
+            base.DisposeDescendants();
+            extensionMapsDescendants = null;
+            extensionMapsDescendantsSet = false;
         }
 
         protected List<PatternNodePPA> ComputeChildren(List<PermutationContainerPPA> containerPpas)
@@ -75,14 +68,19 @@ namespace PatternNode
 
             childrenNodes =  ComputeChildren(childrenUnfolded);
             
-            childrenSet = true;
-            children = childrenNodes;
-            countChildrenSet = true;
-            countChildren = childrenNodes.Count;
+            SetChildren(childrenNodes);
 
             return childrenNodes;
         }
 
+        protected void SetChildren(List<PatternNodePPA> children)
+        {
+            childrenSet = true;
+            this.children = children;
+            countChildrenSet = true;
+            countChildren = children.Count;
+        }
+        
         public void SetDescendants(List<PatternNodePPA>[] descendants, int descendantsLevelFromNode)
         {
             base.descendantsLevelFromNode = descendantsLevelFromNode;
@@ -94,35 +92,6 @@ namespace PatternNode
         {
             extensionMapsDescendantsSet = true;
             this.extensionMapsDescendants = extensionMaps;
-        }
-        
-        public override bool TryGetChildren(out List<PatternNodePPA> children)
-        {
-            if (childrenSet)
-            {
-                children = base.children;
-                return true;
-            }
-            else
-            {
-                children = null;
-                return false;
-            }
-        }
-
-        public override bool TryGetDescendants(out List<PatternNodePPA>[] descendants)
-        {
-            if (descendantsSet)
-            {
-                descendants = base.descendants;
-                return true;
-            }
-            else
-            {
-                descendants = null;
-                return false;
-            }
-                
         }
 
         public bool TryGetExtensionMapsDescendants(out IPermutationDictionary<ExtensionMap> extensionMapsDescendants)

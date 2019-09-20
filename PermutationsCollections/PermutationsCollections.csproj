@@ -45,10 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GeneralCollectionsInterfaces\GeneralCollectionsInterfaces.csproj">
-      <Project>{b41c951e-c8a9-4387-98a2-2b65c17b333d}</Project>
-      <Name>GeneralCollectionsInterfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Patterns\Patterns.csproj">
       <Project>{c353a7a2-b66e-441e-958b-4bfa2e0ea042}</Project>
       <Name>Patterns</Name>

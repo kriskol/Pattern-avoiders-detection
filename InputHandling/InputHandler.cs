@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Security.Policy;
 using CommandAccept;
 
 namespace InputHandling
@@ -39,7 +38,9 @@ namespace InputHandling
         
         protected void Reset()
         {
-            correctCommands = new HashSet<string>() {"PPAA","PPAP"};
+            correctCommands = new HashSet<string>();
+            correctCommands.Add("PPAA");
+            correctCommands.Add("PPAP");
             readers = new Dictionary<string, IReader>();
             SetReaders();
         }

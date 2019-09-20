@@ -65,7 +65,7 @@ namespace PermutationContainers
                 
                 if(checkAvoidedPermutations && avoidedPermutations.Contains(newPermutation))
                     break;
-                newPermutationPositions = PermutationPositions.InsertLetter(position);
+                newPermutationPositions = PermutationPositions.InsertLetter((ulong)position);
                 CorrectPositionsTop(newPermutationPositions);
                 newExtensionMap = exMapComputationUnsorted.Compute(collection, newPermutation,
                     newPermutationPositions, minimumLettersConsidered);
