@@ -52,6 +52,10 @@
     <Compile Include="NumSequenceExtendedWsBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NumberOperationsDefaults\NumberOperationsDefaults.csproj">
+      <Project>{2675c87b-46dd-4c3b-ae85-046b16fdbd3e}</Project>
+      <Name>NumberOperationsDefaults</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NumberOperationsInterfaces\NumberOperationsInterfaces.csproj">
       <Project>{bf98f9a0-9058-45dd-8f4e-c6743110b5c0}</Project>
       <Name>NumberOperationsInterfaces</Name>

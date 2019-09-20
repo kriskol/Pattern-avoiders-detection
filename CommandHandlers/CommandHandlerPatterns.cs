@@ -41,5 +41,10 @@ namespace CommandHandlers
 
         protected abstract void SetDefaultResultFactories();
         protected abstract void SetDefaultComputationHandlers();
+
+        public CommandHandlerPatterns()
+        {
+            builder = new PermutationBuilderExternal();
+        }
     }
 }

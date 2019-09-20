@@ -1,3 +1,4 @@
+using NumberOperationsImplementations;
 using NumberOperationsInterfaces;
 
 namespace NumericalSequences
@@ -21,11 +22,16 @@ namespace NumericalSequences
         
         public abstract void SetPopCountCompute(IPopCountCompute popCountCompute);
 
+        public void SetDefaultCtzPopCountCompute()
+        {
+            SetCtzCompute(NumberOperationsDefaultFactory.GetCtzCompute());
+            SetPopCountCompute(NumberOperationsDefaultFactory.GetPopCountCompute());
+        }
+
         public override void Reset()
         {
             base.Reset();
-            ctzComputeS = false;
-            popCountComputeS = false;
+            SetDefaultCtzPopCountCompute();
         }
     }
 }

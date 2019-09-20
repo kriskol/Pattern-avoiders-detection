@@ -68,7 +68,7 @@ namespace InputHandling
             throw new ArgumentException("Supplied arguments were not valid.");
         }
         
-        public InputHandler(string[] args):base()
+        public InputHandler(string[] args):this()
         {
             if ((args.Length == 0 && !correctCommands.Contains(""))
                 || !correctCommands.Contains(args[0]))

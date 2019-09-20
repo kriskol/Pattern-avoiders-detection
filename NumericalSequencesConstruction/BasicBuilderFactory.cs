@@ -12,10 +12,15 @@ namespace NumericalSequences
         public abstract void SetMaximalLength(int maximalLength, int countBlockedBitsFromStart);
         public abstract void SetMaximalLength();
         
+        public void SetDefaultMaximalLength()
+        {
+            SetMaximalLength();
+        }
+
         public override void Reset()
         {
             base.Reset();
-            maximalLengthS = false;
+            SetDefaultMaximalLength();
         }
     }
 }

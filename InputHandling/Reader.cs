@@ -80,5 +80,10 @@ namespace InputHandling
     public abstract void CorrectInput();
     public abstract bool ReadArgs(string[] args);
 
+    public Reader()
+    {
+        correctCommands = new HashSet<string>();
+    }
+
     }
 }

@@ -34,6 +34,7 @@ namespace CommandAccept
         
         public CommandAcceptFactory()
         {
+            commandAccepts = new Dictionary<string, CommandAccept>();
             SetDefaultCommandAccepts();
         }
 

@@ -17,9 +17,8 @@ namespace Patterns
         public PatternBasicBuilderExternal(INumSequenceBasicFactoryExternal factoryNumSequence,
                                             IBasicWsBuilderFactory factoryBuilder,
                                             IPatternFactory<PatternBasic> patternFactory)
-                                            :base(factoryNumSequence, factoryBuilder)
+                                            :base(factoryNumSequence, factoryBuilder, patternFactory)
         {
-            this.patternFactory = patternFactory;
         }
     }
 }

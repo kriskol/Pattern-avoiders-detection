@@ -32,6 +32,7 @@ namespace CommandAccept
 
         public CommandAcceptPatternsAvoidance()
         {
+            handlersPatternAvoidance = new Dictionary<string, ICommandHandlerPatternAvoidance>();
             SetDefaultHandlers();
         }
     }

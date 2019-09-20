@@ -41,8 +41,10 @@ namespace CommandHandlers
             ProcessResult(result);
         }
 
-        public CommandHandlerPatternAvoidancePPA()
+        public CommandHandlerPatternAvoidancePPA():base()
         {
+            resultFactories = new Dictionary<string, IResultPPAFactory>();
+            computationHandlers = new Dictionary<string, IAvoidersPPAComputationHandler>();
             SetDefaultResultFactories();
             SetDefaultComputationHandlers();
         }

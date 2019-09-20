@@ -72,8 +72,9 @@ namespace InputHandling
             intputSet = false;
         }
 
-        public PatternAvoidanceReader()
+        public PatternAvoidanceReader():base()
         {
+            SetCorrectCommands();
             Reset();
         }
     }

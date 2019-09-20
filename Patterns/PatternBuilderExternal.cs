@@ -2,7 +2,7 @@ using NumericalSequences;
 
 namespace Patterns
 {
-    public class PatternBuilderExternal<T> : IPatternBuilderExternal<T> where T: PatternC<T>
+    public abstract class PatternBuilderExternal<T> : IPatternBuilderExternal<T> where T: PatternC<T>
     {
         protected INumSequenceBasicFactoryExternal factoryNumSequence;
         protected IBasicWsBuilderFactory factoryBuilder;
@@ -71,10 +71,13 @@ namespace Patterns
         }
 
         public PatternBuilderExternal(INumSequenceBasicFactoryExternal factoryNumSequence,
-                                        IBasicWsBuilderFactory factoryBuilder)
+                                        IBasicWsBuilderFactory factoryBuilder,
+                                        IPatternFactory<T> patternFactory)
         {
             this.factoryNumSequence = factoryNumSequence;
             this.factoryBuilder = factoryBuilder;
+            this.patternFactory = patternFactory;
+            Reset();
         }
             
      }

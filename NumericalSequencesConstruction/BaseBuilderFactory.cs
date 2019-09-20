@@ -20,17 +20,23 @@ namespace NumericalSequences
         {
             suffixLengthS = true;
         }
-
+        
         public abstract void SetLetterSize(byte letterSize);
         public abstract void SetLength(int length);
         public abstract void SetSuffixLength(int suffixLength);
+        
         public abstract void SetSuffixLength();
+        
+        public virtual void SetDefaultSuffixLength()
+        {
+            SetSuffixLength();   
+        }
         
         public virtual void Reset()
         {
             letterSizeS = false;
             lengthS = false;
-            suffixLengthS = false;
+            SetDefaultSuffixLength();
         }
     }
 }

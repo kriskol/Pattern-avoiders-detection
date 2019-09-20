@@ -12,7 +12,7 @@ namespace Patterns
         public PermutationBuilderExternal(INumSequenceBasicFactoryExternal factoryNumSequence,
                                             IBasicWsBuilderFactory factoryBuilder,
                                             IPatternFactory<Permutation> patternFactory)
-                                            :base(factoryNumSequence, factoryBuilder)
+                                            :base(factoryNumSequence, factoryBuilder, patternFactory)
         {
             this.patternFactory = patternFactory;
         }
