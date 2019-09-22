@@ -7,11 +7,10 @@ namespace Patterns
     public class PatternBasic : PatternIm<PatternBasic>
     {
 
-        private readonly int lowestPosition;
         private readonly int highestPosition;
         private static readonly IPatternFactory<PatternBasic> patternFactory;
         
-        public override int LowestPosition => lowestPosition;
+        public override int LowestPosition => highestPosition - NumSequenceBasic.Length + 1;
         public override int HighestPosition => highestPosition;
         protected override IPatternFactory<PatternBasic> PatternFactory => patternFactory;
 
@@ -20,21 +19,20 @@ namespace Patterns
             NumSequenceBasic.ChangeMutable(positions, difference);
         }
         
-        public PatternBasic(NumSequenceBasic numSequenceBasic, int lowestPosition,
+        public PatternBasic(NumSequenceBasic numSequenceBasic,
                             int highestPosition, int maximum) : base(numSequenceBasic, maximum)
         {
-            this.lowestPosition = lowestPosition;
             this.highestPosition = highestPosition;
         }
 
         public class PatternBasicFactory : IPatternFactory<PatternBasic>
         {
             private IIsPatternBasic isPatternBasic;
-            public PatternBasic GetPattern(NumSequenceBasic numSequenceBasic, int lowestPosition, 
+            public PatternBasic GetPattern(NumSequenceBasic numSequenceBasic, 
                                             int highestPosition, int maximum)
             {
                 if(isPatternBasic.IsPatternBasic(numSequenceBasic))
-                    return  new PatternBasic(numSequenceBasic, lowestPosition, highestPosition, maximum);
+                    return  new PatternBasic(numSequenceBasic, highestPosition, maximum);
 
                 return null;
             }

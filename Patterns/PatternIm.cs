@@ -19,14 +19,14 @@ namespace Patterns
 
         public override T Clone()
         {
-            return PatternFactory.GetPattern(numSequenceBasic.Clone(), LowestPosition, HighestPosition, Maximum);
+            return PatternFactory.GetPattern(numSequenceBasic.Clone(), HighestPosition, Maximum);
         }
         
         public override T InsertPosition(int position)
         {
             NumSequenceBasic newNumSequenceBasic = numSequenceBasic.InsertLetter(position - LowestPosition,
                                                                                 (byte)(Maximum + 1));
-            return PatternFactory.GetPattern(newNumSequenceBasic, LowestPosition, HighestPosition+1, 
+            return PatternFactory.GetPattern(newNumSequenceBasic, HighestPosition+1, 
                                             Maximum+1);
         }
 
@@ -34,7 +34,7 @@ namespace Patterns
         {
             int newMax = Math.Max((int)letter, Maximum);
             NumSequenceBasic newNumSequenceBasic = numSequenceBasic.InsertLetter(numSequenceBasic.Length, letter);
-            return PatternFactory.GetPattern(newNumSequenceBasic, LowestPosition, HighestPosition+1,
+            return PatternFactory.GetPattern(newNumSequenceBasic, HighestPosition+1,
                                                                                             newMax);
         }
 
@@ -42,7 +42,7 @@ namespace Patterns
         {
             int newMax = Math.Max((int)letter, Maximum);
             NumSequenceBasic newNumSequenceBasic = numSequenceBasic.InsertLetter(position - LowestPosition, letter);
-            return PatternFactory.GetPattern(newNumSequenceBasic, LowestPosition, 
+            return PatternFactory.GetPattern(newNumSequenceBasic, 
                                             HighestPosition + 1, newMax);
         }
 
@@ -55,7 +55,7 @@ namespace Patterns
         {
             NumSequenceBasic newNumSequenceBasic = numSequenceBasic.Switch(positionFrom-LowestPosition,
                                                                             positionTo - LowestPosition);
-            return PatternFactory.GetPattern(newNumSequenceBasic, LowestPosition, HighestPosition, Maximum);
+            return PatternFactory.GetPattern(newNumSequenceBasic, HighestPosition, Maximum);
         }
 
         public override T Delete(int position)
@@ -67,7 +67,7 @@ namespace Patterns
 
            NumSequenceBasic newNumSequenceBasic = numSequenceBasic.DeleteLetterPosition(position - LowestPosition);
 
-           return PatternFactory.GetPattern(newNumSequenceBasic, LowestPosition, HighestPosition-1, maximum);
+           return PatternFactory.GetPattern(newNumSequenceBasic, HighestPosition-1, maximum);
         }
 
         public override string ToString()

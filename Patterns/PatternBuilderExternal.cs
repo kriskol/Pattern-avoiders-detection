@@ -44,7 +44,7 @@ namespace Patterns
 
             FillNumSequenceLetters(numSequenceBasic, letters);
 
-            return patternFactory.GetPattern(numSequenceBasic, 0,
+            return patternFactory.GetPattern(numSequenceBasic,
                 letters.Length - 1, letters.Length - 1);
         }
 
@@ -59,7 +59,7 @@ namespace Patterns
 
             NumSequenceBasic numSequenceBasic = factoryNumSequence.CreateNumSequenceBasic(builder);
 
-            return patternFactory.GetPattern(numSequenceBasic, 0,
+            return patternFactory.GetPattern(numSequenceBasic,
                 length - 1, length - 1);
         }
 
