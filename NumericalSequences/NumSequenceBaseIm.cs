@@ -32,7 +32,7 @@ namespace NumericalSequences
 
         protected virtual bool OverFlow(int position, int index, int offset)
         {
-            if ((position + 1) * LetterSize + offset <= (index+1) * bitLengthWord)
+            if ((position + 1) * LetterSize + offset <= bitLengthWord)
                 return false;
             else
                 return true;
@@ -150,7 +150,7 @@ namespace NumericalSequences
             
             ConvertPosition(position, out int index, out byte positionWord, out int offset);
 
-            if (OverFlow(position, index, offset))
+            if (OverFlow(positionWord, index, offset))
             {
                 SetLetter(Words[index], Words[index + 1], positionWord, offset, letter, LetterSize,
                     out ulong newWordPrefix, out ulong newWordSuffix);
@@ -170,7 +170,7 @@ namespace NumericalSequences
             
             ConvertPosition(position, out int index, out byte positionWord, out int offset);
 
-            if (OverFlow(position, index, offset))
+            if (OverFlow(positionWord, index, offset))
             {
                 SetLetter(Words[index], Words[index + 1], positionWord, offset, letter, LetterSize,
                     out ulong newWordPrefix, out ulong newWordSuffix);
@@ -202,7 +202,7 @@ namespace NumericalSequences
             
             ConvertPosition(position, out int index, out byte positionWord, out int offset);
 
-            if (OverFlow(position, index, offset))
+            if (OverFlow(positionWord, index, offset))
             {
                 return GetLetter(Words[index], Words[index + 1], offset, positionWord, LetterSize);
             }
@@ -260,7 +260,7 @@ namespace NumericalSequences
             int newIndex;
             ulong overFlow;
             
-            if (OverFlow(position, index, offset))
+            if (OverFlow(positionWord, index, offset))
             {
                 
                 InsertLetter(Words[index], Words[index + 1], offset,
@@ -345,7 +345,7 @@ namespace NumericalSequences
 
             int newIndex;
 
-            if (OverFlow(position, index, offset))
+            if (OverFlow(positionWord, index, offset))
                 newIndex = index + 2;
             else
                 newIndex = index + 1;
@@ -376,7 +376,7 @@ namespace NumericalSequences
             if (newWords.Length - 2 < newIndex)
                 letterShifted = 0;
 
-            if (OverFlow(position, index, offset))
+            if (OverFlow(positionWord, index, offset))
             {
                 DeleteLetter(Words[index], Words[index + 1], offset, positionWord, LetterSize,
                             letterShifted, out ulong newWordPrefix, out ulong newWordSuffix);
@@ -403,8 +403,58 @@ namespace NumericalSequences
             return numSequence.DeleteLetterPosition(positionFrom);
         }
 
-        protected ulong[] ChangeWords(IEnumerable<int> positions, int difference)
+        protected ulong ChangeLetterGetChangedLetter(ulong letter, int difference)
         {
+            if (difference > 0)
+                letter = letter + (ulong)difference;
+            else if (letter > (ulong) (-1 * difference))
+                letter = letter - (ulong) (-1 * difference);
+            else
+                letter = 0;
+
+            return letter;
+        }
+        
+        protected ulong ChangeLetter(ulong word, int offset, byte position, int difference, byte size)
+        {
+            ulong letter = word >> (position * LetterSize + offset) & (((ulong)1<< LetterSize)-1) ;
+
+            letter = ChangeLetterGetChangedLetter(letter, difference);
+            
+            return ((((word >> ((position + 1) * LetterSize + offset)) << LetterSize) | letter)
+                       << (position * LetterSize + offset)) |
+                      word & ((((ulong) 1) << position * LetterSize + offset) - 1);
+        }
+
+        protected ulong[] ChangeWordsMutable(IEnumerable<int> positions, int difference)
+        {
+            ulong[] newWords = new ulong[Words.Length];
+
+            for (int i = 0; i < newWords.Length; i++)
+                newWords[i] = Words[i];
+            
+            foreach (var position in positions)
+            {
+                ConvertPosition(position, out int index, out  byte positionWord, out int offset);
+
+                if (OverFlow(positionWord, index, offset))
+                    newWords[index] = ChangeLetter(newWords[index], offset, positionWord, difference, LetterSize);
+                else
+                {
+                    ulong letter = GetLetter(newWords[index], newWords[index + 1],
+                                        offset, positionWord, LetterSize);
+                    letter = ChangeLetterGetChangedLetter(letter, difference);
+                    SetLetter(newWords[index], newWords[index + 1], positionWord, offset, 
+                                    letter, LetterSize, out ulong newWordPrefix, out ulong newWordSuffix);
+                    
+                    newWords[index] = newWordPrefix;
+                    newWords[index + 1] = newWordSuffix;
+                } 
+            }
+
+            return newWords;
+
+            /*
             int index;
             byte positionWord;
             int offset;
@@ -438,17 +488,18 @@ namespace NumericalSequences
             }
 
             return newWords;
+            */
         }
         
         public override T Change(IEnumerable<int> positions, int difference)
         {
 
-            return CreateNumSequenceThisProp(ChangeWords(positions, difference));
+            return CreateNumSequenceThisProp(ChangeWordsMutable(positions, difference));
         }
 
         public override void ChangeMutable(IEnumerable<int> positions, int difference)
         {
-            Words = ChangeWords(positions, difference);
+            Words = ChangeWordsMutable(positions, difference);
         }
 
         public override string ToString()

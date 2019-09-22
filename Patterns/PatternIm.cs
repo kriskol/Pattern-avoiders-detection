@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using NumericalSequences;
 
@@ -20,6 +21,16 @@ namespace Patterns
         public override T Clone()
         {
             return PatternFactory.GetPattern(numSequenceBasic.Clone(), HighestPosition, Maximum);
+        }
+        
+        protected IEnumerable<int> CorrectPositions(IEnumerable<int> positions)
+        {
+            List<int> newPositions = new List<int>();
+            
+            foreach (var position in positions)
+                newPositions.Add(position - LowestPosition);
+            
+            return newPositions;
         }
         
         public override T InsertPosition(int position)

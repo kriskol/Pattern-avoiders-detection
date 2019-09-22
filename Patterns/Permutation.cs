@@ -103,16 +103,7 @@ namespace Patterns
                 return inversion;
             }
         }
-
-        private IEnumerable<int> CorrectPositions(IEnumerable<int> positions)
-        {
-            List<int> newPositions = new List<int>();
-            
-            foreach (var position in positions)
-                newPositions.Add(position - LowestPosition);
-            
-            return newPositions;
-        }
+        
 
         private NumSequenceBasic IncreaseHigherLetters(NumSequenceBasic numSequenceBasic, ulong letter,
             int avoidedPosition)

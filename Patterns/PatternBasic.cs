@@ -16,7 +16,8 @@ namespace Patterns
 
         public void Change(IEnumerable<int> positions, int difference)
         {
-            NumSequenceBasic.ChangeMutable(positions, difference);
+            IEnumerable<int> correctedPositions = CorrectPositions(positions);
+            NumSequenceBasic.ChangeMutable(correctedPositions, difference);
         }
         
         public PatternBasic(NumSequenceBasic numSequenceBasic,
