@@ -29,6 +29,16 @@ namespace NumericalSequences
             positionWord = (byte)(((((position * LetterSize + CountBlockedBitsFromStart) % bitLengthWord)) 
                                    - offset) / LetterSize);
         }
+
+        /*
+        protected override bool OverFlow(int position, int index)
+        {
+            if ((position + 1) * LetterSize + countBlockedBitsFromStart <= index * bitLengthWord)
+                return false;
+            else
+                return true;
+        }
+        */
         
         protected override NumSequenceBasic CreateNumSequenceThisProp(ulong[] words)
         {

@@ -10,7 +10,7 @@ namespace Patterns
         public abstract int LowestPosition { get; }
         public abstract int HighestPosition { get; }
         public abstract byte LetterSize { get; }
-        public int Length => HighestPosition - LowestPosition;
+        public int Length => HighestPosition - LowestPosition + 1;
         public int Maximum => maximum;
 
         public abstract T InsertPosition(int position);

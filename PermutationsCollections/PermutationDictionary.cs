@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Patterns;
@@ -52,11 +54,16 @@ namespace PermutationsCollections
         public bool Remove(KeyValuePair<Permutation, T> item)
         {
             bool result =  dictionary.Remove(item.Key);
-            lengthLongestPermutation = -1;
-            foreach (var key in dictionary.Keys)
+
+            if (item.Key.Length == lengthLongestPermutation)
             {
-                if (key.Length > lengthLongestPermutation)
-                    lengthLongestPermutation = key.Length;
+
+                lengthLongestPermutation = -1;
+                foreach (var key in dictionary.Keys)
+                {
+                    if (key.Length > lengthLongestPermutation)
+                        lengthLongestPermutation = key.Length;
+                }
             }
 
             return result;
@@ -80,12 +87,16 @@ namespace PermutationsCollections
         public bool Remove(Permutation key)
         {
             bool result = dictionary.Remove(key);
-            
-            lengthLongestPermutation = -1;
-            foreach (var permutation in dictionary.Keys)
+
+            if (key.Length == lengthLongestPermutation)
             {
-                if (permutation.Length > lengthLongestPermutation)
-                    lengthLongestPermutation = permutation.Length;
+
+                lengthLongestPermutation = -1;
+                foreach (var permutation in dictionary.Keys)
+                {
+                    if (permutation.Length > lengthLongestPermutation)
+                        lengthLongestPermutation = permutation.Length;
+                }
             }
 
             return result;
@@ -101,13 +112,10 @@ namespace PermutationsCollections
             get => dictionary[key];
             set
             {
-                dictionary[key] = value; 
-                lengthLongestPermutation = -1;
-                foreach (var permutation in dictionary.Keys)
-                {
-                    if (permutation.Length > lengthLongestPermutation)
-                        lengthLongestPermutation = permutation.Length;
-                }
+                if (lengthLongestPermutation > key.Length)
+                    lengthLongestPermutation = key.Length;
+                
+                dictionary[key] = value;
             }
         }
 
@@ -120,6 +128,11 @@ namespace PermutationsCollections
             permutationCollection.AddItems(dictionary.Keys);
 
             return permutationCollection;
+        }
+
+        public PermutationDictionary()
+        {
+            dictionary = new Dictionary<Permutation, T>();
         }
     }
 }

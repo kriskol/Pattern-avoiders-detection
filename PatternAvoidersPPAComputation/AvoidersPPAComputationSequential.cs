@@ -17,7 +17,7 @@ namespace PatternAvoidersPPAComputation
             IPatternNodePPAFactory factory = new PatternNodePPAFactory();
             
             int maxValue = Math.Max(maximalLengthAvoiders, avoidedPermutations.LengthLongestPermutation);
-            byte letterSize = (byte)((int)(Math.Ceiling(Math.Log(maxValue,2))) - 1);
+            byte letterSize = (byte)(int)(Math.Ceiling(Math.Log(maxValue,2)));
             
             
 
@@ -71,7 +71,7 @@ namespace PatternAvoidersPPAComputation
             
             int depth = Math.Min(maximalLengthAvoiders, maximalDepthComputed);
 
-            if (depth == maximalDepthComputed)
+            if (depth == maximalLengthAvoiders)
                 return ComputeMaximalDepth(node, avoidedPermutations, depth, result);
             else
                 return ComputeNotMaximalDepth(node, avoidedPermutations, depth, result);

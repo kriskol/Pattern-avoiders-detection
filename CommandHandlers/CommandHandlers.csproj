@@ -50,6 +50,10 @@
       <Project>{86b52843-055f-442c-94bd-9fbf27e6e6ff}</Project>
       <Name>PermutationsCollections</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ResultWriter\ResultWriter.csproj">
+      <Project>{93e3170b-d99e-4479-9a27-454e46369abd}</Project>
+      <Name>ResultWriter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Result\Result.csproj">
       <Project>{57756a2a-f6fa-4029-bfd2-c45d64013224}</Project>
       <Name>Result</Name>

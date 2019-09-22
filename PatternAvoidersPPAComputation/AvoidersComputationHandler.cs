@@ -15,8 +15,9 @@ namespace PatternAvoidersPPAComputation
             PatternNodePPA node = computationSequential.Compute(avoidedPatterns, maximalLengthAvoiders,
                                                 avoidedPatterns.LengthLongestPermutation - 1,
                                                                     result);
-            return computationTreeTraverse.Compute(node, avoidedPatterns, maximalLengthAvoiders,
-                                                    result, numThreads);
+            return computationTreeTraverse.Compute(node, avoidedPatterns, 
+                                    maximalLengthAvoiders, result, 
+                                    numThreads, avoidedPatterns.LengthLongestPermutation-1);
         }
 
         public AvoidersComputationHandler(IAvoidersComputationAbstractFactory factory)

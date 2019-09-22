@@ -4,13 +4,20 @@ using System.IO;
 using System.Text;
 using Patterns;
 using PermutationsCollections;
+using Result;
 
 namespace CommandHandlers
 {
     public abstract class CommandHandlerPatterns : CommandHandlerW
     {
         private IPermutationBuilderExternal builder;
-        
+
+        protected CommandHandlerPatterns(IResultWriter resultWriter, IPermutationBuilderExternal builder) 
+            : base(resultWriter)
+        {
+            this.builder = builder;
+        }
+
         protected IPermutationsCollection ProcessPermutations(StreamReader reader, int n)
         {
             string line;
@@ -32,7 +39,7 @@ namespace CommandHandlers
             {
                 parsedLine = parsedLines[i];
                 maxValue = Math.Max(n, lengthLongestAvoider);
-                byte letterSize = (byte)((int)(Math.Ceiling(Math.Log(maxValue,2))) - 1);
+                byte letterSize = (byte)((int)(Math.Ceiling(Math.Log(maxValue,2))));
                 collection.Add(builder.CreatePattern(parsedLine, letterSize));
             }
 
@@ -42,9 +49,6 @@ namespace CommandHandlers
         protected abstract void SetDefaultResultFactories();
         protected abstract void SetDefaultComputationHandlers();
 
-        public CommandHandlerPatterns()
-        {
-            builder = new PermutationBuilderExternal();
-        }
+        
     }
 }

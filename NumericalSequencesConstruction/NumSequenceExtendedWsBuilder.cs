@@ -94,10 +94,15 @@ namespace NumericalSequences
                 }
             }
 
+            public ExtendedWsBuilderFactory()
+            {
+                Reset();
+            }
+
             public override void Reset()
             {
-                base.Reset();
                 builder = new NumSequenceExtendedWsBuilder();
+                base.Reset();
                 wordsS = false;
             }
         }

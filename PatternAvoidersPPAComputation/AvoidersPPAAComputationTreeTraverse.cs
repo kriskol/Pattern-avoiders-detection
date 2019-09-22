@@ -30,7 +30,7 @@ namespace PatternAvoidersPPAComputation
         
         protected override void ComputeStep(PatternNodePPA node, ResultPPA result)
         {
-            if (node.Parent.Permutation.Length + node.Parent.DescendantsDepthFromNode == depthComputed - 1)
+            if (node.Permutation.Length + node.Parent.DescendantsDepthFromNode == depthComputed)
                 ComputeStepProcessPermutations(node, result);
             else
                 ComputeStepDefault(node, result);

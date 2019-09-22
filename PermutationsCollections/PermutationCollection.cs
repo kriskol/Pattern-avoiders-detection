@@ -57,14 +57,18 @@ namespace PermutationsCollections
         {
             bool result =  hashSet.Remove(item);
 
-            int newLengthLongest = -1;
-            
-            if(result)
-                foreach (var permutation in hashSet)
-                    if (permutation.Length > newLengthLongest)
-                        newLengthLongest = permutation.Length;
+            if (item.Length == lengthLongestPermutation)
+            {
 
-            lengthLongestPermutation = newLengthLongest;
+                int newLengthLongest = -1;
+
+                if (result)
+                    foreach (var permutation in hashSet)
+                        if (permutation.Length > newLengthLongest)
+                            newLengthLongest = permutation.Length;
+
+                lengthLongestPermutation = newLengthLongest;
+            }
 
             return result;
         }
@@ -75,6 +79,11 @@ namespace PermutationsCollections
         public void UnionWith(IPermutationsCollection permutationCollection)
         {
             hashSet.UnionWith(permutationCollection);
+        }
+
+        public PermutationCollection()
+        {
+            hashSet = new HashSet<Permutation>();
         }
     }
 }

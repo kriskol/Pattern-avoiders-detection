@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
 using PatternAvoidersPPAComputation;
+using Patterns;
 using PermutationsCollections;
 using Result;
+
 
 namespace CommandHandlers
 {
@@ -41,7 +43,8 @@ namespace CommandHandlers
             ProcessResult(result);
         }
 
-        public CommandHandlerPatternAvoidancePPA():base()
+        public CommandHandlerPatternAvoidancePPA():base( new ResultWriter.ResultWriter(),
+                                                    new PermutationBuilderExternal() )
         {
             resultFactories = new Dictionary<string, IResultPPAFactory>();
             computationHandlers = new Dictionary<string, IAvoidersPPAComputationHandler>();

@@ -14,11 +14,14 @@ namespace PatternAvoidersPPAComputation
 
         protected int depthComputed;
         protected IPermutationsCollection avoidedPermutations;
-
-        protected void SetFields(int depthComputed, IPermutationsCollection avoidedPermutations)
+        protected int descendantsDepth;
+        
+        protected void SetFields(int depthComputed, IPermutationsCollection avoidedPermutations,
+                                    int descendantsDepth)
         {
             this.depthComputed = depthComputed;
             this.avoidedPermutations = avoidedPermutations;
+            this.descendantsDepth = descendantsDepth;
         }
         
         //patternNodeDispose
@@ -65,12 +68,15 @@ namespace PatternAvoidersPPAComputation
             List<PatternNodePPA>[] newDescendants = new List<PatternNodePPA>[node.Permutation.Length+1];
             List<PatternNodePPA> newNodes;
             List<PatternNodePPA> allNodes = new List<PatternNodePPA>();
+
+            for(int i = 0; i < newDescendants.Length; i++)
+                newDescendants[i] = new List<PatternNodePPA>();
             
             foreach (var nodeProcessed in nodes)
             {
                 newNodes = nodeProcessed.ComputeChildren(extensionMaps, avoidedPermutations);
                 allNodes.AddRange(newNodes);
-                AddDescendants(descendants, newNodes, parent.DescendantsDepthFromNode, 
+                AddDescendants(newDescendants, newNodes, parent.DescendantsDepthFromNode, 
                     node.Permutation.Length);
             }
             
@@ -192,25 +198,28 @@ namespace PatternAvoidersPPAComputation
         
         protected void ComputeParallelHandler(PatternNodePPA node, ResultPPA result, int numThreads)
         {
-            if (depthComputed > node.Permutation.Length + node.DescendantsDepthFromNode)
+            if (depthComputed > node.Permutation.Length + descendantsDepth)
             {
 
                 if (numThreads == 1)
                     ComputeNonParallel(node, result);
-
-                if (numThreads < node.CountChildren)
-                    ComputeParallelUnSufficientThreads(node,  result, numThreads);
                 else
-                    ComputeParallelSufficientThreads(node, result, numThreads);
-                
-                node.DisposeChildren();
-                node.DisposeDescendants();
+                {
+
+                    if (numThreads < node.CountChildren)
+                        ComputeParallelUnSufficientThreads(node, result, numThreads);
+                    else
+                        ComputeParallelSufficientThreads(node, result, numThreads);
+
+                    node.DisposeChildren();
+                    node.DisposeDescendants();
+                }
             }
         }
 
         protected void ComputeNonParallel(PatternNodePPA node, ResultPPA result)
         {
-            if (depthComputed > node.Permutation.Length + node.DescendantsDepthFromNode)
+            if (depthComputed > node.Permutation.Length + descendantsDepth)
             {
                 List<PatternNodePPA> children;
                 node.TryGetChildren(out children);
@@ -218,21 +227,24 @@ namespace PatternAvoidersPPAComputation
                 foreach (var child in children)
                 {
                     ComputeStep(child, result);
-                    ComputeNonParallel(child, result);
+                    
+                    if(depthComputed - 1 > node.Permutation.Length + node.DescendantsDepthFromNode)
+                        ComputeNonParallel(child, result);
                 }
                 
                 node.DisposeChildren();
                 node.DisposeDescendants();
             }
+            
         }
 
         
         public ResultPPA Compute(PatternNodePPA node, IPermutationsCollection avoidedPermutations,
-            int maximalDepthComputed, ResultPPA result, int numThreads)
+            int maximalDepthComputed, ResultPPA result, int numThreads, int descendantsDepth)
         {
-            SetFields(maximalDepthComputed, avoidedPermutations);
+            SetFields(maximalDepthComputed, avoidedPermutations, descendantsDepth);
             ComputeParallelHandler(node, result, numThreads);
-
+            
             return result;
         }
 

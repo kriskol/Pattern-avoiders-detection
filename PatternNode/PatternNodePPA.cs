@@ -79,13 +79,11 @@ namespace PatternNode
             this.children = children;
             countChildrenSet = true;
             countChildren = children.Count;
-        }
-        
-        public void SetDescendants(List<PatternNodePPA>[] descendants, int descendantsLevelFromNode)
-        {
-            base.descendantsLevelFromNode = descendantsLevelFromNode;
-            base.descendants = descendants;
-            base.descendantsSet = true;
+
+            foreach (var child in children)
+            {
+                child.Parent = this;
+            }
         }
 
         public void SetExtensionMapsDescendants(IPermutationDictionary<ExtensionMap> extensionMaps)

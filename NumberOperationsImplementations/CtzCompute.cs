@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using NumberOperationsInterfaces;
 
 namespace NumberOperationsImplementations
@@ -15,11 +16,12 @@ namespace NumberOperationsImplementations
 
             lookUpTable[0] = 64;
 
-            uint number = 1;
+            ulong number = 1;
 
             for (int i = 1; i < 65; i++)
             {
-                lookUpTable[number % 67] = (int)(i - 1);
+                lookUpTable[number % 67] = i - 1;
+                number <<= 1;
             }
         }
 
@@ -30,16 +32,18 @@ namespace NumberOperationsImplementations
 
         private IEnumerable<int> Compute(IEnumerable<ulong> words)
         {
-            int position = 0;
+            ulong processedWord = 0;
+            int position = -1;
             int remainder;
             int ctz;
-            
+
             foreach (var word in words)
             {
+                processedWord = word;
                 remainder = 64;
                 while (true)
                 {
-                    ctz = Compute(word);
+                    ctz = Compute(processedWord);
 
                     if (ctz == 64)
                     {
@@ -52,6 +56,8 @@ namespace NumberOperationsImplementations
                         remainder = remainder - ctz - 1;
                         yield return position;
                     }
+
+                    processedWord =  processedWord >> (ctz + 1);
                 }
             }
         }

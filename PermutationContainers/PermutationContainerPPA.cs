@@ -39,9 +39,11 @@ namespace PermutationContainers
             ulong positionCorrect = positions.Get(length-1);
             List<int> positionsBeCorrected = new List<int>();
 
-            for(int i = 0; i < lengthLongestPermutationAvoided-1; i++)
-                if(positions.Get(length-i-2) >= positionCorrect)
-                    positionsBeCorrected.Add(length-i-2);
+            int numPositionsCorrected = Math.Min(lengthLongestPermutationAvoided, length);
+            
+            for(int i = 0; i < numPositionsCorrected-1; i++)
+                if(positions.Get(positions.LowestPosition + length-i-2) >= positionCorrect)
+                    positionsBeCorrected.Add(positions.LowestPosition + length-i-2);
             
             positions.Change(positionsBeCorrected, 1);
         }

@@ -5,10 +5,10 @@ namespace PatternNode
 {
     public abstract class PatternNode<T> where T: PatternNode<T>
     {
-        protected bool parentSet;
+        private bool parentSet;
         protected bool childrenSet;
         protected bool descendantsSet;
-        protected T parent;
+        private T parent;
         protected List<T> children;
         protected List<T>[] descendants;
         protected bool countChildrenSet;
@@ -23,6 +23,9 @@ namespace PatternNode
                     return parent;
                 else
                     return null;
+            }
+            protected set { parent = value;
+                parentSet = true;
             }
         }
 
@@ -68,6 +71,13 @@ namespace PatternNode
                 descendants = null;
                 return false;
             }
+        }
+        
+        public void SetDescendants(List<T>[] descendants, int descendantsLevelFromNode)
+        {
+            this.descendantsLevelFromNode = descendantsLevelFromNode;
+            this.descendants = descendants;
+            descendantsSet = true;
         }
 
         protected PatternNode(IPatternNodeBuilder<T> builder)

@@ -10,5 +10,11 @@ namespace CommandHandlers
         {
             result.Accept(resultWriter);
         }
+        
+        public CommandHandlerW(IResultWriter resultWriter)
+        {
+            this.resultWriter = resultWriter;
+        }
+        
     }
 }

@@ -27,7 +27,7 @@ namespace ExtensionMaps
 
         public override ExtensionMap GetExtensionMapDefault(int length, bool set)
         {
-            NumSequenceExtended numSequenceExtended = factory.GetNumSequenceDefault(1, length, true);
+            NumSequenceExtended numSequenceExtended = factory.GetNumSequenceDefault(1, length, set);
             return new ExtensionMapNumSeq(numSequenceExtended);
         }
 

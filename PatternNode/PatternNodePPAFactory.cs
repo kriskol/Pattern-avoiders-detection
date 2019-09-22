@@ -27,7 +27,7 @@ namespace PatternNode
             patternBasic = patternBasicBuilderExternal.CreatePattern(new ulong[] {0}, letterSize, 0);
             
             
-            if(avoidedPermutations.Contains(permutation.Insert(0,0)))
+            if(!avoidedPermutations.Contains(permutation.Insert(0,0)))
                 extensionMap = extensionMapFactory.GetExtensionMapDefault(1, true);
             else
                 extensionMap = extensionMapFactory.GetExtensionMapDefault(1, false);

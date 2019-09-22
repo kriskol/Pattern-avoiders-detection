@@ -16,6 +16,7 @@ namespace NumericalSequences
         private NumSequenceBasic GetNumSequence()
         {
             builderFactory.TryGetBuilder(out builder);
+            Reset();
             return new NumSequenceBasicWs(builder);
         }
         
@@ -59,6 +60,11 @@ namespace NumericalSequences
             builderFactory.SetSuffixLength(suffixLength);
             builderFactory.SetMaximalLength(maximalLength, countBitsFromStart);
             return GetNumSequence();
+        }
+
+        public NumSequenceBasicFactory()
+        {
+            Reset();
         }
 
         public void Reset()

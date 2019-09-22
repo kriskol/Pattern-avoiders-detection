@@ -27,6 +27,7 @@ namespace NumericalSequences
         
         public abstract void SetSuffixLength();
         
+        
         public virtual void SetDefaultSuffixLength()
         {
             SetSuffixLength();   
