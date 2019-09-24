@@ -9,28 +9,32 @@ namespace NumericalSequences
     {
         private ICtzCompute ctzCompute;
         private IPopCountCompute popCountCompute;
-        private NumSequenceExtendedWsBuilder.ExtendedWsBuilderFactory builderFactory;
-        private INumSequenceExtendedWsBuilder builder;
+
+        protected virtual IExtendedWsBuilderFactory GetBuilderFactory()
+        {
+            return new NumSequenceExtendedWsBuilder.ExtendedWsBuilderFactory();
+        }
         
-        protected 
-        
-        protected void SetBaseAttributes(ulong[] words, byte letterSize, int length)
+        protected void SetBaseAttributes(ulong[] words, byte letterSize, 
+                                        int length, IExtendedWsBuilderFactory builderFactory)
         {
             builderFactory.SetWords(words);
             builderFactory.SetLetterSize(letterSize);
             builderFactory.SetLength(length);
         }
-        private void SetCtzPopCountCompute()
+        private void SetCtzPopCountCompute(IExtendedWsBuilderFactory builderFactory)
         {
-            SetCtzPopCountCompute(ctzCompute, popCountCompute);
+            SetCtzPopCountCompute(ctzCompute, popCountCompute, builderFactory);
         }
-        private void SetCtzPopCountCompute(ICtzCompute ctzCompute, IPopCountCompute popCountCompute)
+        private void SetCtzPopCountCompute(ICtzCompute ctzCompute, IPopCountCompute popCountCompute,
+                                                IExtendedWsBuilderFactory builderFactory)
         {
             builderFactory.SetCtzCompute(ctzCompute);
             builderFactory.SetPopCountCompute(popCountCompute);
         }
-        private NumSequenceExtended GetNumSequence()
+        private NumSequenceExtended GetNumSequence(IExtendedWsBuilderFactory builderFactory)
         {
+            INumSequenceExtendedWsBuilder builder;
             builderFactory.TryGetBuilder(out builder);
             Reset();
             return new NumSequenceExtendedWs(builder);
@@ -38,49 +42,54 @@ namespace NumericalSequences
         
         public NumSequenceExtended GetNumSequenceDefault(byte letterSize, int length, bool set)
         {
-            SetBaseAttributes(CreteDefaultWords(letterSize, length, set), letterSize, length);
+            IExtendedWsBuilderFactory builderFactory = GetBuilderFactory();
+            SetBaseAttributes(CreteDefaultWords(letterSize, length, set), 
+                                            letterSize, length, builderFactory);
             builderFactory.SetSuffixLength();
-            SetCtzPopCountCompute();
+            SetCtzPopCountCompute(builderFactory);
 
-            return GetNumSequence();
+            return GetNumSequence(builderFactory);
         }
 
         public NumSequenceExtended GetNumSequence(ulong[] words, byte letterSize, int length)
         {
-            SetBaseAttributes(words, letterSize, length);
-            SetCtzPopCountCompute();
+            IExtendedWsBuilderFactory builderFactory = GetBuilderFactory();
+            SetBaseAttributes(words, letterSize, length, builderFactory);
+            SetCtzPopCountCompute(builderFactory);
             builderFactory.SetSuffixLength();
-            return GetNumSequence();
+            return GetNumSequence(builderFactory);
         }
-
+        
         public NumSequenceExtended GetNumSequence(ulong[] words, byte letterSize, int length, int suffixLength)
         {
-            SetBaseAttributes(words, letterSize, length);
+            IExtendedWsBuilderFactory builderFactory = GetBuilderFactory();
+            SetBaseAttributes(words, letterSize, length, builderFactory);
             builderFactory.SetSuffixLength(suffixLength);
-            SetCtzPopCountCompute();
-            return GetNumSequence();
+            SetCtzPopCountCompute(builderFactory);
+            return GetNumSequence(builderFactory);
         }
-
+        
         public NumSequenceExtended GetNumSequence(ulong[] words, byte letterSize, int length, 
                                                     ICtzCompute ctzCompute, IPopCountCompute popCountCompute)
         {
-            SetBaseAttributes(words, letterSize, length);
-            SetCtzPopCountCompute(ctzCompute, popCountCompute);
+            IExtendedWsBuilderFactory builderFactory = GetBuilderFactory();
+            SetBaseAttributes(words, letterSize, length, builderFactory);
+            SetCtzPopCountCompute(ctzCompute, popCountCompute, builderFactory);
             builderFactory.SetSuffixLength();
-            return GetNumSequence();
+            return GetNumSequence(builderFactory);
         }
         public NumSequenceExtended GetNumSequence(ulong[] words, byte letterSize, int length, int suffixLength, 
                                                     ICtzCompute ctzCompute, IPopCountCompute popCountCompute)
         {
-            SetBaseAttributes(words, letterSize, length);
-            SetCtzPopCountCompute(ctzCompute, popCountCompute);
+            IExtendedWsBuilderFactory builderFactory = GetBuilderFactory();
+            SetBaseAttributes(words, letterSize, length, builderFactory);
+            SetCtzPopCountCompute(ctzCompute, popCountCompute, builderFactory);
             builderFactory.SetSuffixLength(suffixLength);
-            return GetNumSequence();
+            return GetNumSequence(builderFactory);
         }
-
+        
         public void Reset()
         {
-            builderFactory = new NumSequenceExtendedWsBuilder.ExtendedWsBuilderFactory();
         }
         
         public NumSequenceExtendedFactory()
