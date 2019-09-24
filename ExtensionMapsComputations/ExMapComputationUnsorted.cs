@@ -21,7 +21,7 @@ namespace ExtensionMapsComputations
             
             ExtensionMap[] extensionMaps = new ExtensionMap[lettersConsidered];
 
-            int positionTo = positions.GetPosition(positions.LowestPosition +  permutation.Length - 1);
+            int positionTo = positions.GetPosition( permutation.Length - 1);
             Permutation newPermutation = permutation.Delete(positionTo, new int[] {});
             permExMaps.TryGetValue(newPermutation, out ExtensionMap extensionMap);
             extensionMap = extensionMap.Insert(positionTo, extensionMap.Get(positionTo));
@@ -31,7 +31,7 @@ namespace ExtensionMapsComputations
             bool positionDiminished = false;
             for (int i = 0; i < lettersConsidered-1; i++)
             {
-                positionFrom = positions.GetPosition(positions.LowestPosition + permutation.Length - i - 2);
+                positionFrom = positions.GetPosition( permutation.Length - i - 2);
                 if (positionFrom >= positionTo)
                 {
                     positionFrom--;

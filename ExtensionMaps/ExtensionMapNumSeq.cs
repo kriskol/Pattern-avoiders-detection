@@ -16,6 +16,11 @@ namespace ExtensionMaps
            return extensionMapFactory.GetExtensionMapNumSeq(numSequenceExtended.SetLetter(position, letter.ToByte()));
         }
 
+        public override void SetMutable(int position, bool letter)
+        {
+            numSequenceExtended.SetLetterMutable(position, letter.ToByte());
+        }
+
         public override bool Get(int position)
         {
             return ((byte)numSequenceExtended.GetLetter(position)).ToBool();

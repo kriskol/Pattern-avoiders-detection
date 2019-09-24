@@ -30,7 +30,7 @@ namespace ExtensionMapsComputations
             
             for (int i = 0; i < length-1; i++)
             {
-                index = positions.GetPosition(positions.LowestPosition + length - i - 2);
+                index = positions.GetPosition(length - i - 2);
                 numSequenceExtended.SetLetterMutable(index, 1);
                 popCount = numSequenceExtended.PopCount(index);
                 permutationUpfix = permutationUpfix.InsertPosition(i+1-popCount);
@@ -56,7 +56,7 @@ namespace ExtensionMapsComputations
             for (int i = 0; i < maximumLettersConsidered; i++)
             {
                 minimumLettersConsidered++;
-                index = positions.GetPosition(positions.LowestPosition + length - i - 1);
+                index = positions.GetPosition(length - i - 1);
                 numSequenceExtended.SetLetterMutable(index, 1);
                 popCount = numSequenceExtended.PopCount(index);
                 permutationUpfix = permutationUpfix.InsertPosition(i + 1 - popCount);

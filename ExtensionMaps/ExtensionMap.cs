@@ -14,6 +14,7 @@ namespace ExtensionMaps
                                         ICtz, IPopCount, IEquatable<ExtensionMap>
     {
         public abstract ExtensionMap Set(int position, bool letter);
+        public abstract void SetMutable(int position, bool letter);
         public abstract bool Get(int position);
         public abstract ExtensionMap Insert(int position, bool letter);
         public abstract ExtensionMap Delete(int position);

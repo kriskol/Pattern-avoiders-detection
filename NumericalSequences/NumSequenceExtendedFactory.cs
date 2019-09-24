@@ -12,6 +12,8 @@ namespace NumericalSequences
         private NumSequenceExtendedWsBuilder.ExtendedWsBuilderFactory builderFactory;
         private INumSequenceExtendedWsBuilder builder;
         
+        protected 
+        
         protected void SetBaseAttributes(ulong[] words, byte letterSize, int length)
         {
             builderFactory.SetWords(words);

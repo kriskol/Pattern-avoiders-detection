@@ -356,12 +356,12 @@ namespace NumericalSequences
             if((Length-(position+1))*LetterSize + index * bitLengthWord 
                 + offset + positionWord*LetterSize <= (Words.Length - 1)*bitLengthWord)
             {
-                newWords = new ulong[Words.Length-1];
+                newWords = new ulong[Math.Max(Words.Length-1,1)];
                 ShiftRightBasic(Words[Words.Length-1], LetterSize, out overFlow);
             }
             else
             {
-                newWords = new ulong[Words.Length];
+                newWords = new ulong[Math.Max(Words.Length-1,1)];
                 newWords[newWords.Length-1] = ShiftRightBasic(Words[Words.Length-1], LetterSize, out overFlow);
             }
 
@@ -437,7 +437,7 @@ namespace NumericalSequences
             {
                 ConvertPosition(position, out int index, out  byte positionWord, out int offset);
 
-                if (OverFlow(positionWord, index, offset))
+                if (!OverFlow(positionWord, index, offset))
                     newWords[index] = ChangeLetter(newWords[index], offset, positionWord, difference, LetterSize);
                 else
                 {

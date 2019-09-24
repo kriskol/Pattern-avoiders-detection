@@ -16,9 +16,7 @@ namespace PatternAvoidersPPAComputation
             PatternNodePPA parent = node.Parent;
             List<PatternNodePPA> nodes;
             List<PatternNodePPA>[] descendants;
-            IPermutationDictionary<ExtensionMap> extensionMaps;
             parent.TryGetDescendants(out descendants);
-            parent.TryGetExtensionMapsDescendants(out extensionMaps);
             
             nodes = descendants[node.PositionPrecedingLetters(node.Permutation.Length - 1)];
             

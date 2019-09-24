@@ -41,10 +41,10 @@ namespace Result
         public override bool TryProcessNodeChildren(PatternNodePPA nodePpa)
         {
             Permutation permutation = nodePpa.Permutation;
-            if (storedData.ContainsKey(permutation.Length + 1))
+            if (!storedData.ContainsKey(permutation.Length + 1))
                 storedData[permutation.Length + 1] = 0;
 
-            storedData[permutation.Length + 1] = nodePpa.CountChildren;
+            storedData[permutation.Length + 1] += nodePpa.CountChildren;
 
             return true;
         }

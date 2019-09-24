@@ -36,7 +36,7 @@ namespace PermutationContainers
         protected void CorrectPositionsTop(PatternBasic positions)
         {
             int length = positions.Length;
-            ulong positionCorrect = positions.Get(length-1);
+            ulong positionCorrect = positions.Get(positions.LowestPosition + length-1);
             List<int> positionsBeCorrected = new List<int>();
 
             int numPositionsCorrected = Math.Min(lengthLongestPermutationAvoided, length);
@@ -48,9 +48,10 @@ namespace PermutationContainers
             positions.Change(positionsBeCorrected, 1);
         }
 
-        protected List<PermutationContainerPPA> ComputeSuccessors(IPermutationDictionary<ExtensionMap> collection,
-                                                                        IPermutationsCollection avoidedPermutations,
-                                                                        bool checkAvoidedPermutations)
+        protected List<PermutationContainerPPA> ComputeSuccessorsDuplicate
+        (IPermutationDictionary<ExtensionMap> collection,
+            IPermutationsCollection avoidedPermutations,
+            bool checkAvoidedPermutations)
         {
             Permutation newPermutation;
             PatternBasic newPermutationPositions;
@@ -74,6 +75,59 @@ namespace PermutationContainers
                 newMinimumLettersConsidered = minimumLettersBeChecked.
                     GetMinimumLettersConsidered(collection, newPermutation,
                         newPermutationPositions,maximumLettersConsidered);
+
+                permutationContainerPPA = new PermutationContainerPPA(newPermutation, newPermutationPositions,
+                    minimumLettersBeChecked, exMapComputationUnsorted,
+                    newExtensionMap, lengthLongestPermutationAvoided,
+                    newMinimumLettersConsidered);
+                
+                containers.Add(permutationContainerPPA);
+            }
+
+            return containers;
+        }
+
+        protected void CorrectExtensionMap(Permutation newPermutation, ExtensionMap extensionMap, 
+                                            IPermutationsCollection avoidedPermutations)
+        {
+            for(int i = 0; i < extensionMap.Length; i++)
+                if(extensionMap.Get(i) == true)
+                    if(avoidedPermutations.Contains(newPermutation.InsertLetter(((ulong)i))))
+                        extensionMap.SetMutable(i, false);
+        }
+        
+        protected List<PermutationContainerPPA> ComputeSuccessors(IPermutationDictionary<ExtensionMap> collection,
+                                                                        IPermutationsCollection avoidedPermutations,
+                                                                        bool checkAvoidedPermutations)
+        {
+            Permutation newPermutation;
+            PatternBasic newPermutationPositions;
+            ExtensionMap newExtensionMap;
+            int newMinimumLettersConsidered;
+            List<PermutationContainerPPA> containers = new List<PermutationContainerPPA>();
+            PermutationContainerPPA permutationContainerPPA;
+            
+            int maximumLettersConsidered = Math.Min(lengthLongestPermutationAvoided, Permutation.Length + 1);
+            
+            foreach (var position in extensionMap.Ctz())
+            {
+                newPermutation = Permutation.InsertPosition(position);
+                
+                if(checkAvoidedPermutations && avoidedPermutations.Contains(newPermutation))
+                    break;
+                newPermutationPositions = PermutationPositions.InsertLetter((ulong)position);
+                CorrectPositionsTop(newPermutationPositions);
+                
+                newMinimumLettersConsidered = minimumLettersBeChecked.
+                    GetMinimumLettersConsidered(collection, newPermutation,
+                        newPermutationPositions,maximumLettersConsidered);
+                
+                newExtensionMap = exMapComputationUnsorted.Compute(collection, newPermutation,
+                    newPermutationPositions, newMinimumLettersConsidered);
+                
+                if(checkAvoidedPermutations)
+                    CorrectExtensionMap(newPermutation, newExtensionMap, avoidedPermutations);
+                
 
                 permutationContainerPPA = new PermutationContainerPPA(newPermutation, newPermutationPositions,
                     minimumLettersBeChecked, exMapComputationUnsorted,

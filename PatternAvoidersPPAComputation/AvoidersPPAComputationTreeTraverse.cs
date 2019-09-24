@@ -116,7 +116,7 @@ namespace PatternAvoidersPPAComputation
             {
                 childrenPerThread[i] = eachThread;
 
-                if (i > remainder)
+                if (i < remainder)
                     childrenPerThread[i]++;
             }
 
@@ -134,26 +134,35 @@ namespace PatternAvoidersPPAComputation
         {
             int[] numThreadsChildren = ComputeThreadsCountChildren(node.CountChildren, numThreads);
             Thread[] threads = new Thread[node.CountChildren-1];
+            ResultPPA[] clones = new ResultPPA[node.CountChildren-1];
             List<PatternNodePPA> children;
             node.TryGetChildren(out children);
             
+            
             for (int i = 0; i < threads.Length; i++)
-                threads[i] = new Thread(()=>ComputeParallel(children[i], 
-                                         result.GetClone(), numThreadsChildren[i]));
+            {
+                ResultPPA clone = result.GetClone();
+                PatternNodePPA child = children[i];
+                int numThreadsChild = numThreadsChildren[i];
+                threads[i] = new Thread(() => ComputeParallel(child,
+                    clone, numThreadsChild));
+            }
+
             foreach (var thread in threads)
                 thread.Start();
-            
+
+
             ComputeParallel(children[children.Count-1],
                             result.GetClone(), numThreadsChildren[children.Count-1]);
 
             foreach (var thread in threads)
                 thread.Join();
-            
+             
             result.FetchDataAllClones();
             result.DisposeClones();
         }
 
-        protected void ComputeParallelUnsufficientThreadsChildrenProcessing
+        protected void ComputeParallelUnSufficientThreadsChildrenProcessing
             (List<PatternNodePPA> children, int startIndex, int length, 
             ResultPPA result)
         {
@@ -169,24 +178,29 @@ namespace PatternAvoidersPPAComputation
         {
             int[] childrenPerThread = DivideThreadsChildren(node.CountChildren, numThreads);
             Thread[] threads = new Thread[childrenPerThread.Length-1];
+            ResultPPA[] clones = new ResultPPA[childrenPerThread.Length-1];
             List<PatternNodePPA> children;
             node.TryGetChildren(out children);
 
-            int startIndex = 0;
+            int index = 0;
+            
 
             for (int i = 0; i < threads.Length; i++)
             {
-                threads[i] = new Thread(() => ComputeParallelUnsufficientThreadsChildrenProcessing(children,
-                    startIndex, childrenPerThread[i], result.GetClone()));
+                int startIndex = index;
+                ResultPPA clone = result.GetClone();
+                int childrenToThread = childrenPerThread[i];
+                threads[i] = new Thread(() => ComputeParallelUnSufficientThreadsChildrenProcessing(children,
+                    startIndex, childrenToThread, clone));
 
-                startIndex += childrenPerThread[i];
+                index += childrenPerThread[i];
             }
 
             foreach (var thread in threads)
                 thread.Start();
             
-            ComputeParallelUnsufficientThreadsChildrenProcessing(children, 
-                startIndex, childrenPerThread[childrenPerThread.Length-1], 
+            ComputeParallelUnSufficientThreadsChildrenProcessing(children, 
+                index, childrenPerThread[childrenPerThread.Length-1], 
                 result.GetClone());
 
             foreach (var thread in threads)
@@ -228,7 +242,7 @@ namespace PatternAvoidersPPAComputation
                 {
                     ComputeStep(child, result);
                     
-                    if(depthComputed - 1 > node.Permutation.Length + node.DescendantsDepthFromNode)
+                    //if(depthComputed - 1 > node.Permutation.Length + node.DescendantsDepthFromNode)
                         ComputeNonParallel(child, result);
                 }
                 
