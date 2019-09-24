@@ -4,62 +4,74 @@ namespace NumericalSequences
 {
     public class NumSequenceBasicFactory : NumSequenceFactory, INumSequenceBasicFactory
     {
-        private NumSequenceBasicWsBuilder.BasicWsBuilderFactory builderFactory;
-        private INumSequenceBasicWsBuilder builder;
-        
-        private void SetBaseAttributes(ulong[] words, byte letterSize, int length)
+        protected IBasicWsBuilderFactory GetBuilderFactory()
+        {
+            return new NumSequenceBasicWsBuilder.BasicWsBuilderFactory();
+        }
+
+        private void SetBaseAttributes(ulong[] words, byte letterSize, 
+                                    int length, IBasicWsBuilderFactory builderFactory)
         {
             builderFactory.SetWords(words);
             builderFactory.SetLetterSize(letterSize);
             builderFactory.SetLength(length);
         }
-        private NumSequenceBasic GetNumSequence()
+        private NumSequenceBasic GetNumSequence(IBasicWsBuilderFactory builderFactory)
         {
+            INumSequenceBasicWsBuilder builder;
             builderFactory.TryGetBuilder(out builder);
             Reset();
             return new NumSequenceBasicWs(builder);
         }
         
-        public NumSequenceBasic GetNumSequenceDefault(byte letterSize, int length, bool set)
+        public NumSequenceBasic GetNumSequenceDefault(byte letterSize, int length, 
+                                                    bool set)
         {
-            SetBaseAttributes(CreteDefaultWords(letterSize, length, set), letterSize, length);
+            IBasicWsBuilderFactory builderFactory = GetBuilderFactory();
+            SetBaseAttributes(CreteDefaultWords(letterSize, length, set), letterSize, length, builderFactory);
             builderFactory.SetSuffixLength();
             builderFactory.SetMaximalLength();
-            return GetNumSequence();
+            return GetNumSequence(builderFactory);
         }
 
-        public NumSequenceBasic GetNumSequence(ulong[] words, byte letterSize, int length)
+        public NumSequenceBasic GetNumSequence(ulong[] words, byte letterSize, 
+                                                int length)
         {
-            SetBaseAttributes(words, letterSize, length);
+            IBasicWsBuilderFactory builderFactory = GetBuilderFactory();
+            SetBaseAttributes(words, letterSize, length, builderFactory);
             builderFactory.SetSuffixLength();
             builderFactory.SetMaximalLength();
-            return GetNumSequence();
+            return GetNumSequence(builderFactory);
         }
 
-        public NumSequenceBasic GetNumSequence(ulong[] words, byte letterSize, int length, int suffixLength)
+        public NumSequenceBasic GetNumSequence(ulong[] words, byte letterSize, int length, 
+                                                int suffixLength)
         {
-            SetBaseAttributes(words, letterSize, length);
+            IBasicWsBuilderFactory builderFactory = GetBuilderFactory();
+            SetBaseAttributes(words, letterSize, length, builderFactory);
             builderFactory.SetSuffixLength(suffixLength);
             builderFactory.SetMaximalLength();
-            return GetNumSequence();
+            return GetNumSequence(builderFactory);
         }
 
         public NumSequenceBasic GetNumSequence(ulong[] words, byte letterSize, int length, 
                                                 int maximalLength, int countBitsFromStart)
         {
-            SetBaseAttributes(words, letterSize, length);
+            IBasicWsBuilderFactory builderFactory = GetBuilderFactory();
+            SetBaseAttributes(words, letterSize, length, builderFactory);
             builderFactory.SetSuffixLength();
             builderFactory.SetMaximalLength(maximalLength, countBitsFromStart);
-            return GetNumSequence();
+            return GetNumSequence(builderFactory);
         }
 
         public NumSequenceBasic GetNumSequence(ulong[] words, byte letterSize, int length, 
                                                 int suffixLength, int maximalLength, int countBitsFromStart)
         {
-            SetBaseAttributes(words, letterSize, length);
+            IBasicWsBuilderFactory builderFactory = GetBuilderFactory();
+            SetBaseAttributes(words, letterSize, length, builderFactory);
             builderFactory.SetSuffixLength(suffixLength);
             builderFactory.SetMaximalLength(maximalLength, countBitsFromStart);
-            return GetNumSequence();
+            return GetNumSequence(builderFactory);
         }
 
         public NumSequenceBasicFactory()
@@ -69,7 +81,6 @@ namespace NumericalSequences
 
         public void Reset()
         {
-            builderFactory = new NumSequenceBasicWsBuilder.BasicWsBuilderFactory();
         }
     }
 }
