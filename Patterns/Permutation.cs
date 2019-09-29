@@ -19,41 +19,66 @@ namespace Patterns
         public override Permutation InsertLetter(ulong letter)
         {
             int maximum;
-
-            if (Maximum >= (int)letter)
+            bool lettersIncreased = false;
+            NumSequenceBasic newNumSequenceBasic;
+            
+            if (Maximum >= (int) letter)
+            {
                 maximum = Maximum + 1;
+                lettersIncreased = true;
+            }
             else
                 maximum = (int)letter;
             
             NumSequenceBasic numSequenceBasicTemp = base.InsertLetter(letter).NumSequenceBasic;
-            NumSequenceBasic newNumSequenceBasic = IncreaseHigherLetters(numSequenceBasicTemp, letter,
-                                                            numSequenceBasicTemp.Length-1);
+            if (lettersIncreased)
+                newNumSequenceBasic = IncreaseHigherLetters(numSequenceBasicTemp, letter,
+                    numSequenceBasicTemp.Length - 1);
+            else
+                newNumSequenceBasic = numSequenceBasicTemp;
+            
             return patternFactory.GetPattern(newNumSequenceBasic, HighestPosition +1,
                                             maximum);
         }
         public override Permutation Insert(int position, ulong letter)
         {
             int maximum;
-
-            if (Maximum >= (int)letter)
+            bool lettersIncreased = false;
+            NumSequenceBasic newNumSequenceBasic;
+            
+            if (Maximum >= (int) letter)
+            {
                 maximum = Maximum + 1;
+                lettersIncreased = true;
+            }
             else
                 maximum = (int)letter;
 
             
             NumSequenceBasic numSequenceBasicTemp = base.Insert(position, letter).NumSequenceBasic;
-            NumSequenceBasic newNumSequenceBasic = IncreaseHigherLetters(numSequenceBasicTemp, letter,
-                                                                            position - LowestPosition);
+
+            if (lettersIncreased)
+                newNumSequenceBasic = IncreaseHigherLetters(numSequenceBasicTemp, letter,
+                    position - LowestPosition);
+            else
+                newNumSequenceBasic = numSequenceBasicTemp;
+                    
             return patternFactory.GetPattern(newNumSequenceBasic,
                                             HighestPosition + 1, maximum);
         }
         public override Permutation Delete(int position)
         {
-
+            NumSequenceBasic newNumSequenceBasic;
+            
             byte letter = (byte)NumSequenceBasic.GetLetter(position - LowestPosition);
             NumSequenceBasic numSequenceBasicTemp = base.Delete(position).NumSequenceBasic;
-            NumSequenceBasic newNumSequenceBasic = DecreaseHigherLetters(numSequenceBasicTemp, letter,
+
+            if (letter == Maximum)
+                newNumSequenceBasic = numSequenceBasicTemp;
+            else 
+                newNumSequenceBasic = DecreaseHigherLetters(numSequenceBasicTemp, letter,
                                                 position - LowestPosition);
+            
             return patternFactory.GetPattern(newNumSequenceBasic, 
                                 HighestPosition-1, Maximum -1);
         }
@@ -61,16 +86,25 @@ namespace Patterns
         public Permutation Insert(int position, byte letter, IEnumerable<int> positionsHigherLetters)
         {
             int maximum;
-
-            if (Maximum >= (int)letter)
+            bool lettersIncreased = false;
+            NumSequenceBasic newNumSequenceBasic;
+            
+            if (Maximum >= (int) letter)
+            {
+                lettersIncreased = true;
                 maximum = Maximum + 1;
+            }
             else
                 maximum = (int)letter;
             
             NumSequenceBasic numSequenceBasicTemp = base.Insert(position, letter).NumSequenceBasic;
-            NumSequenceBasic newNumSequenceBasic = numSequenceBasicTemp.
-                                                    Change(CorrectPositions(positionsHigherLetters),
-                                                            +1);
+            if (lettersIncreased)
+                newNumSequenceBasic = numSequenceBasicTemp.Change(CorrectPositions(positionsHigherLetters),
+                    +1);
+            else
+                newNumSequenceBasic = numSequenceBasicTemp;
+            
+            
             return patternFactory.GetPattern(newNumSequenceBasic, 
                                     HighestPosition+1, maximum);
         }

@@ -22,6 +22,20 @@ namespace Patterns
         {
             return PatternFactory.GetPattern(numSequenceBasic.Clone(), HighestPosition, Maximum);
         }
+
+        protected ulong FindMaximum(IEnumerable<int> positions)
+        {
+            ulong maximum = 0;
+            ulong letter;
+            foreach (var position in positions)
+            {
+                letter = numSequenceBasic.GetLetter(position);
+                if (numSequenceBasic.GetLetter(position) > maximum)
+                    maximum = letter;
+            }
+
+            return maximum;
+        }
         
         protected IEnumerable<int> CorrectPositions(IEnumerable<int> positions)
         {
@@ -75,7 +89,7 @@ namespace Patterns
            int maximum = Maximum;
            if (letter == Maximum)
                maximum--;
-
+            
            NumSequenceBasic newNumSequenceBasic = numSequenceBasic.DeleteLetterPosition(position - LowestPosition);
 
            return PatternFactory.GetPattern(newNumSequenceBasic, HighestPosition-1, maximum);

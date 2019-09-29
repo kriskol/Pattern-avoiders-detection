@@ -2,7 +2,8 @@ using NumericalSequences;
 
 namespace Patterns
 {
-    public abstract class PatternBuilderExternal<T> : IPatternBuilderExternal<T> where T: PatternC<T>
+    public abstract class PatternBuilderExternal<T, U> : IPatternBuilderExternal<T,U> where T: PatternC<T>
+                                                            where U: IPatternBuilderExternal<T,U>
     {
         protected INumSequenceBasicFactoryExternal factoryNumSequence;
         protected IBasicWsBuilderFactory factoryBuilder;
@@ -18,7 +19,11 @@ namespace Patterns
                 numSequenceBasic.InsertLetterMutable(0, (ulong)letter);
             }
         }
-        
+
+        protected IBasicWsBuilderFactory GetBuilderFactory()
+        {
+            return  new NumSequenceBasicWsBuilder.BasicWsBuilderFactory();
+        }
 
         public void SetSuffixLength(int suffixLength)
         {
@@ -27,7 +32,6 @@ namespace Patterns
 
         public void Reset()
         {
-            factoryBuilder.Reset();
         }
         
         
@@ -79,6 +83,7 @@ namespace Patterns
             this.patternFactory = patternFactory;
             Reset();
         }
-            
-     }
+
+        public abstract U Clone();
+    }
 }

@@ -30,5 +30,10 @@ namespace PatternAvoidersPPAComputation
             successorsComputation = new PermSuccessorsComputation();
         }
 
+        public AvoidersPPAAComputationSequential(IPermSuccessorsComputation successorsComputation)
+        {
+            this.successorsComputation = successorsComputation;
+        }
+
     }
 }

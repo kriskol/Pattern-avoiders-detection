@@ -1,6 +1,9 @@
+using GeneralInterfaces;
+
 namespace Patterns
 {
-    public interface IPatternBuilderExternal<T> where T : PatternC<T>
+    public interface IPatternBuilderExternal<T,U> : ICloneable<U> where T : PatternC<T> 
+                                                                    where U: IPatternBuilderExternal<T,U>
     {
         void SetSuffixLength(int suffixLength);
 

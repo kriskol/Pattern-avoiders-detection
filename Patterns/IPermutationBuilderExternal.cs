@@ -1,6 +1,6 @@
 namespace Patterns
 {
-    public interface IPermutationBuilderExternal : IPatternBuilderExternal<Permutation>
+    public interface IPermutationBuilderExternal : IPatternBuilderExternal<Permutation, IPermutationBuilderExternal>
     {
     }
 }

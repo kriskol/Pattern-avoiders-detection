@@ -38,6 +38,10 @@
     <Compile Include="CommandHandlerW.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GeneralInterfaces\GeneralInterfaces.csproj">
+      <Project>{cd6b0881-1cb7-4fa9-8eb0-157a83f67de1}</Project>
+      <Name>GeneralInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PatternAvoidersPPAComputation\PatternAvoidersPPAComputation.csproj">
       <Project>{b847ae18-876f-4f8d-aafc-5994a46bee05}</Project>
       <Name>PatternAvoidersPPAComputation</Name>

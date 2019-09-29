@@ -12,6 +12,7 @@ namespace PermutationsCollections
     {
         private Dictionary<Permutation, T> dictionary;
         private int lengthLongestPermutation = -1;
+        
         public IEnumerator<KeyValuePair<Permutation, T>> GetEnumerator()
         {
             return dictionary.GetEnumerator();

@@ -33,7 +33,7 @@ namespace PermutationContainers
             }
         }
 
-        protected void CorrectPositionsTop(PatternBasic positions)
+        protected PatternBasic CorrectPositionsTop(PatternBasic positions)
         {
             int length = positions.Length;
             ulong positionCorrect = positions.Get(positions.LowestPosition + length-1);
@@ -45,7 +45,7 @@ namespace PermutationContainers
                 if(positions.Get(positions.LowestPosition + length-i-2) >= positionCorrect)
                     positionsBeCorrected.Add(positions.LowestPosition + length-i-2);
             
-            positions.Change(positionsBeCorrected, 1);
+            return positions.Change(positionsBeCorrected, 1);
         }
 
         protected List<PermutationContainerPPA> ComputeSuccessorsDuplicate
@@ -92,7 +92,7 @@ namespace PermutationContainers
         {
             for(int i = 0; i < extensionMap.Length; i++)
                 if(extensionMap.Get(i) == true)
-                    if(avoidedPermutations.Contains(newPermutation.InsertLetter(((ulong)i))))
+                    if(avoidedPermutations.Contains(newPermutation.InsertPosition(i)))
                         extensionMap.SetMutable(i, false);
         }
         
@@ -114,9 +114,9 @@ namespace PermutationContainers
                 newPermutation = Permutation.InsertPosition(position);
                 
                 if(checkAvoidedPermutations && avoidedPermutations.Contains(newPermutation))
-                    break;
+                    continue;
                 newPermutationPositions = PermutationPositions.InsertLetter((ulong)position);
-                CorrectPositionsTop(newPermutationPositions);
+                newPermutationPositions = CorrectPositionsTop(newPermutationPositions);
                 
                 newMinimumLettersConsidered = minimumLettersBeChecked.
                     GetMinimumLettersConsidered(collection, newPermutation,

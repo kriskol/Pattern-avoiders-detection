@@ -25,14 +25,14 @@ namespace NumericalSequences
         {
         }
         
-        public sealed class ExtendedWsBuilderFactory : ExtendedBuilderFactory, IExtendedWsBuilderFactory
+        public class ExtendedWsBuilderFactory : ExtendedBuilderFactory, IExtendedWsBuilderFactory
         {
-            protected bool wordsS;
+            protected bool wordsSet;
             private NumSequenceExtendedWsBuilder builder;
 
             protected void WordsSet()
             {
-                wordsS = true;
+                wordsSet = true;
             }
             
             public override void SetLetterSize(byte letterSize)
@@ -81,8 +81,8 @@ namespace NumericalSequences
 
             public bool TryGetBuilder(out INumSequenceExtendedWsBuilder builder)
             {
-                if (letterSizeS && lengthS && suffixLengthS
-                    && ctzComputeS && popCountComputeS && wordsS)
+                if (letterSizeSet && lengthSet && suffixLengthSet
+                    && ctzComputeSet && popCountComputeSet && wordsSet)
                 {
                     builder = this.builder;
                     return true;
@@ -103,7 +103,7 @@ namespace NumericalSequences
             {
                 builder = new NumSequenceExtendedWsBuilder();
                 base.Reset();
-                wordsS = false;
+                wordsSet = false;
             }
         }
     }

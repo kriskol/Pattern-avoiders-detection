@@ -11,8 +11,9 @@ namespace NumberOperationsImplementations
         
         private byte Compute(ulong word)
         {
-            return (byte)(lookUpTable[word & 0xFFFF] + lookUpTable[(word >> 16) & 0xFFFF] + lookUpTable[(word >> 32) & 0xFFFF]
-                   + lookUpTable[(word >> 48) & 0xFFFF]);
+            return (byte)(lookUpTable[word & 0xFFFF] + lookUpTable[(word >> 16) & 0xFFFF] + 
+                          lookUpTable[(word >> 32) & 0xFFFF]
+                            + lookUpTable[(word >> 48) & 0xFFFF]);
         }
 
         public int ComputePopCount(IEnumerable<ulong> words)

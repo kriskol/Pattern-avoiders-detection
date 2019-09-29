@@ -15,9 +15,10 @@ namespace ExtensionMapsComputations
         
         private void ComputeUpfixes(Permutation permutation, IPosition positions)
         {
-    
-            permutationBuilder.Reset();
-            Permutation permutationUpfix = permutationBuilder.CreatePattern(new ulong[] {0},
+
+            IPermutationBuilderExternal permutationBuilderExternal = permutationBuilder.Clone();
+                
+            Permutation permutationUpfix = permutationBuilderExternal.CreatePattern(new ulong[] {0},
                                             permutation.LetterSize, 0);
             
             int length = permutation.Length;
@@ -42,11 +43,13 @@ namespace ExtensionMapsComputations
                                                 Permutation permutation, 
                                                 IPosition positions, int maximumLettersConsidered)
         {
+            IPermutationBuilderExternal permutationBuilderExternal = permutationBuilder.Clone();
+
             int length = permutation.Length;
             NumSequenceExtended numSequenceExtended =
                 numSeqExtFactory.GetNumSequenceDefault(1, length, false);
 
-            Permutation permutationUpfix = permutationBuilder.CreatePattern(new ulong[] {0},
+            Permutation permutationUpfix = permutationBuilderExternal.CreatePattern(new ulong[] {0},
                                                                     permutation.LetterSize, 0);
             
             int minimumLettersConsidered = 0;

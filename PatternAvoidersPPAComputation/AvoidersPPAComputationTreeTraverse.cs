@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtensionMaps;
@@ -212,7 +213,7 @@ namespace PatternAvoidersPPAComputation
         
         protected void ComputeParallelHandler(PatternNodePPA node, ResultPPA result, int numThreads)
         {
-            if (depthComputed > node.Permutation.Length + descendantsDepth)
+            if (depthComputed > node.Permutation.Length + descendantsDepth && node.CountChildren > 0)
             {
 
                 if (numThreads == 1)
@@ -237,7 +238,7 @@ namespace PatternAvoidersPPAComputation
             {
                 List<PatternNodePPA> children;
                 node.TryGetChildren(out children);
-
+                //Console.WriteLine(node.Permutation.Length);
                 foreach (var child in children)
                 {
                     ComputeStep(child, result);

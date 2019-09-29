@@ -5,17 +5,17 @@ namespace NumericalSequences
 {
     public abstract class ExtendedBuilderFactory : BaseBuilderFactory, IExtendedBuilderFactory
     {
-        protected bool ctzComputeS;
-        protected bool popCountComputeS;
+        protected bool ctzComputeSet;
+        protected bool popCountComputeSet;
 
         protected virtual void CtzComputeSet()
         {
-            ctzComputeS = true;
+            ctzComputeSet = true;
         }
 
         protected virtual void PopCountComputeSet()
         {
-            popCountComputeS = true;
+            popCountComputeSet = true;
         }
 
         public abstract void SetCtzCompute(ICtzCompute ctzCompute);

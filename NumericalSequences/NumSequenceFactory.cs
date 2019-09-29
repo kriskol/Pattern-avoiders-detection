@@ -4,8 +4,9 @@ namespace NumericalSequences
     {
         protected ulong[] CreteDefaultWords(byte letterSize, int length, bool set)
         {
+
             int countWords = length*letterSize / 64;
-            if (length * letterSize % 64 != 0)
+            if (length * letterSize % 64 != 0 || length == 0)
                 countWords++;
             
             ulong[] words = new ulong[countWords];
@@ -20,8 +21,8 @@ namespace NumericalSequences
             {
                 words[j] = word;
             }
-
-            words[countWords - 1] = word % ((ulong)1 << ((letterSize * length) % 64));
+            
+            words[countWords - 1] = word & (ulong)(((ulong)1 << ((letterSize * length) % 64)) - (ulong)1);
 
             return words;
         }

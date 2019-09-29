@@ -24,14 +24,14 @@ namespace NumericalSequences
         {
         }
         
-        public sealed class BasicWsBuilderFactory : BasicBuilderFactory, IBasicWsBuilderFactory
+        public class BasicWsBuilderFactory : BasicBuilderFactory, IBasicWsBuilderFactory
         {
-            protected bool wordsS;
+            protected bool wordsSet;
             private NumSequenceBasicWsBuilder builder;
 
             protected void WordsSet()
             {
-                wordsS = true;
+                wordsSet = true;
             }
 
             public BasicWsBuilderFactory()
@@ -90,8 +90,8 @@ namespace NumericalSequences
 
             public bool TryGetBuilder(out INumSequenceBasicWsBuilder builder)
             {
-                if (lengthS && letterSizeS && suffixLengthS 
-                    && maximalLengthS && wordsS)
+                if (lengthSet && letterSizeSet && suffixLengthSet 
+                    && maximalLengthSet && wordsSet)
                 {
                     builder = this.builder;
                     return true;
@@ -107,7 +107,7 @@ namespace NumericalSequences
             {
                 builder = new NumSequenceBasicWsBuilder();
                 base.Reset();
-                wordsS = false;
+                wordsSet = false;
             }
         }
     }

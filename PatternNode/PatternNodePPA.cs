@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using ExtensionMaps;
 using PermutationContainers;
 using Patterns;
@@ -8,7 +9,7 @@ namespace PatternNode
 {
     public class PatternNodePPA : PatternNode<PatternNodePPA>
     {
-        private static readonly IPatternNodePPABuilderFactory builderFactory;
+        private static readonly IPatternNodePPABuilderFactoryCreator builderFactoryCreator;
         private PermutationContainerPPA containerPPA;
         private IPermutationDictionary<ExtensionMap> extensionMapsDescendants;
         private bool extensionMapsDescendantsSet = false;
@@ -48,6 +49,7 @@ namespace PatternNode
         {
             List<PatternNodePPA> nodePpas = new List<PatternNodePPA>();
             IPatternNodePPABuilder builder;
+            IPatternNodePPABuilderFactory builderFactory = builderFactoryCreator.GetBuilderFactory();
             
             foreach (var container in containerPpas)
             {
@@ -115,7 +117,7 @@ namespace PatternNode
 
         static PatternNodePPA()
         {
-            builderFactory = new PatternNodePPABuilder();
+            builderFactoryCreator = new PatternNodePPABuilderFactoryCreator();
         }
     }
 }

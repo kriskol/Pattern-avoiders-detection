@@ -34,6 +34,7 @@
   <ItemGroup>
     <Compile Include="IPatternNodeBuilder.cs" />
     <Compile Include="IPatternNodeBuilderFactory.cs" />
+    <Compile Include="IPatternNodePPABuilderFactoryCreator.cs" />
     <Compile Include="IPatternNodePPAFactory.cs" />
     <Compile Include="IPatternNodePPABuilder.cs" />
     <Compile Include="IPatternNodePPABuilderFactory.cs" />
@@ -41,12 +42,17 @@
     <Compile Include="PatternNodeBuilder.cs" />
     <Compile Include="PatternNodePPA.cs" />
     <Compile Include="PatternNodePPABuilder.cs" />
+    <Compile Include="PatternNodePPABuilderFactoryCreator.cs" />
     <Compile Include="PatternNodePPAFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExtensionMaps\ExtensionMaps.csproj">
       <Project>{83364f56-fb73-4e56-b5fb-0621f3fa3d1d}</Project>
       <Name>ExtensionMaps</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GeneralInterfaces\GeneralInterfaces.csproj">
+      <Project>{cd6b0881-1cb7-4fa9-8eb0-157a83f67de1}</Project>
+      <Name>GeneralInterfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\Patterns\Patterns.csproj">
       <Project>{c353a7a2-b66e-441e-958b-4bfa2e0ea042}</Project>

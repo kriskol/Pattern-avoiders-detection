@@ -2,7 +2,8 @@ using NumericalSequences;
 
 namespace Patterns
 {
-    public class PermutationBuilderExternal : PatternBuilderExternal<Permutation>, IPermutationBuilderExternal
+    public class PermutationBuilderExternal : PatternBuilderExternal<Permutation, IPermutationBuilderExternal>, 
+                                                IPermutationBuilderExternal
     {
         public PermutationBuilderExternal() : base()
         {
@@ -15,6 +16,11 @@ namespace Patterns
                                             :base(factoryNumSequence, factoryBuilder, patternFactory)
         {
             this.patternFactory = patternFactory;
+        }
+
+        public override IPermutationBuilderExternal Clone()
+        {
+            return new PermutationBuilderExternal();
         }
     }
 }

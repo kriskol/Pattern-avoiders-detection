@@ -2,11 +2,11 @@ namespace NumericalSequences
 {
     public abstract class BasicBuilderFactory : BaseBuilderFactory, IBasicBuilderFactory
     {
-        protected bool maximalLengthS;
+        protected bool maximalLengthSet;
 
         protected virtual void MaximalLengthSet()
         {
-            maximalLengthS = true;
+            maximalLengthSet = true;
         }
 
         public abstract void SetMaximalLength(int maximalLength, int countBlockedBitsFromStart);

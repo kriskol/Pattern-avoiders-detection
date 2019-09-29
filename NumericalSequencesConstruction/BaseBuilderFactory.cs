@@ -3,22 +3,22 @@ namespace NumericalSequences
     public abstract class BaseBuilderFactory : IBaseBuilderFactory
 
     {
-        protected bool letterSizeS;
-        protected bool lengthS;
-        protected bool suffixLengthS;
+        protected bool letterSizeSet;
+        protected bool lengthSet;
+        protected bool suffixLengthSet;
 
         protected virtual void LetterSizeSet()
         {
-            letterSizeS = true;
+            letterSizeSet = true;
         }
         protected virtual void LengthSet()
         {
-            lengthS = true;
+            lengthSet = true;
         }
 
         protected virtual void SuffixLengthSet()
         {
-            suffixLengthS = true;
+            suffixLengthSet = true;
         }
         
         public abstract void SetLetterSize(byte letterSize);
@@ -35,8 +35,8 @@ namespace NumericalSequences
         
         public virtual void Reset()
         {
-            letterSizeS = false;
-            lengthS = false;
+            letterSizeSet = false;
+            lengthSet = false;
             SetDefaultSuffixLength();
         }
     }

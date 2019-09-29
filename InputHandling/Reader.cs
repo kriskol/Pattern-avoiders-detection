@@ -46,7 +46,7 @@ namespace InputHandling
         {
             reader = new StreamReader(filePath);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             OnPositionReadableFile(position);
             return false;
