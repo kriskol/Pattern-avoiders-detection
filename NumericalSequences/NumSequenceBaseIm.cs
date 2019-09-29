@@ -30,6 +30,17 @@ namespace NumericalSequences
         protected abstract T CreateNumSequenceThisProp(ulong[] words);
         protected abstract T CreateNumSequence(ulong[] words, int length, byte letterSize);
 
+        protected virtual bool ExtensionNeeded(int index, byte positionWord, 
+                                                int offset, int wordsLength, int lengthSequence)
+        {
+            if (index * bitLengthWord + (positionWord + 1) * LetterSize
+                                      + (lengthSequence - positionWord) * LetterSize + offset
+                > wordsLength * bitLengthWord)
+                return true;
+            else
+                return false;
+        }
+        
         protected virtual bool OverFlow(int position, int index, int offset)
         {
             if ((position + 1) * LetterSize + offset <= bitLengthWord)
@@ -249,7 +260,7 @@ namespace NumericalSequences
 
             ulong[] newWords;
 
-            if ((Length + 1) * LetterSize > Words.Length * bitLengthWord)
+            if (ExtensionNeeded(index, positionWord, offset, Words.Length, Length))
             {
                 newWords = new ulong[Words.Length + 1];
                 newWords[newWords.Length-1] = 0;
@@ -280,10 +291,20 @@ namespace NumericalSequences
 
             ulong newOverFlow;
 
-            for (int i = newIndex; i < newWords.Length; i++)
+            for (int i = newIndex; i < newWords.Length-1; i++)
             {
                 newWords[i] = ShiftLeftBasic(Words[i], overFlow, LetterSize, out newOverFlow);
                 overFlow = newOverFlow;
+            }
+
+            if (ExtensionNeeded(index, positionWord, offset, Words.Length, Length))
+            {
+                newWords[newWords.Length - 1] = overFlow;
+            }
+            else
+            {
+                newWords[newWords.Length-1] = ShiftLeftBasic(Words[Words.Length-1], 
+                    overFlow, LetterSize, out newOverFlow);
             }
 
             return newWords;
@@ -453,42 +474,6 @@ namespace NumericalSequences
             }
 
             return newWords;
-
-            /*
-            int index;
-            byte positionWord;
-            int offset;
-            ulong letter;
-            ulong newWord;
-            ulong word;
-            ulong[] newWords = new ulong[Words.Length];
-
-            for (int i = 0; i < Words.Length; i++)
-            {
-                newWords[i] = Words[i];
-            }
-            
-            foreach (var position in positions)
-            {
-                ConvertPosition(position, out index, out positionWord, out offset);
-                word = newWords[index];
-                letter = word >> (positionWord * LetterSize + offset) & (((ulong)1<< LetterSize)-1) ;
-                
-                if (difference > 0)
-                    letter = letter + (ulong)difference;
-                else if (letter > (ulong) (-1 * difference))
-                    letter = letter - (ulong) (-1 * difference);
-                else
-                    letter = 0;
-                newWord = ((((word >> ((positionWord + 1) * LetterSize + offset)) << LetterSize) | letter)
-                           << (positionWord * LetterSize + offset)) |
-                          word & ((((ulong) 1) << position * LetterSize + offset) - 1);
-
-                newWords[index] = newWord;
-            }
-
-            return newWords;
-            */
         }
         
         public override T Change(IEnumerable<int> positions, int difference)
