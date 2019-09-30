@@ -15,7 +15,7 @@ namespace NumericalSequences
         protected override void ConvertPosition(int position, out int index, out byte positionWord, out int offset)
         {
             index = (position * LetterSize ) / bitLengthWord;
-            offset = ((position * LetterSize ) - (bitLengthWord * index)) % LetterSize;
+            offset = ((position * LetterSize ) % bitLengthWord) % LetterSize;
             positionWord = (byte)(((((position * LetterSize ) % bitLengthWord)) 
                                    - offset) / LetterSize);
         }
