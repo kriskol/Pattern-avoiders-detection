@@ -25,16 +25,17 @@ namespace NumericalSequences
             return CreateNumSequenceThisProp(newWords);
         }
 
-        protected abstract void ConvertPosition(int position, out int index, out byte positionWord, out int offset);
+        protected abstract void ConvertPosition(int position, out int index, out byte positionWord, 
+                                                out int offset);
 
         protected abstract T CreateNumSequenceThisProp(ulong[] words);
         protected abstract T CreateNumSequence(ulong[] words, int length, byte letterSize);
 
-        protected virtual bool ExtensionNeeded(int index, byte positionWord, 
+        protected virtual bool ExtensionNeeded(int index, int position, byte positionWord, 
                                                 int offset, int wordsLength, int lengthSequence)
         {
             if (index * bitLengthWord + (positionWord + 1) * LetterSize
-                                      + (lengthSequence - positionWord) * LetterSize + offset
+                                      + (lengthSequence - position) * LetterSize + offset
                 > wordsLength * bitLengthWord)
                 return true;
             else
@@ -66,7 +67,7 @@ namespace NumericalSequences
             ulong[] newWords = new ulong[words.Length];
             for (int i = 0; i < words.Length; i++)
                 if (index == i)
-                    newWords[index] = wordPrefix;
+                    newWords[i] = wordPrefix;
                 else 
                 {
                     if (index + 1 == i)
@@ -229,7 +230,8 @@ namespace NumericalSequences
             ulong newWordSuffix = (((word >> (position * size + offset)) << size) | letter) << (position * size + offset);
             return newWordPrefix | newWordSuffix;
         }
-        protected ulong InsertLetter(ulong word, int offset, byte position, ulong letter, byte size, out ulong overFlow)
+        protected ulong InsertLetter(ulong word, int offset, byte position, ulong letter, 
+                                        byte size, out ulong overFlow)
         {
             overFlow = GetSuffix(word, size);
             return InsertLetter(word, offset, position, letter, size);
@@ -250,7 +252,8 @@ namespace NumericalSequences
                                     out ulong newWordPrefix, out ulong newWordSuffix)
         {
             overFlow = GetSuffix(wordSuffix, size);
-            InsertLetter(wordPrefix, wordSuffix, offset,position, letter,size, out newWordPrefix, out newWordSuffix);
+            InsertLetter(wordPrefix, wordSuffix, offset,position, letter,size, 
+                            out newWordPrefix, out newWordSuffix);
         }
 
         protected virtual ulong[] InsertLetterInternal(int position, ulong letter)
@@ -260,23 +263,32 @@ namespace NumericalSequences
 
             ulong[] newWords;
 
-            if (ExtensionNeeded(index, positionWord, offset, Words.Length, Length))
+            if (ExtensionNeeded(index, position,
+                positionWord, offset, Words.Length, 
+                Length))
             {
                 newWords = new ulong[Words.Length + 1];
-                newWords[newWords.Length-1] = 0;
+                newWords[newWords.Length - 1] = 0;
             }
             else
                 newWords = new ulong[Words.Length];
-            
+
             int newIndex;
             ulong overFlow;
-            
+
             if (OverFlow(positionWord, index, offset))
             {
+                ulong newWordPrefix;
+                ulong newWordSuffix;
                 
-                InsertLetter(Words[index], Words[index + 1], offset,
-                    positionWord, letter, LetterSize, out overFlow,
-                    out ulong newWordPrefix, out ulong newWordSuffix);
+                if (Words.Length == index + 1)
+                    InsertLetter(Words[index], 0, offset,
+                        positionWord, letter, LetterSize, out overFlow,
+                        out newWordPrefix, out newWordSuffix);
+                else
+                    InsertLetter(Words[index], Words[index + 1], offset,
+                        positionWord, letter, LetterSize, out overFlow,
+                        out newWordPrefix, out newWordSuffix);
 
                 GetNewWordsUpToIndex(newWords, Words, newWordPrefix, newWordSuffix, index);
                 newIndex = index + 2;
@@ -291,20 +303,25 @@ namespace NumericalSequences
 
             ulong newOverFlow;
 
-            for (int i = newIndex; i < newWords.Length-1; i++)
+            for (int i = newIndex; i < newWords.Length - 1; i++)
             {
                 newWords[i] = ShiftLeftBasic(Words[i], overFlow, LetterSize, out newOverFlow);
                 overFlow = newOverFlow;
             }
 
-            if (ExtensionNeeded(index, positionWord, offset, Words.Length, Length))
+            if (newIndex < newWords.Length)
             {
-                newWords[newWords.Length - 1] = overFlow;
-            }
-            else
-            {
-                newWords[newWords.Length-1] = ShiftLeftBasic(Words[Words.Length-1], 
-                    overFlow, LetterSize, out newOverFlow);
+                if (ExtensionNeeded(index, position, 
+                    positionWord, offset, Words.Length, 
+                    Length))
+                {
+                    newWords[newWords.Length - 1] = overFlow;
+                }
+                else
+                {
+                    newWords[newWords.Length - 1] = ShiftLeftBasic(Words[Words.Length - 1],
+                        overFlow, LetterSize, out newOverFlow);
+                }
             }
 
             return newWords;
@@ -315,7 +332,8 @@ namespace NumericalSequences
             if(position > Length + 1 || letter >= (ulong)1<<LetterSize)
                 throw new ArgumentOutOfRangeException();
             
-            return CreateNumSequence(InsertLetterInternal(position, letter), Length + 1, LetterSize);
+            return CreateNumSequence(InsertLetterInternal(position, letter), 
+                                        Length + 1, LetterSize);
         }
 
         public override void InsertLetterMutable(int position, ulong letter)
@@ -348,7 +366,8 @@ namespace NumericalSequences
                             (newLetterPrefix << (bitLengthWord - sizePrefix));
         }
         protected void DeleteLetter(ulong wordPrefix, ulong wordSuffix, int offset, byte position,
-                                    byte size, ulong shiftedLetter, out ulong newWorPrefix, out ulong newWordSuffix)
+                                    byte size, ulong shiftedLetter, 
+                                    out ulong newWorPrefix, out ulong newWordSuffix)
         {
             ComputeSizePrefixSuffix(position, offset, size, out byte sizePrefix, out byte sizeSuffix);
             newWordSuffix = ShiftRightBasic(wordSuffix, size, shiftedLetter,out ulong overFlow);
@@ -382,8 +401,9 @@ namespace NumericalSequences
             }
             else
             {
-                newWords = new ulong[Math.Max(Words.Length-1,1)];
-                newWords[newWords.Length-1] = ShiftRightBasic(Words[Words.Length-1], LetterSize, out overFlow);
+                newWords = new ulong[Math.Max(Words.Length,1)];
+                newWords[newWords.Length-1] = ShiftRightBasic(Words[Words.Length-1], 
+                                                                LetterSize, out overFlow);
             }
 
             ulong letterShifted = overFlow;
@@ -399,8 +419,9 @@ namespace NumericalSequences
 
             if (OverFlow(positionWord, index, offset))
             {
-                DeleteLetter(Words[index], Words[index + 1], offset, positionWord, LetterSize,
-                            letterShifted, out ulong newWordPrefix, out ulong newWordSuffix);
+                DeleteLetter(Words[index], Words[index + 1], offset, positionWord, 
+                                LetterSize, letterShifted, 
+                            out ulong newWordPrefix, out ulong newWordSuffix);
                 GetNewWordsUpToIndex(newWords, Words, newWordPrefix, newWordSuffix, index);
             }
             else
@@ -416,7 +437,7 @@ namespace NumericalSequences
 
         public override T Switch(int positionFrom, int positionTo)
         {
-            T numSequence = this.InsertLetter(positionTo, GetLetter(positionFrom));
+            T numSequence = InsertLetter(positionTo, GetLetter(positionFrom));
 
             if (positionTo <= positionFrom)
                 positionFrom++;
@@ -438,13 +459,13 @@ namespace NumericalSequences
         
         protected ulong ChangeLetter(ulong word, int offset, byte position, int difference, byte size)
         {
-            ulong letter = word >> (position * LetterSize + offset) & (((ulong)1<< LetterSize)-1) ;
+            ulong letter = word >> (position * size + offset) & (((ulong)1<< size)-1) ;
 
             letter = ChangeLetterGetChangedLetter(letter, difference);
             
-            return ((((word >> ((position + 1) * LetterSize + offset)) << LetterSize) | letter)
-                       << (position * LetterSize + offset)) |
-                      word & ((((ulong) 1) << position * LetterSize + offset) - 1);
+            return ((((word >> ((position + 1) * size + offset)) << size) | letter)
+                       << (position * size + offset)) |
+                      word & ((((ulong) 1) << position * size + offset) - 1);
         }
 
         protected ulong[] ChangeWordsMutable(IEnumerable<int> positions, int difference)
@@ -459,7 +480,8 @@ namespace NumericalSequences
                 ConvertPosition(position, out int index, out  byte positionWord, out int offset);
 
                 if (!OverFlow(positionWord, index, offset))
-                    newWords[index] = ChangeLetter(newWords[index], offset, positionWord, difference, LetterSize);
+                    newWords[index] = ChangeLetter(newWords[index], offset, positionWord, 
+                                                        difference, LetterSize);
                 else
                 {
                     ulong letter = GetLetter(newWords[index], newWords[index + 1],
@@ -505,7 +527,8 @@ namespace NumericalSequences
                 if (position <= bitLengthWord)
                 {
                     word = Words[index];
-                    stringBuilder.Append((word >> (positionWord*LetterSize + offset)) & ((((ulong)1)<<LetterSize)-1));
+                    stringBuilder.Append((word >> (positionWord*LetterSize + offset)) & 
+                                                ((((ulong)1)<<LetterSize)-1));
                     stringBuilder.Append('-');
 
                     if (position < bitLengthWord)
@@ -521,15 +544,16 @@ namespace NumericalSequences
                 }
                 else
                 { 
-                    byte size = (byte) (bitLengthWord - (position - LetterSize));
-                    number = GetSuffix(Words[index], size);
-                    number = number | (GetPrefix(Words[index + 1], (byte)(LetterSize - size)) << size);
+                    byte prefixSize = (byte) (bitLengthWord - (position - LetterSize));
+                    number = GetSuffix(Words[index], prefixSize);
+                    number = number | (GetPrefix(Words[index + 1], (byte)(LetterSize - prefixSize)) 
+                                                                                        << prefixSize);
                     stringBuilder.Append(number);
                     stringBuilder.Append("-");
 
                     index++;
                     positionWord = 0;
-                    offset = LetterSize - size;
+                    offset = LetterSize - prefixSize;
                 }
             }
 
@@ -548,12 +572,13 @@ namespace NumericalSequences
 
             return hash;
         }
-        
+            
         public override int GetHashCode()
         {
             if (SuffixLengthSet && Length > SuffixLength)
             {
-                ConvertPosition(Length-SuffixLength, out int index, out byte positionWord, out int offset);
+                ConvertPosition(Length-SuffixLength, out int index, 
+                                    out byte positionWord, out int offset);
                 return ComputeHash(Words, index);
             }
             else
