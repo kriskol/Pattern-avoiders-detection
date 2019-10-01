@@ -121,7 +121,7 @@ namespace NumericalSequences
         {
             if (size >= bitLengthWord)
                 return word;
-            return word & (PerformSafeShiftLeft(1, size) - 1);
+            return word & (((ulong)1 << size) - 1);
         }
         private ulong GetSuffix(ulong word, byte size)
         {
@@ -151,21 +151,28 @@ namespace NumericalSequences
         }
         protected ulong ShiftRightBasic(ulong word, byte size, ulong letter, out ulong overFlow)
         {
+
             return (ShiftRightBasic(word, size, out overFlow) | PerformSafeShiftLeft(letter, bitLengthWord - size));
         }
 
         protected ulong SetLetter(ulong word, int offset, byte position, ulong letter, byte size, byte letterSize)
         {
             ulong newWordPrefix;
-
-            if (position * size + offset >= bitLengthWord)
+            ulong newWordSuffix;
+            if (letterSize == 0)
+            {
                 newWordPrefix = word;
+                newWordSuffix = 0;
+            }
             else
-                newWordPrefix = word & (((ulong)1 << (position * size + offset)) - 1);
-            
-            ulong newWordSuffix = PerformSafeShiftLeft(
-                ((PerformSafeShiftRight(word, position * size + offset + letterSize)
-                  << letterSize) | letter), position * size + offset);
+            {
+                newWordPrefix = word & (((ulong) 1 << (position * size + offset)) - 1);
+
+                newWordSuffix =
+                    ((PerformSafeShiftRight(word, position * size + offset + letterSize)
+                      << letterSize) | letter) << (position * size + offset);
+            }
+
             /*
             ulong newWordSuffix = (((word >> (position * size + offset + letterSize)) << letterSize) | letter)
                                   << (position * size + offset);
@@ -231,7 +238,7 @@ namespace NumericalSequences
 
         protected ulong GetLetter(ulong word, int offset, byte position, byte size, byte letterSize)
         {
-            return (PerformSafeShiftRight(word, position*size+offset)) & (((ulong)1 << letterSize) - 1);
+            return word >> position*size+offset & (((ulong)1 << letterSize) - 1);
         }
         protected ulong GetLetter(ulong wordPrefix, ulong wordSuffix, int offset, 
                                     byte position, byte size, byte letterSize)
@@ -263,18 +270,24 @@ namespace NumericalSequences
         protected ulong InsertLetter(ulong word, int offset, byte position, ulong letter, byte size, byte letterSize)
         {
             ulong newWordPrefix;
+            ulong newWordSuffix;
 
             if (position * size + offset >= bitLengthWord)
+            {
                 newWordPrefix = word;
-            else 
-                newWordPrefix = word & (((ulong)1 << (position * size + offset)) - 1);
-            
-            ulong newWordSuffix = PerformSafeShiftLeft
-                                    (((PerformSafeShiftRight(word, position * size + offset)
-                                    << letterSize) | letter), position*size+offset);
+                newWordSuffix = 0;
+            }
+            else
+            {
+                newWordPrefix = word & (((ulong) 1 << (position * size + offset)) - 1);
+
+                newWordSuffix = (((word >> position * size + offset)
+                                  << letterSize) | letter) << position * size + offset;
+            }
+
             /*
             ulong newWordSuffix = (((word >> (position * size + offset)) << letterSize) | letter) 
-                                  << (position * size + offset);
+                              << (position * size + offset);
             */
             return newWordPrefix | newWordSuffix;
         }
@@ -397,18 +410,25 @@ namespace NumericalSequences
         protected ulong DeleteLetter(ulong word, int offset, byte position, byte size, byte letterSize)
         {
             ulong newWordPrefix;
+            ulong newWordSuffix;
 
             if (position * size + offset >= bitLengthWord)
+            {
                 newWordPrefix = word;
+                newWordSuffix = 0;
+            }
             else
-                newWordPrefix = word & (((ulong)1 << (position * size + offset)) - 1);
-            
-            ulong newWordSuffix = PerformSafeShiftLeft(
-                PerformSafeShiftRight(word, position * size + offset + letterSize),
-                position * size + offset);
+            {
+                newWordPrefix = word & (((ulong) 1 << (position * size + offset)) - 1);
+
+                newWordSuffix =
+                    PerformSafeShiftRight(word, position * size + offset + letterSize)
+                    << (position * size + offset);
+            }
+
             /*
-            ulong newWordSuffix = ((word >> ((position * size + offset + letterSize))) << (position * size + offset));
-            */
+        ulong newWordSuffix = ((word >> ((position * size + offset + letterSize))) << (position * size + offset));
+        */
             return newWordPrefix | newWordSuffix;
         }
         protected ulong DeleteLetter(ulong word, int offset, byte position, 
@@ -595,7 +615,10 @@ namespace NumericalSequences
         protected ulong ChangeLetter(ulong word, int offset, byte position, 
                                         int difference, byte size, byte letterSize)
         {
-            ulong letter = PerformSafeShiftRight(word, position*size + offset) & (((ulong)1<< letterSize)-1) ;
+            if (letterSize == 0)
+                return word;
+            
+            ulong letter = (word >> (position*size + offset)) & (((ulong)1<< letterSize)-1) ;
 
             letter = ChangeLetterGetChangedLetter(letter, difference);
 
