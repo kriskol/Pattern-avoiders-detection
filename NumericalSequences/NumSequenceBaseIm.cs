@@ -387,7 +387,7 @@ namespace NumericalSequences
                            (newLetterPrefix << (bitLengthWord - sizePrefix));
         }
 
-        public override T DeleteLetterPosition(int position)
+        protected ulong[] DeleteLetterPositionInternal(int position)
         { 
             if(position >= Length)
                 throw new ArgumentOutOfRangeException();
@@ -395,16 +395,50 @@ namespace NumericalSequences
             ConvertPosition(position, out int index, out byte positionWord, out int offset);
 
             int newIndex;
+            bool letterOnTwoWords;
 
             if (OverFlow(positionWord, LetterSize, offset))
+            {
+                letterOnTwoWords = true;
                 newIndex = index + 2;
+            }
             else
+            {
+                letterOnTwoWords = false;
                 newIndex = index + 1;
+            }
 
+            ulong[] newWords = new ulong[Words.Length];
+            ulong overflow;
+            ulong shiftedLetter = 0;
+            for (int i = newWords.Length - 1; i >= newIndex; i--)
+            {
+                newWords[i] = ShiftRightBasic(Words[i], LetterSize, shiftedLetter, out overflow);
+                shiftedLetter = overflow;
+            }
+
+            if (letterOnTwoWords)
+            {
+                DeleteLetter(Words[index], Words[index + 1], offset, positionWord,
+                                LetterSize, LetterSize, shiftedLetter,
+                                out ulong newWordPrefix, out ulong newWordSuffix);
+                GetNewWordsUpToIndex(newWords, Words, newWordPrefix, newWordSuffix, index);
+            }
+            else
+            {
+                GetNewWordsUpToIndex(newWords, Words,
+                                DeleteLetter(Words[index], offset, positionWord,
+                                LetterSize, LetterSize, shiftedLetter),
+                                index);
+            }
+
+            return newWords;
+
+            /*
             ulong[] newWords;
             ulong overFlow = 0;
             bool lengthWordsDecreased = false;
-
+    
             if((Length-(position+1))*LetterSize + index * bitLengthWord 
                 + offset + positionWord*LetterSize <= (Words.Length - 1)*bitLengthWord)
             {
@@ -454,6 +488,28 @@ namespace NumericalSequences
             }
 
             return CreateNumSequence(newWords, Length - 1, LetterSize);
+            */
+        }
+
+        public override T DeleteLetterPosition(int position)
+        {
+            ulong[] newWordsTemp = DeleteLetterPositionInternal(position);
+            ulong[] newWords;
+            ConvertPosition(position, out int index, out byte positionWord, out int offset);
+
+            if ((Length - (position + 1)) * LetterSize + index * bitLengthWord
+                                                       + offset + positionWord * LetterSize <=
+                (Words.Length - 1) * bitLengthWord)
+            {
+                newWords = new ulong[Math.Max(newWordsTemp.Length - 1, 1)];
+                for (int i = 0; i < newWordsTemp.Length - 1; i++)
+                    newWords[i] = newWordsTemp[i];
+            }
+            else
+                newWords = newWordsTemp;
+
+            return CreateNumSequence(newWords, Length - 1, LetterSize);
+
         }
 
         public override T Switch(int positionFrom, int positionTo)
