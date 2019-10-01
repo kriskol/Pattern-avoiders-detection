@@ -57,7 +57,10 @@ namespace NumberOperationsImplementations
                         yield return position;
                     }
 
-                    processedWord =  processedWord >> (ctz + 1);
+                    if (ctz + 1 == 64)
+                        processedWord = 0;
+                    else 
+                        processedWord =  (processedWord >> (ctz + 1));
                 }
             }
         }
