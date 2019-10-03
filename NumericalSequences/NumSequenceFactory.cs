@@ -21,8 +21,11 @@ namespace NumericalSequences
             {
                 words[j] = word;
             }
-            
-            words[countWords - 1] = word & (ulong)(((ulong)1 << ((letterSize * length) % 64)) - (ulong)1);
+
+            if (letterSize * length % 64 == 0 || length == 0)
+                words[countWords - 1] = word;
+            else
+                words[countWords - 1] = word & (ulong) (((ulong) 1 << ((letterSize * length) % 64)) - (ulong) 1);
 
             return words;
         }

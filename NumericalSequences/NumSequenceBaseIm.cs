@@ -268,10 +268,10 @@ namespace NumericalSequences
         }
 
         protected ulong InsertLetter(ulong word, int offset, byte position, ulong letter, byte size, byte letterSize)
-        {
+        {    
             ulong newWordPrefix;
             ulong newWordSuffix;
-
+            
             if (position * size + offset >= bitLengthWord)
             {
                 newWordPrefix = word;
@@ -280,17 +280,18 @@ namespace NumericalSequences
             else
             {
                 newWordPrefix = word & (((ulong) 1 << (position * size + offset)) - 1);
-
+                
                 newWordSuffix = (((word >> position * size + offset)
                                   << letterSize) | letter) << position * size + offset;
             }
-
+            
             /*
             ulong newWordSuffix = (((word >> (position * size + offset)) << letterSize) | letter) 
                               << (position * size + offset);
             */
             return newWordPrefix | newWordSuffix;
         }
+        
         protected ulong InsertLetter(ulong word, int offset, byte position, ulong letter, 
                                         byte size, byte letterSize, out ulong overFlow)
         {
@@ -356,10 +357,20 @@ namespace NumericalSequences
             }
             else
             {
-                GetNewWordsUpToIndex(newWords, Words,
-                    InsertLetter(Words[index], offset,
-                        positionWord, letter, LetterSize, LetterSize, out overFlow), index);
-                newIndex = index + 1;
+                if (index == Words.Length)
+                {
+                    GetNewWordsUpToIndex(newWords, Words,
+                        InsertLetter(0, offset, positionWord, letter,
+                            LetterSize, LetterSize, out overFlow), index);
+                    newIndex = index + 2;
+                }
+                else
+                {
+                    GetNewWordsUpToIndex(newWords, Words,
+                        InsertLetter(Words[index], offset,
+                            positionWord, letter, LetterSize, LetterSize, out overFlow), index);
+                    newIndex = index + 1;
+                }
             }
 
             ulong newOverFlow;

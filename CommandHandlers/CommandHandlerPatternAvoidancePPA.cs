@@ -37,7 +37,7 @@ namespace CommandHandlers
         public void Compute(string command, int n, StreamReader reader, int numThreads)
         {
             IPermutationsCollection avoidedPermutations = ProcessPermutations(reader, n);
-            ResultPPA result = resultFactories[command].CreateResultPPA();
+            ResultPPA result = resultFactories[command].CreateResultPPA(n);
             IAvoidersPPAComputationHandler computationHandler = computationHandlers[command];
             result = computationHandler.Compute(avoidedPermutations, n, result, numThreads);
             ProcessResult(result);

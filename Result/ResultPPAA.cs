@@ -88,5 +88,15 @@ namespace Result
 
             return result;
         }
+
+        public ResultPPAA(int maximalLength)
+        {
+            storedData[maximalLength] = new List<Permutation>();
+        }
+
+        public ResultPPAA()
+        {
+            
+        }
     }
 }

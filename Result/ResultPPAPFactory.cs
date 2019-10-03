@@ -2,9 +2,9 @@ namespace Result
 {
     public class ResultPPAPFactory : IResultPPAFactory
     {
-        public ResultPPA CreateResultPPA()
+        public ResultPPA CreateResultPPA(int maximalLength)
         {
-            return new ResultPPAP();
+            return new ResultPPAP(maximalLength);
         }
     }
 }

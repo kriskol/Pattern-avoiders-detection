@@ -83,5 +83,15 @@ namespace Result
 
             return result;
         }
+
+        public ResultPPAP(int maximalLength)
+        {
+            storedData[maximalLength] = 0;
+        }
+
+        public ResultPPAP()
+        {
+            
+        }
     }
 }

@@ -2,6 +2,6 @@ namespace Result
 {
     public interface IResultPPAFactory
     {
-        ResultPPA CreateResultPPA();
+        ResultPPA CreateResultPPA(int maximalLength);
     }
 }
