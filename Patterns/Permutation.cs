@@ -30,7 +30,8 @@ namespace Patterns
             else
                 maximum = (int)letter;
             
-            NumSequenceBasic numSequenceBasicTemp = base.InsertLetter(letter).NumSequenceBasic;
+            //NumSequenceBasic numSequenceBasicTemp = base.InsertLetter(letter).NumSequenceBasic;
+            NumSequenceBasic numSequenceBasicTemp = NumSequenceBasic.InsertLetter(NumSequenceBasic.Length, letter);
             if (lettersIncreased)
                 newNumSequenceBasic = IncreaseHigherLetters(numSequenceBasicTemp, letter,
                     numSequenceBasicTemp.Length - 1);
@@ -55,8 +56,10 @@ namespace Patterns
                 maximum = (int)letter;
 
             
-            NumSequenceBasic numSequenceBasicTemp = base.Insert(position, letter).NumSequenceBasic;
-
+            //NumSequenceBasic numSequenceBasicTemp = base.Insert(position, letter).NumSequenceBasic;
+            NumSequenceBasic numSequenceBasicTemp = NumSequenceBasic.InsertLetter
+                                                    (position - LowestPosition, letter);
+            
             if (lettersIncreased)
                 newNumSequenceBasic = IncreaseHigherLetters(numSequenceBasicTemp, letter,
                     position - LowestPosition);
@@ -71,8 +74,10 @@ namespace Patterns
             NumSequenceBasic newNumSequenceBasic;
             
             byte letter = (byte)NumSequenceBasic.GetLetter(position - LowestPosition);
-            NumSequenceBasic numSequenceBasicTemp = base.Delete(position).NumSequenceBasic;
-
+            //NumSequenceBasic numSequenceBasicTemp = base.Delete(position).NumSequenceBasic;
+            NumSequenceBasic numSequenceBasicTemp = NumSequenceBasic.
+                                                    DeleteLetterPosition(position - LowestPosition);
+            
             if (letter == Maximum)
                 newNumSequenceBasic = numSequenceBasicTemp;
             else 
@@ -97,7 +102,11 @@ namespace Patterns
             else
                 maximum = (int)letter;
             
-            NumSequenceBasic numSequenceBasicTemp = base.Insert(position, letter).NumSequenceBasic;
+            //NumSequenceBasic numSequenceBasicTemp = base.Insert(position, letter).NumSequenceBasic;
+            NumSequenceBasic numSequenceBasicTemp = NumSequenceBasic.InsertLetter
+                                                    (position - LowestPosition,
+                                                    letter);
+            
             if (lettersIncreased)
                 newNumSequenceBasic = numSequenceBasicTemp.Change(CorrectPositions(positionsHigherLetters),
                     +1);
@@ -111,7 +120,10 @@ namespace Patterns
         
         public Permutation Delete(int position, IEnumerable<int> positionsHigherLetters)
         {
-            NumSequenceBasic numSequenceBasicTemp = base.Delete(position).NumSequenceBasic;
+            //NumSequenceBasic numSequenceBasicTemp = base.Delete(position).NumSequenceBasic;
+            NumSequenceBasic numSequenceBasicTemp = NumSequenceBasic.
+                                                    DeleteLetterPosition(position - LowestPosition);
+            
             NumSequenceBasic newNumSequenceBasic = numSequenceBasicTemp.
                                                         Change(CorrectPositions(positionsHigherLetters),
                                                             -1);

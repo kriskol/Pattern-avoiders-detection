@@ -30,7 +30,7 @@ namespace Patterns
             foreach (var position in positions)
             {
                 letter = numSequenceBasic.GetLetter(position);
-                if (numSequenceBasic.GetLetter(position) > maximum)
+                if (letter > maximum)
                     maximum = letter;
             }
 

@@ -15,13 +15,13 @@ namespace Patterns
         public override int HighestPosition => highestPosition;
         protected override IPatternFactory<PatternBasic> PatternFactory => patternFactory;
 
-        public PatternBasic Change(IEnumerable<int> positions, int difference)
+        public PatternBasic ChangePositive(IEnumerable<int> positions, int difference)
         {
             int maximum;
             NumSequenceBasic newNumSequenceBasic;
             IEnumerable<int> correctedPositions = CorrectPositions(positions);
             newNumSequenceBasic = NumSequenceBasic.Change(correctedPositions, difference);
-            maximum = Math.Max(Maximum, (int)FindMaximum(correctedPositions));
+            maximum = Math.Max(Maximum, (int)FindMaximum(correctedPositions)+difference);
 
             return patternFactory.GetPattern(newNumSequenceBasic, highestPosition, maximum);
         }

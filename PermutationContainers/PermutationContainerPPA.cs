@@ -45,48 +45,9 @@ namespace PermutationContainers
                 if(positions.Get(positions.LowestPosition + length-i-2) >= positionCorrect)
                     positionsBeCorrected.Add(positions.LowestPosition + length-i-2);
             
-            return positions.Change(positionsBeCorrected, 1);
+            return positions.ChangePositive(positionsBeCorrected, 1);
         }
-
-        protected List<PermutationContainerPPA> ComputeSuccessorsDuplicate
-        (IPermutationDictionary<ExtensionMap> collection,
-            IPermutationsCollection avoidedPermutations,
-            bool checkAvoidedPermutations)
-        {
-            Permutation newPermutation;
-            PatternBasic newPermutationPositions;
-            ExtensionMap newExtensionMap;
-            int newMinimumLettersConsidered;
-            List<PermutationContainerPPA> containers = new List<PermutationContainerPPA>();
-            PermutationContainerPPA permutationContainerPPA;
-            
-            int maximumLettersConsidered = Math.Min(lengthLongestPermutationAvoided, Permutation.Length + 1);
-            
-            foreach (var position in extensionMap.Ctz())
-            {
-                newPermutation = Permutation.InsertPosition(position);
-                
-                if(checkAvoidedPermutations && avoidedPermutations.Contains(newPermutation))
-                    break;
-                newPermutationPositions = PermutationPositions.InsertLetter((ulong)position);
-                CorrectPositionsTop(newPermutationPositions);
-                newExtensionMap = exMapComputationUnsorted.Compute(collection, newPermutation,
-                    newPermutationPositions, minimumLettersConsidered);
-                newMinimumLettersConsidered = minimumLettersBeChecked.
-                    GetMinimumLettersConsidered(collection, newPermutation,
-                        newPermutationPositions,maximumLettersConsidered);
-
-                permutationContainerPPA = new PermutationContainerPPA(newPermutation, newPermutationPositions,
-                    minimumLettersBeChecked, exMapComputationUnsorted,
-                    newExtensionMap, lengthLongestPermutationAvoided,
-                    newMinimumLettersConsidered);
-                
-                containers.Add(permutationContainerPPA);
-            }
-
-            return containers;
-        }
-
+        
         protected void CorrectExtensionMap(Permutation newPermutation, ExtensionMap extensionMap, 
                                             IPermutationsCollection avoidedPermutations)
         {
