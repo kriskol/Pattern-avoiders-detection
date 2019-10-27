@@ -5,19 +5,11 @@ namespace Patterns
 {
     public abstract class Pattern<T>: IPosition , IEquatable<T> where  T: Pattern<T>
     {
-        private readonly int maximum;
-        
         public abstract int LowestPosition { get; }
         public abstract int HighestPosition { get; }
         public abstract byte LetterSize { get; }
         public int Length => HighestPosition - LowestPosition + 1;
-
-        public int Maximum
-        {
-            get => maximum;
-        }
-
-        public abstract T InsertPosition(int position);
+        
         public abstract T InsertLetter(ulong letter);
         public abstract T Insert(int position, ulong letter);
         public abstract ulong Get(int position);
@@ -42,9 +34,8 @@ namespace Patterns
             return Equals((T) obj);
         }
 
-        protected Pattern(int newMaximum)
+        protected Pattern()
         {
-            maximum = newMaximum;
         }
     }
 }

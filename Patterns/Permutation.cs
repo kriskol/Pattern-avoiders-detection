@@ -5,17 +5,26 @@ using NumericalSequences;
 
 namespace Patterns
 {
-    public class Permutation: PatternIm<Permutation>
+    public class Permutation: PatternMax<Permutation>
     {
         private readonly int highestPosition;
-        private static readonly IPatternFactory<Permutation> patternFactory;
+        private static readonly IPatternFactoryMax<Permutation> patternFactory;
         private Permutation inversion;
         private bool inversionSet;
         
         public override int LowestPosition => 0;
         public override int HighestPosition => highestPosition;
-        protected override IPatternFactory<Permutation> PatternFactory => patternFactory;
+        protected override IPatternFactoryMax<Permutation> PatternFactory => patternFactory;
 
+
+        public override Permutation InsertPosition(int position)
+        {
+            NumSequenceBasic newNumSequenceBasic = NumSequenceBasic.InsertLetter(position - LowestPosition,
+                (byte)(Maximum + 1));
+            return PatternFactory.GetPattern(newNumSequenceBasic, HighestPosition+1, 
+                Maximum+1);
+        }
+        
         public override Permutation InsertLetter(ulong letter)
         {
             int maximum;
@@ -131,6 +140,14 @@ namespace Patterns
                                             HighestPosition - 1, Maximum - 1);
         }
 
+        
+        public override Permutation Switch(int positionFrom, int positionTo)
+        {
+            NumSequenceBasic newNumSequenceBasic = NumSequenceBasic.Switch(positionFrom-LowestPosition,
+                positionTo - LowestPosition);
+            return PatternFactory.GetPattern(newNumSequenceBasic, HighestPosition, Maximum);
+        }
+        
         public Permutation ComputeInversion()
         {
             if (inversionSet)
@@ -182,8 +199,8 @@ namespace Patterns
         {
             return numSequenceBasic.Change(positions, difference);
         }
-        
-        public class PermutationFactory : IPatternFactory<Permutation>
+
+        public class PermutationFactory : IPatternFactoryMax<Permutation>
         {
             private IIsPermutation isPermutation;
             public Permutation GetPattern(NumSequenceBasic numSequenceBasic, 

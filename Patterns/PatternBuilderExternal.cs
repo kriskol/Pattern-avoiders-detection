@@ -7,7 +7,6 @@ namespace Patterns
     {
         protected INumSequenceBasicFactoryExternal factoryNumSequence;
         protected IBasicWsBuilderFactory factoryBuilder;
-        protected IPatternFactory<T> patternFactory;
         
         protected void FillNumSequenceLetters(NumSequenceBasic numSequenceBasic, string[] letters)
         {
@@ -33,6 +32,8 @@ namespace Patterns
         public void Reset()
         {
         }
+
+        protected abstract T ConstructPattern(NumSequenceBasic numSequenceBasic, int highestPosition, int maximum);
         
         
         public T CreatePattern(string[] letters, byte letterSize)
@@ -48,7 +49,7 @@ namespace Patterns
 
             FillNumSequenceLetters(numSequenceBasic, letters);
 
-            return patternFactory.GetPattern(numSequenceBasic,
+            return ConstructPattern(numSequenceBasic,
                 letters.Length - 1, letters.Length - 1);
         }
 
@@ -63,7 +64,7 @@ namespace Patterns
 
             NumSequenceBasic numSequenceBasic = factoryNumSequence.CreateNumSequenceBasic(builder);
 
-            return patternFactory.GetPattern(numSequenceBasic,
+            return ConstructPattern(numSequenceBasic,
                 length - 1, length - 1);
         }
 
@@ -75,12 +76,10 @@ namespace Patterns
         }
 
         public PatternBuilderExternal(INumSequenceBasicFactoryExternal factoryNumSequence,
-                                        IBasicWsBuilderFactory factoryBuilder,
-                                        IPatternFactory<T> patternFactory)
+                                        IBasicWsBuilderFactory factoryBuilder)
         {
             this.factoryNumSequence = factoryNumSequence;
             this.factoryBuilder = factoryBuilder;
-            this.patternFactory = patternFactory;
             Reset();
         }
 

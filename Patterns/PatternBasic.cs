@@ -13,23 +13,52 @@ namespace Patterns
         
         public override int LowestPosition => highestPosition - NumSequenceBasic.Length + 1;
         public override int HighestPosition => highestPosition;
-        protected override IPatternFactory<PatternBasic> PatternFactory => patternFactory;
+        protected IPatternFactory<PatternBasic> PatternFactory => patternFactory;
 
         public PatternBasic ChangePositive(IEnumerable<int> positions, int difference)
         {
-            int maximum;
             NumSequenceBasic newNumSequenceBasic;
             IEnumerable<int> correctedPositions = CorrectPositions(positions);
             newNumSequenceBasic = NumSequenceBasic.Change(correctedPositions, difference);
-            maximum = Math.Max(Maximum, (int)FindMaximum(correctedPositions)+difference);
 
-            return patternFactory.GetPattern(newNumSequenceBasic, highestPosition, maximum);
+            return patternFactory.GetPattern(newNumSequenceBasic, highestPosition);
         }
         
+        public override PatternBasic InsertLetter(ulong letter)
+        {
+            NumSequenceBasic newNumSequenceBasic = NumSequenceBasic.InsertLetter(NumSequenceBasic.Length, letter);
+            return PatternFactory.GetPattern(newNumSequenceBasic, HighestPosition+1);
+        }
+
+        public override PatternBasic Insert(int position, ulong letter)
+        {
+            NumSequenceBasic newNumSequenceBasic = NumSequenceBasic.InsertLetter(position - LowestPosition, letter);
+            return PatternFactory.GetPattern(newNumSequenceBasic, 
+                HighestPosition + 1);
+        }
         
+        public override PatternBasic Switch(int positionFrom, int positionTo)
+        {
+            NumSequenceBasic newNumSequenceBasic = NumSequenceBasic.Switch(positionFrom-LowestPosition,
+                positionTo - LowestPosition);
+            return PatternFactory.GetPattern(newNumSequenceBasic, HighestPosition);
+        }
+        
+        public override PatternBasic Delete(int position)
+        {
+
+            NumSequenceBasic newNumSequenceBasic = NumSequenceBasic.DeleteLetterPosition(position - LowestPosition);
+
+            return PatternFactory.GetPattern(newNumSequenceBasic, HighestPosition-1);
+        }
+        
+        public override PatternBasic  Clone()
+        {
+            return PatternFactory.GetPattern(NumSequenceBasic.Clone(), HighestPosition);
+        }
         
         public PatternBasic(NumSequenceBasic numSequenceBasic,
-                            int highestPosition, int maximum) : base(numSequenceBasic, maximum)
+                            int highestPosition) : base(numSequenceBasic)
         {
             this.highestPosition = highestPosition;
         }
@@ -38,10 +67,10 @@ namespace Patterns
         {
             private IIsPatternBasic isPatternBasic;
             public PatternBasic GetPattern(NumSequenceBasic numSequenceBasic, 
-                                            int highestPosition, int maximum)
+                                            int highestPosition)
             {
                 if(isPatternBasic.IsPatternBasic(numSequenceBasic))
-                    return  new PatternBasic(numSequenceBasic, highestPosition, maximum);
+                    return  new PatternBasic(numSequenceBasic, highestPosition);
 
                 return null;
             }

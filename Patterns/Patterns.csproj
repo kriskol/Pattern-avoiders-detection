@@ -37,11 +37,13 @@
     <Compile Include="IPatternBuilderExternal.cs" />
     <Compile Include="IPatternFactory.cs" />
     <Compile Include="IIsPatternBasic.cs" />
+    <Compile Include="IPatternFactoryMax.cs" />
     <Compile Include="IPermutationBuilderExternal.cs" />
     <Compile Include="PatternBasic.cs" />
     <Compile Include="PatternBasicBuilderExternal.cs" />
     <Compile Include="PatternBasicCheckFree.cs" />
     <Compile Include="PatternBuilderExternal.cs" />
+    <Compile Include="PatternMax.cs" />
     <Compile Include="PermutationBuilderExternal.cs" />
     <Compile Include="PermutationCheck.cs" />
     <Compile Include="Pattern.cs" />
