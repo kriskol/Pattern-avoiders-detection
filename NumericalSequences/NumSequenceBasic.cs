@@ -24,18 +24,18 @@ namespace NumericalSequences
         protected INumSequenceBasicFactory NumSequenceFactory => numSequenceFactory;
 
         protected override void ConvertPosition(int position, out int index,
-            out byte positionWord, out int offset)
+            out int positionWord, out int offset)
         {
             index = (position * LetterSize + CountBlockedBitsFromStart) / bitLengthWord;
             if (index == 0)
             {
                 offset = countBlockedBitsFromStart;
-                positionWord = (byte)position;
+                positionWord = position;
             }
             else
             {
                 offset = ((position * LetterSize + CountBlockedBitsFromStart) - (bitLengthWord * index)) % LetterSize;
-                positionWord = (byte) (((((position * LetterSize + CountBlockedBitsFromStart) % bitLengthWord))
+                positionWord = (((((position * LetterSize + CountBlockedBitsFromStart) % bitLengthWord))
                                         - offset) / LetterSize);
             }
         }
