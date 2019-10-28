@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatternAvoidersPPAComputati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayExtensions", "ArrayExtensions\ArrayExtensions.csproj", "{987920BE-E0D8-49BD-AABA-6562C1AF6E4E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntExtensions", "IntExtensions\IntExtensions.csproj", "{1833A777-D232-4F59-90B0-EA6C7FF08816}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -150,5 +152,9 @@ Global
 		{987920BE-E0D8-49BD-AABA-6562C1AF6E4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{987920BE-E0D8-49BD-AABA-6562C1AF6E4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{987920BE-E0D8-49BD-AABA-6562C1AF6E4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1833A777-D232-4F59-90B0-EA6C7FF08816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1833A777-D232-4F59-90B0-EA6C7FF08816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1833A777-D232-4F59-90B0-EA6C7FF08816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1833A777-D232-4F59-90B0-EA6C7FF08816}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

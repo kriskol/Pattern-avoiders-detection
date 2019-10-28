@@ -13,10 +13,10 @@ namespace Patterns
             get => maximum;
         }
         
-        protected ulong FindMaximum(IEnumerable<int> positions)
+        protected int FindMaximum(IEnumerable<int> positions)
         {
-            ulong maximum = 0;
-            ulong letter;
+            int maximum = 0;
+            int letter;
             foreach (var position in positions)
             {
                 letter = NumSequenceBasic.GetLetter(position);

@@ -1,4 +1,3 @@
-using NumberOperationsInterfaces;
 
 namespace NumberOperationsInterfaces
 {

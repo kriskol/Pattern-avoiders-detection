@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Reflection.Emit;
+
 using Patterns;
 
 namespace PermutationContainers
@@ -15,7 +14,7 @@ namespace PermutationContainers
         {
             if (letter <=  permutationPositions.HighestPosition &&
                 letter >=  permutationPositions.LowestPosition)
-                return (int)permutationPositions.Get(letter);
+                return permutationPositions.Get(letter);
             
             throw new ArgumentException();
         }
@@ -26,7 +25,7 @@ namespace PermutationContainers
             int lowerPositions = 0;
             for (int i = letter+1; i <= permutationPositions.HighestPosition; i++)
             {
-                if (permutationPositions.Get(i) < (ulong) position)
+                if (permutationPositions.Get(i) < position)
                     lowerPositions++;
             }
 

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using ExtensionMaps;
 using Patterns;
 using PermutationsCollections;

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using PermutationContainers;
 
 namespace PatternNode
 {

@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace InputHandling
 {
-    public class PatternAvoidanceReader : Reader, IReader
+    public class PatternAvoidanceReader : Reader
 
     {
         private string command;
@@ -72,7 +71,7 @@ namespace InputHandling
             intputSet = false;
         }
 
-        public PatternAvoidanceReader():base()
+        public PatternAvoidanceReader()
         {
             SetCorrectCommands();
             Reset();

@@ -8,5 +8,12 @@ namespace BoolExtension
             
             return 0;
         }
+
+        public static int ToInt(this bool b)
+        {
+            if (b) return 1;
+
+            return 0;
+        }
     }
 }

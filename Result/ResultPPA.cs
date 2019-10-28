@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using PatternNode;
-using Patterns;
-using PermutationsCollections;
 
 namespace Result
 {

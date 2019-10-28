@@ -52,6 +52,10 @@
       <Project>{cd6b0881-1cb7-4fa9-8eb0-157a83f67de1}</Project>
       <Name>GeneralInterfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IntExtensions\IntExtensions.csproj">
+      <Project>{1833a777-d232-4f59-90b0-ea6c7ff08816}</Project>
+      <Name>IntExtensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LogicInterfaces\LogicInterfaces.csproj">
       <Project>{037a0165-6f38-41f3-a687-e66df0d8d0a5}</Project>
       <Name>LogicInterfaces</Name>

@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 using BoolExtension;
-using ByteExtensions;
+using IntExtensions;
 using NumericalSequences;
 
 namespace ExtensionMaps
@@ -18,17 +17,17 @@ namespace ExtensionMaps
 
         public override void SetMutable(int position, bool letter)
         {
-            numSequenceExtended.SetLetterMutable(position, letter.ToByte());
+            numSequenceExtended.SetLetterMutable(position, letter.ToInt());
         }
 
         public override bool Get(int position)
         {
-            return ((byte)numSequenceExtended.GetLetter(position)).ToBool();
+            return (numSequenceExtended.GetLetter(position)).ToBool();
         }
 
         public override ExtensionMap Insert(int position, bool letter)
         {
-           return extensionMapFactory.GetExtensionMapNumSeq(numSequenceExtended.InsertLetter(position, letter.ToByte()));
+           return extensionMapFactory.GetExtensionMapNumSeq(numSequenceExtended.InsertLetter(position, letter.ToInt()));
         }
 
         public override ExtensionMap Delete(int position)

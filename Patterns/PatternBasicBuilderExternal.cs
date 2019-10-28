@@ -1,4 +1,3 @@
-using GeneralInterfaces;
 using NumericalSequences;
 
 namespace Patterns
@@ -13,7 +12,7 @@ namespace Patterns
             factoryBuilder.SetMaximalLength(maximalLength, 0);
         }
                     
-        public PatternBasicBuilderExternal() : base()
+        public PatternBasicBuilderExternal()
         {
             patternFactory = new PatternBasic.PatternBasicFactory();
         }

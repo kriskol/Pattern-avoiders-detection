@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using PatternNode;
 using Patterns;
-using PermutationsCollections;
 
 namespace Result
 {

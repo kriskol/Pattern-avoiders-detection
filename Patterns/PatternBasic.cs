@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 using NumericalSequences;
 
 namespace Patterns
@@ -24,13 +22,13 @@ namespace Patterns
             return patternFactory.GetPattern(newNumSequenceBasic, highestPosition);
         }
         
-        public override PatternBasic InsertLetter(ulong letter)
+        public override PatternBasic InsertLetter(int letter)
         {
             NumSequenceBasic newNumSequenceBasic = NumSequenceBasic.InsertLetter(NumSequenceBasic.Length, letter);
             return PatternFactory.GetPattern(newNumSequenceBasic, HighestPosition+1);
         }
 
-        public override PatternBasic Insert(int position, ulong letter)
+        public override PatternBasic Insert(int position, int letter)
         {
             NumSequenceBasic newNumSequenceBasic = NumSequenceBasic.InsertLetter(position - LowestPosition, letter);
             return PatternFactory.GetPattern(newNumSequenceBasic, 
@@ -74,7 +72,7 @@ namespace Patterns
 
             public PatternBasicFactory()
             {
-                isPatternBasic = new PatternBasicCheckFree();;
+                isPatternBasic = new PatternBasicCheckFree();
             }
 
             public PatternBasicFactory(IIsPatternBasic isPatternBasic)

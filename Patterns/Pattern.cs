@@ -10,14 +10,14 @@ namespace Patterns
         public abstract byte LetterSize { get; }
         public int Length => HighestPosition - LowestPosition + 1;
         
-        public abstract T InsertLetter(ulong letter);
-        public abstract T Insert(int position, ulong letter);
-        public abstract ulong Get(int position);
+        public abstract T InsertLetter(int letter);
+        public abstract T Insert(int position, int letter);
+        public abstract int Get(int position);
         public abstract T Switch(int positionFrom, int positionTo);
         public abstract T Delete(int position);
         int IPosition.GetPosition(int index)
         { 
-            return (int)Get(index);
+            return Get(index);
         }
         
         public abstract override string ToString();
@@ -32,10 +32,6 @@ namespace Patterns
                 return false;
 
             return Equals((T) obj);
-        }
-
-        protected Pattern()
-        {
         }
     }
 }

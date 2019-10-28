@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 using NumericalSequences;
 
 namespace Patterns
@@ -8,7 +6,7 @@ namespace Patterns
     public abstract class PatternIm<T>: PatternC<T> where T: PatternIm<T>
     {
         private readonly NumSequenceBasic numSequenceBasic;
-        protected PatternIm(NumSequenceBasic numSequenceBasic) : base()
+        protected PatternIm(NumSequenceBasic numSequenceBasic)
         {
             this.numSequenceBasic = numSequenceBasic;
         }
@@ -27,9 +25,9 @@ namespace Patterns
             return newPositions;
         }
 
-        public override ulong Get(int position)
+        public override int Get(int position)
         {
-            return (byte)numSequenceBasic.GetLetter(position - LowestPosition);
+            return numSequenceBasic.GetLetter(position - LowestPosition);
         }
 
         protected virtual NumSequenceBasic DeleteInternal(int position)

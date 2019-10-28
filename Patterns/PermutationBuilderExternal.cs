@@ -7,7 +7,7 @@ namespace Patterns
     {
         protected IPatternFactoryMax<Permutation> patternFactory;
 
-        public PermutationBuilderExternal() : base()
+        public PermutationBuilderExternal()
         {
             patternFactory = new Permutation.PermutationFactory();
         }

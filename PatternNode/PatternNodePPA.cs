@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text;
 using ExtensionMaps;
 using PermutationContainers;
 using Patterns;
@@ -12,7 +11,7 @@ namespace PatternNode
         private static readonly IPatternNodePPABuilderFactoryCreator builderFactoryCreator;
         private PermutationContainerPPA containerPPA;
         private IPermutationDictionary<ExtensionMap> extensionMapsDescendants;
-        private bool extensionMapsDescendantsSet = false;
+        private bool extensionMapsDescendantsSet;
         
         public Permutation Permutation => containerPPA.Permutation;
         public ExtensionMap ExtensionMap => containerPPA.ExtensionMap;

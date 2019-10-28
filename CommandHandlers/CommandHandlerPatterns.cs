@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Patterns;
 using PermutationsCollections;
 using Result;
@@ -30,7 +29,7 @@ namespace CommandHandlers
             while (!reader.EndOfStream)
             {
                 line = reader.ReadLine();
-                parsedLine = line.Split(new char[] {'-'}, StringSplitOptions.RemoveEmptyEntries);
+                parsedLine = line.Split(new [] {'-'}, StringSplitOptions.RemoveEmptyEntries);
                 lengthLongestAvoider = Math.Max(lengthLongestAvoider, parsedLine.Length);
                 parsedLines.Add(parsedLine);
             }

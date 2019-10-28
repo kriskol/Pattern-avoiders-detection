@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using PatternNode;
-using PermutationsCollections;
 using Result;
 
 namespace PatternAvoidersPPAComputation

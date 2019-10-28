@@ -11,7 +11,7 @@ namespace PermutationPatterns
             InputHandler inputHandler = new InputHandler(args);
             ICommandAcceptFactory factory = new CommandAcceptFactory();
             CommandAccept.CommandAccept commandAccept;
-            bool commandAccepted = true;
+            bool commandAccepted;
             
             if (args.Length == 0)
                 commandAccepted = factory.CommandAccept("", out commandAccept);

@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using ExtensionMaps;
 using PatternNode;
-using Patterns;
-using PermutationContainers;
 using PermutationsCollections;
 using Result;
 
@@ -58,7 +56,7 @@ namespace PatternAvoidersPPAComputation
                                                                 int depthComputed, ResultPPA result)
         {
             List<PatternNodePPA> nodes = Compute(node, avoidedPermutations, depthComputed, result);
-            node.SetDescendants(new List<PatternNodePPA>[] {nodes}, depthComputed);
+            node.SetDescendants(new[] {nodes}, depthComputed);
             node.SetExtensionMapsDescendants(ExtractExtensionMaps(nodes));
             
             return node;

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.Remoting.Lifetime;
 
 namespace PatternNode
 {

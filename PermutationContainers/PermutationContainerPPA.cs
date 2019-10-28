@@ -36,7 +36,7 @@ namespace PermutationContainers
         protected PatternBasic CorrectPositionsTop(PatternBasic positions)
         {
             int length = positions.Length;
-            ulong positionCorrect = positions.Get(positions.LowestPosition + length-1);
+            int positionCorrect = positions.Get(positions.LowestPosition + length-1);
             List<int> positionsBeCorrected = new List<int>();
 
             int numPositionsCorrected = Math.Min(lengthLongestPermutationAvoided, length);
@@ -52,7 +52,7 @@ namespace PermutationContainers
                                             IPermutationsCollection avoidedPermutations)
         {
             for(int i = 0; i < extensionMap.Length; i++)
-                if(extensionMap.Get(i) == true)
+                if(extensionMap.Get(i))
                     if(avoidedPermutations.Contains(newPermutation.InsertPosition(i)))
                         extensionMap.SetMutable(i, false);
         }
@@ -76,7 +76,7 @@ namespace PermutationContainers
                 
                 if(checkAvoidedPermutations && avoidedPermutations.Contains(newPermutation))
                     continue;
-                newPermutationPositions = PermutationPositions.InsertLetter((ulong)position);
+                newPermutationPositions = PermutationPositions.InsertLetter(position);
                 newPermutationPositions = CorrectPositionsTop(newPermutationPositions);
                 
                 newMinimumLettersConsidered = minimumLettersBeChecked.

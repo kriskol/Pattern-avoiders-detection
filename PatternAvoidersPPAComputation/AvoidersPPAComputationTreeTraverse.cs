@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using ExtensionMaps;
 using PatternNode;
 using PermutationsCollections;
 using Result;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace PatternAvoidersPPAComputation
 {
@@ -24,10 +21,7 @@ namespace PatternAvoidersPPAComputation
             this.avoidedPermutations = avoidedPermutations;
             this.descendantsDepth = descendantsDepth;
         }
-        
-        //patternNodeDispose
-        //resultClonesDispose
-        
+
         protected void InsertDescendant(List<PatternNodePPA>[] descendants, PatternNodePPA node,
                                         int index)
         {

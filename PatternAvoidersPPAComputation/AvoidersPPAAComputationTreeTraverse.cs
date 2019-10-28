@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using ExtensionMaps;
 using PatternNode;
-using PermutationsCollections;
 using PermutationSuccessorsComputation;
 using Result;
 

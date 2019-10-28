@@ -19,13 +19,13 @@ namespace NumericalSequences
         protected int SuffixLength => SuffixLengthSet ? suffixLength : 0;
         protected  bool SuffixLengthSet => suffixLengthSet;
         
-        public abstract ulong GetLetter(int position);
-        public abstract T SetLetter(int position, ulong letter);
-        public abstract void SetLetterMutable(int position, ulong letter);
+        public abstract int GetLetter(int position);
+        public abstract T SetLetter(int position, int letter);
+        public abstract void SetLetterMutable(int position, int letter);
         public abstract T DeleteLetterPosition(int position);
         
-        public abstract T InsertLetter(int position, ulong letter);
-        public abstract void InsertLetterMutable(int position, ulong letter);
+        public abstract T InsertLetter(int position, int letter);
+        public abstract void InsertLetterMutable(int position, int letter);
         public abstract T Switch(int positionFrom, int positionTo);
         public abstract T Change(IEnumerable<int> positions, int difference);
         public abstract void ChangeMutable(IEnumerable<int> positions, int difference);
