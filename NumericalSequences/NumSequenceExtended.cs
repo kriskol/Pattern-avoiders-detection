@@ -12,7 +12,7 @@ namespace NumericalSequences
         protected override ICtzCompute CtzCompute => ctzCompute;
         protected override IPopCountCompute PopCountCompute => popCountCompute;
         protected INumSequenceExtendedFactory NumSequenceFactory => numSequenceFactory;
-        protected override void ConvertPosition(int position, out int index, out byte positionWord, out int offset)
+        protected override void ConvertPosition(int position, out int index, out int positionWord, out int offset)
         {
             index = (position * LetterSize ) / bitLengthWord;
             offset = ((position * LetterSize ) % bitLengthWord) % LetterSize;

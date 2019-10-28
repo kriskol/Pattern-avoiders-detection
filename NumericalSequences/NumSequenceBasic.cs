@@ -142,11 +142,12 @@ namespace NumericalSequences
             return words;
         }
 
-        public override NumSequenceBasic InsertLetter(int position, ulong letter)
+        public override NumSequenceBasic InsertLetter(int position, int letter)
         {
+            ulong letterInternal = (ulong) letter;
             if (maximalLengthSet && Length == MaximalLength)
             {
-                ulong[] words = InsertLetterInternal(position, letter);
+                ulong[] words = InsertLetterInternal(position, letterInternal);
                 words = CutOverflowWords(words, LetterSize, out int newCountBlockedBitsFromStart);
                 return CreateNumSequence(words, Length, LetterSize, newCountBlockedBitsFromStart);
             }
@@ -154,11 +155,12 @@ namespace NumericalSequences
             return base.InsertLetter(position, letter);
         }
 
-        public override void InsertLetterMutable(int position, ulong letter)
+        public override void InsertLetterMutable(int position, int letter)
         {
+            ulong letterInternal = (ulong) letter;
             if (maximalLengthSet && Length == MaximalLength)
             {
-                ulong[] words = InsertLetterInternal(position, letter);
+                ulong[] words = InsertLetterInternal(position, letterInternal);
                 CutOverflowWords(words, LetterSize, out int newCountBlockedBitsFromStart);
                 Words = words;
                 Length = Length + 1;

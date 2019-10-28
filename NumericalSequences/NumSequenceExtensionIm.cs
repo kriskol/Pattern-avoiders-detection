@@ -21,7 +21,7 @@ namespace NumericalSequences
 
         public override int PopCount(int fromGivenPosition)
         {
-            ConvertPosition(fromGivenPosition, out int index, out byte positionWord, out int offset);
+            ConvertPosition(fromGivenPosition, out int index, out int positionWord, out int offset);
             ulong[] newArray = Words.Slice(index, Words.Length);
             newArray[0] = newArray[0] >> (offset + positionWord * LetterSize);
             return PopCountCompute.ComputePopCount(newArray);

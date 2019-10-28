@@ -33,5 +33,6 @@ namespace Patterns
 
             return Equals((T) obj);
         }
+        
     }
 }
