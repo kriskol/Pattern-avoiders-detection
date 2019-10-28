@@ -18,7 +18,7 @@ namespace NumberOperationsImplementations
 
         public int ComputePopCount(IEnumerable<ulong> words)
         {
-            byte count = 0;
+            int count = 0;
 
             foreach (var word in words)
             {

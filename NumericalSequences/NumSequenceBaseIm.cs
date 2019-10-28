@@ -172,11 +172,7 @@ namespace NumericalSequences
                     ((PerformSafeShiftRight(word, position * size + offset + letterSize)
                       << letterSize) | letter) << (position * size + offset);
             }
-
-            /*
-            ulong newWordSuffix = (((word >> (position * size + offset + letterSize)) << letterSize) | letter)
-                                  << (position * size + offset);
-            */
+            
             return newWordPrefix | newWordSuffix;
         }
         protected void SetLetter(ulong wordPrefix, ulong wordsSuffix, byte position,
@@ -285,10 +281,6 @@ namespace NumericalSequences
                                   << letterSize) | letter) << position * size + offset;
             }
             
-            /*
-            ulong newWordSuffix = (((word >> (position * size + offset)) << letterSize) | letter) 
-                              << (position * size + offset);
-            */
             return newWordPrefix | newWordSuffix;
         }
         

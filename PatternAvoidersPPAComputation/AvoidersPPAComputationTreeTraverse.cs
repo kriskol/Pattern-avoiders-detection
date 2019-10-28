@@ -135,7 +135,6 @@ namespace PatternAvoidersPPAComputation
         {
             int[] numThreadsChildren = ComputeThreadsCountChildren(node.CountChildren, numThreads);
             Thread[] threads = new Thread[node.CountChildren-1];
-            ResultPPA[] clones = new ResultPPA[node.CountChildren-1];
             List<PatternNodePPA> children;
             node.TryGetChildren(out children);
             
@@ -179,7 +178,6 @@ namespace PatternAvoidersPPAComputation
         {
             int[] childrenPerThread = DivideThreadsChildren(node.CountChildren, numThreads);
             Thread[] threads = new Thread[childrenPerThread.Length-1];
-            ResultPPA[] clones = new ResultPPA[childrenPerThread.Length-1];
             List<PatternNodePPA> children;
             node.TryGetChildren(out children);
 
@@ -238,12 +236,10 @@ namespace PatternAvoidersPPAComputation
             {
                 List<PatternNodePPA> children;
                 node.TryGetChildren(out children);
-                //Console.WriteLine(node.Permutation.Length);
                 foreach (var child in children)
                 {
                     ComputeStep(child, result);
                     
-                    //if(depthComputed - 1 > node.Permutation.Length + node.DescendantsDepthFromNode)
                         ComputeNonParallel(child, result);
                 }
                 

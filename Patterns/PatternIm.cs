@@ -32,6 +32,17 @@ namespace Patterns
             return (byte)numSequenceBasic.GetLetter(position - LowestPosition);
         }
 
+        protected virtual NumSequenceBasic DeleteInternal(int position)
+        {
+            return NumSequenceBasic.DeleteLetterPosition(position - LowestPosition);
+        }
+
+        protected virtual NumSequenceBasic SwitchInternal(int positionFrom, int positionTo)
+        {
+            return NumSequenceBasic.Switch(positionFrom-LowestPosition,
+                positionTo - LowestPosition);
+        }
+
         public override string ToString()
         {
             return numSequenceBasic.ToString();

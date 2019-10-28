@@ -39,16 +39,13 @@ namespace Patterns
         
         public override PatternBasic Switch(int positionFrom, int positionTo)
         {
-            NumSequenceBasic newNumSequenceBasic = NumSequenceBasic.Switch(positionFrom-LowestPosition,
-                positionTo - LowestPosition);
+            NumSequenceBasic newNumSequenceBasic = SwitchInternal(positionFrom, positionTo);
             return PatternFactory.GetPattern(newNumSequenceBasic, HighestPosition);
         }
         
         public override PatternBasic Delete(int position)
         {
-
-            NumSequenceBasic newNumSequenceBasic = NumSequenceBasic.DeleteLetterPosition(position - LowestPosition);
-
+            NumSequenceBasic newNumSequenceBasic = DeleteInternal(position);
             return PatternFactory.GetPattern(newNumSequenceBasic, HighestPosition-1);
         }
         
