@@ -116,7 +116,7 @@ Obsahuje triedy na reprezentovanie ulozenych dat z vypoctu PPA.
 ### `ResultWriter`:
 Obsahuje triedu implementujucu kod na vypisovanie ulozenych dat z tried v projekte `Result`.
 
-###Teda priebeh vypoctu je takyto:
+### Teda priebeh vypoctu je takyto:
 `PermutationPatterns` -> `InputHandling` -> `CommandAccept` -> 
 `CommandHandlers` -> `PatternAvoidersPPAComputation` -> `ResultWriter`
 
