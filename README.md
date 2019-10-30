@@ -82,12 +82,12 @@ vypoctu a vypoctov, kedy chceme len počet avoider-ov danej velkosti a nie to ak
 
 ### `PatternNode`:
 Obsahuje interfac-y a ich implementacie, ktore reprezentuju pomyselny uzol pri vypocte PPA, kde dany uzol obsahuje permutaciu,
-jej inverziu, resp. cast jej inverzie, jej extension map-u atd. Spominane data ma ulozene v instancii triedy z projektu
+jej inverziu, resp. cast jej inverzie, jej `extension map` atd. Spominane data ma ulozene v instancii triedy z projektu
 `PermutationContainers`.
 
 ### `Patterns`:
 Obsahuje triedy a interfac-y, ktore sluzia na reprezentaciu a vytvaranie vzorov. Kde jedna z tried sluzi presne 
-na reprezentaciu permutacii, dalsia zase na reprezentaciu ich "ciastocnych inverznych funkcii". 
+na reprezentaciu permutacii, dalsia zase na reprezentaciu "ciastocnych inverznych funkcii". 
 Taketo permutacie a "ciastocne inverzne funkcie" su potom zabalene napr. v instancii 
 triedy z projektu `PermutationContainers`.
 Na internu reprezentaciu pouziva triedy z projektu `NumericalSequences`.
@@ -97,7 +97,7 @@ Na internu reprezentaciu pouziva triedy z projektu `NumericalSequences`.
 Obsahuje triedy, ktore zabaluju permutaciu, jej "ciastocnu inverznu funkciu" a napr. jej `extension map`.
 Zabezpecuje napr. vytvaranie novych permutacii z permutacie, ktoru obsahuje na zaklade jej `extension map`. Teda ze vytvori
 nove permutacie vlozenim noveho najvyssieho cisla na pozicie kam mu to dovoluje `extension map`. 
-Nasledne spocita "ciastocnu inverznu funckciu", `extension map` novej permutacie a zabali to nevej instancie triedy
+Nasledne spocita "ciastocnu inverznu funckciu", `extension map` novej permutacie a zabali to do novej instancie triedy
 z `PermutationContainers`.
 
 ### `PermutationPatterns`:
@@ -124,5 +124,7 @@ Obsahuje triedu implementujucu kod na vypisovanie ulozenych dat z tried v projek
 `PatternNode` zabaluje `PermutationContainers`.
 
 
-
+Pod "ciastocna inverzna funkcia" je mysleny taky vzor
+z projektu `Patterns`, ktory uchovava pozicie najvyssich k
+pismen (cisel) z nejakej, z kontextu jasnej, permutacie.
 
