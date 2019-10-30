@@ -32,8 +32,8 @@ projektu `CommandHandlers`. Teda je to medzivrstva medzi triedami z `InputHandle
 
 ### `CommandHandlers`:
 Spracovava vstup, ktory dostane od triedy z projektu`CommandAccept`. Napr. nacita permutacie zo suboru a ulozi ich. Vytvori
-objekt pre ukladanie spocitanych dat a spusti samotne pocitanie PPA.
-
+objekt pre ukladanie spocitanych dat (typu `ResultPPA`) a spusti samotne pocitanie PPA.
+ 
 ### `ExtensionMaps`:
 V danom projekte su triedy, interface, ktore sluzia na vytvaranie a reprezentovanie `extension map` popisanych v clanku.
 Na internu reprezentaciu pouziva triedy z projektu `NumericalSequences`.
@@ -48,8 +48,7 @@ do uvahy pri pocitani extension map novej premutacie.
 Obsahuje interface, ktoere su pouzivane v celom solution-e, nepatraja k implementovanym interfac-om a su pomerne obecne.
 
 ### `InputHandling`:
-Jeho triedy sluzia na prvotnu interakciu so vstupnymi argumentami. Skontroluju ich spravnost, rozumne ich ulozi a preda ich
-instancie triedy z projektu `CommandAccept`, ked to bude potrebne.
+Jeho triedy sluzia na prvotnu interakciu so vstupnymi argumentami. Skontroluju ich spravnost, rozumne ich ulozia a odovzdaju ich instancii triedy z projektu `CommandAccept`, ked to bude potrebne.
 
 ### `IntExtensions`:
 Obsahuje rozsirujuce metody pre typ `int`.
@@ -60,7 +59,7 @@ Obsahuje interfac-y, ktore maju "logicku povahu".
 ### `NumberOperationsDefaults`:
 Obsahuje triedu, ktora vracia triedy, ktore pocituju popcount a ctz na postupnosti cisel typu `ulong`, tj. na
 postupnostiach 64 bitovych cisel. Kde ctz vracia postupne pocet 0 pred 1. 1, 2. 1,... Kde pocet 0 pred i. 1 je "realny"
-pocet 0 pred i. 1 a este i pocet 1 pred i. 1.
+pocet 0 pred i. 1 a este aj pocet 1 pred i. 1.
 
 ### `NumberOperationsImplementations`:
 Obsahuje implementacie interfac-ov, ktore podporuje pocitatnie popcount a ctz, tak ako je to popisane v predchadzajucom
